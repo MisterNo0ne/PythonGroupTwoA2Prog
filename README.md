@@ -3,4 +3,4 @@ We're deciding between a spell based text based adventure game and a MadLibs gen
 
 [Spell Based Adventure Game](https://github.com/MisterNo0ne/PythonGroupTwoA2Prog/tree/main/SpellBattleGame)
 
-[MadLibs Generator]()
+[MadLibs Generator](https://github.com/MisterNo0ne/PythonGroupTwoA2Prog/tree/main/Madlibs)
