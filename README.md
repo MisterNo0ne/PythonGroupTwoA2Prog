@@ -1,5 +1,6 @@
 # PythonGroupTwoA2Prog
-we're making a spell based text based adventure game smiley face 
+We're deciding between a spell based text based adventure game and a MadLibs generator smiley face 
 
-idk what put here sad face
-👍👍👍
+[Spell Based Adventure Game]()
+
+[MadLibs Generator]()
