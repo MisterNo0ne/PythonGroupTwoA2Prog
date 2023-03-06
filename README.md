@@ -11,14 +11,12 @@ Description: Text-based adventure games are electronic games that uses a text-ba
 
 ![Space Based Adventure 3](https://github.com/MisterNo0ne/PythonGroupTwoA2Prog/blob/main/images/sba3.png?raw=true)
 
-![Space Based Adventure Class Model](https://github.com/MisterNo0ne/PythonGroupTwoA2Prog/blob/main/images/sba4.png?raw=true)
-
 ## [MadLibs Generator](https://github.com/MisterNo0ne/PythonGroupTwoA2Prog/tree/main/Madlibs)
 
 Description: MadLibs are story generators that uses a "fill in the blank feature" to allow the player to create the story. The player generally will input nouns, verbs, adjectives, adverbs, and other parts of speech to fill in a phrasal template to create a fun silly story.
 
-![Space Themed Mad Libs 1](https://github.com/MisterNo0ne/PythonGroupTwoA2Prog/blob/main/images/MadLibs1.png)
+![Space Themed Mad Libs 1](https://github.com/MisterNo0ne/PythonGroupTwoA2Prog/blob/main/images/MadLibsFirst.png)
 
-![Space Themed Mad Libs 2](https://github.com/MisterNo0ne/PythonGroupTwoA2Prog/blob/main/images/MadLibs2.png)
+![Space Themed Mad Libs 2](https://github.com/MisterNo0ne/PythonGroupTwoA2Prog/blob/main/images/MadLibsSecond.png)
 
-![Space Themed Mad Libs 3](https://github.com/MisterNo0ne/PythonGroupTwoA2Prog/blob/main/images/MadLibs3.png)
+![Space Themed Mad Libs 3](https://github.com/MisterNo0ne/PythonGroupTwoA2Prog/blob/main/images/MadLibsThird.png)
