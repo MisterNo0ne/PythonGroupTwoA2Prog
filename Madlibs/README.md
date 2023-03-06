@@ -6,3 +6,4 @@ Madlibs are interactive stories in which the player inputs nouns, verbs, adjecti
 ### Mockup
 
 ### Class Diagram
+![ClassDiagramMad](https://github.com/MisterNo0ne/PythonGroupTwoA2Prog/blob/main/images/MadLib%20Class%20Diagram.png?raw=true)
