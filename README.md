@@ -18,8 +18,10 @@ Text-based adventure games are electronic games that uses a text-based user inte
 
 ## [MadLibs Generator](https://github.com/MisterNo0ne/PythonGroupTwoA2Prog/tree/main/Madlibs)
 
-Description: MadLibs are story generators that uses a "fill in the blank feature" to allow the player to create the story. The player generally will input nouns, verbs, adjectives, adverbs, and other parts of speech to fill in a phrasal template to create a fun silly story.
+### Description
+MadLibs are story generators that uses a "fill in the blank feature" to allow the player to create the story. The player generally will input nouns, verbs, adjectives, adverbs, and other parts of speech to fill in a phrasal template to create a fun silly story.
 
+### GUI Mockups
 ![Space Themed Mad Libs 1](https://github.com/MisterNo0ne/PythonGroupTwoA2Prog/blob/main/images/MadLibsFirst.png)
 
 ![Space Themed Mad Libs 2](https://github.com/MisterNo0ne/PythonGroupTwoA2Prog/blob/main/images/MadLibsSecond.png)
