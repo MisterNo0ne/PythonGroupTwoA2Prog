@@ -3,7 +3,7 @@ We're deciding between a spell based text based adventure game and a MadLibs gen
 
 ## [Spell Based Adventure Game](https://github.com/MisterNo0ne/PythonGroupTwoA2Prog/tree/main/SpellBattleGame)
 
-Description: Text-based adventure games are electronic games that uses a text-based user interface. This game concept allows the player to fully direct and make in-game decisions through input. Our game idea will be a spell casting game that involves exploring a world, discovering new spells, and fighting bosses.
+Description: Text-based adventure games are electronic games that use a text-based user interface. This game concept allows the player to fully direct and make in-game decisions through input. Our game idea will be a spell casting game that involves exploring a world, discovering new spells, and fighting bosses.
 
 ![Space Based Adventure 1](https://github.com/MisterNo0ne/PythonGroupTwoA2Prog/blob/main/images/sba1.png?raw=true)
 
