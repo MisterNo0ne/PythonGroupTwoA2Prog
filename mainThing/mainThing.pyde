@@ -11,7 +11,7 @@ def setup():
     
     
     #zacks stuff
-    ghoul = enemy(50,"ghoul")
+    ghoul = enemy(50,"ghoul", "ice")
 
 def draw():
     if gameState == "fight":
