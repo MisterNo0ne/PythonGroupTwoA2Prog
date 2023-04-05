@@ -4,3 +4,4 @@ class enemy:
         self.type = type
         self.element = element
     
+    
