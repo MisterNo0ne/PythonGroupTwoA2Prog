@@ -2,7 +2,7 @@
 #2 Main game states that always need to be separated:
     #Map mode: player walking around a map
     #Fight mode: player battling
-gameState = "fightgvbjhjknnh"
+gameState = "fight"
 
 def setup():
     size(400, 600)
