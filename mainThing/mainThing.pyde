@@ -1,4 +1,4 @@
-#import enemy
+import enemy
 import item
 import obstacle
 import player
