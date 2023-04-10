@@ -7,10 +7,9 @@ class Obstacle(object):
         self.w = w
         self.h = h
         
-    def display(displayOn):
+    def display(self, displayOn):
         if displayOn: #so that you can turn off showing the obstacles if you want
             stroke(255, 0, 0)
             strokeWeight(3)
             noFill()
             rect(self.xPos, self.yPos, self.w, self.h)
-        
