@@ -1,7 +1,9 @@
 class player:
-    def __init__():
-        knownElements = [True, True, False, True]
-        itemsOwned = [] #items is already a thing ig
+    def __init__(self, mapPosX, mapPosY):
+        self.knownElements = [True, True, False, True]
+        self.itemsOwned = [] #items is already a thing ig
+        self.mapPosX = mapPosX
+        self.mapPosY = mapPosY
     
-    def printValues():
-        println(str(knownElements[0]) + str(knownElements[1]))
+    def printValues(self):
+        println(str(self.knownElements[0]) + str(self.knownElements[1]))
