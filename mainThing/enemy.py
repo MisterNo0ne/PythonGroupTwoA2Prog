@@ -1,3 +1,5 @@
+#zach did alla dis
+
 class Enemy(object):
     def __init__(self, health, type, element):
         health = 50
@@ -16,9 +18,10 @@ class Enemy(object):
     #defining hit function for when the enemy gets hit, 
     #in other words this is the damage calculator
     #this is run in a for loop because attackType will combine 2 (or 3) elements
+    """
     def hit(initialDamage, attackType):
         damage = initialDamage
-        for i in attackType: 
+        for i in [attackType]: 
             if i == self.element:
                 damage=damage/2
             if i == self.weakness:
@@ -27,6 +30,6 @@ class Enemy(object):
                 damage=damage/2
         self.health -= damage
         return self.health
-        print(self.health)
+    """
         #later add a mechanic for dying where the enemy disappears or soemthing
         
