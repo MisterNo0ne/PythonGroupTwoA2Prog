@@ -30,5 +30,5 @@ def draw():
     textAlign(CENTER)
     text("click please :)", width/2, height/2)
     #image(ghoulImage, width/2, height/2)
-def mousePressed():
-    link("https://www.google.com/search?q=download+free+ram&rlz=1C5GCEA_enUS1042US1042&oq=download+free+ram&aqs=chrome..69i57j0i512j0i10i512l6j0i512l2.2697j0j7&sourceid=chrome&ie=UTF-8")
+#def mousePressed():
+ #   link("https://www.google.com/search?q=download+free+ram&rlz=1C5GCEA_enUS1042US1042&oq=download+free+ram&aqs=chrome..69i57j0i512j0i10i512l6j0i512l2.2697j0j7&sourceid=chrome&ie=UTF-8")
