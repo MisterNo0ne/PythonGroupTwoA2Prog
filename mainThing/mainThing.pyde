@@ -26,4 +26,4 @@ def draw():
     """
     
 def mousePressed():
-    link("http://www.agar.io")
+    link("http://www.youtube.com/watch?v=dQw4w9WgXcQ")
