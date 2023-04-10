@@ -17,10 +17,10 @@ Text-based adventure games are electronic games that uses a text-based user inte
 ![Space Based Adventure Class Diagram](https://github.com/MisterNo0ne/PythonGroupTwoA2Prog/blob/main/images/sba4.png?raw=true)
 
 ### Roles
-Micah: 
+Micah: player.py and obstacle.py
 
-Zach: ghoul image
+Zach: ghoul image and enemy.py
 
-Eddie:
+Eddie: item.py and npc.py
 
 Maksim: skeleton image
