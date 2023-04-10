@@ -14,6 +14,7 @@ def setup():
     global gameState, ghoul, block, debugMode
     gameState = "map"
     ghoul = Enemy(50,"ghoul", "fire")
+    ghoul.hit(10, ["water", ""])
     block = Obstacle(100, 100, 300, 100)
     debugMode = True #displays obstacles
 
