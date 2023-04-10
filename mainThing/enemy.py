@@ -1,4 +1,4 @@
-#zach did alla dis
+#zac=k did alla dis
 
 class Enemy(object):
     def __init__(self, health, type, element):
@@ -18,8 +18,9 @@ class Enemy(object):
     #defining hit function for when the enemy gets hit, 
     #in other words this is the damage calculator
     #this is run in a for loop because attackType will combine 2 (or 3) elements
-    """
-    def hit(initialDamage, attackType):
+    
+    def hit(self, initialDamage, attackType):
+        attackType = ["", ""]
         damage = initialDamage
         for i in [attackType]: 
             if i == self.element:
@@ -29,7 +30,11 @@ class Enemy(object):
             if i == self.resistance:
                 damage=damage/2
         self.health -= damage
+        if self.health < 0:
+            print("the monster is kil!")
+        else: 
+                print(self.health)
         return self.health
-    """
+    
         #later add a mechanic for dying where the enemy disappears or soemthing
         
