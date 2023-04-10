@@ -1,4 +1,4 @@
-import enemy
+from enemy import enemy
 import item
 import item
 import npc
@@ -16,7 +16,7 @@ def setup():
     
     
     #zacks stuff
-    #ghoul = enemy(50,"ghoul", "fire")
+    ghoul = enemy(50,"ghoul", "fire")
     #ghoul.hit(10,"water")
 
 def draw():
