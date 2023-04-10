@@ -20,6 +20,7 @@ class Enemy(object):
     #this is run in a for loop because attackType will combine 2 (or 3) elements
     
     def hit(self, initialDamage, attackType):
+        attackType = ["", ""]
         damage = initialDamage
         for i in [attackType]: 
             if i == self.element:
