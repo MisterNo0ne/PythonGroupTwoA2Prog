@@ -16,8 +16,8 @@ def setup():
     #global block
     global ghoul
     #zacks stuff
-    ghoul = enemy(50,"ghoul", "ice")
-
+   # ghoul = enemy(50,"ghoul", "fire")
+    #ghoul.hit(10, "water")
     gameState = "map"
     #block = obstacle(100, 100, 50, 25)
     #ghoul = enemy(50, "ghoul", "ice")
