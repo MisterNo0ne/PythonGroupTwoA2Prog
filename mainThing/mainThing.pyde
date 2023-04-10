@@ -1,5 +1,5 @@
 from enemy import Enemy
-from  item import Item
+from item import Item
 from npc import Npc
 from obstacle import Obstacle
 from player import Player
@@ -14,9 +14,9 @@ def setup():
     gameState = "map"
     
     
-    #zacks stuff
+    #zacks stuff: alll zackk !)0%55%%%%
     ghoul = Enemy(50,"ghoul", "fire")
-    ghoul.hit(10,"water")
+   # ghoul.hit(10,"water")
 
 def draw():
     background(0)
@@ -31,4 +31,4 @@ def draw():
     """
     
 def mousePressed():
-    link("http://www.youtube.com/watch?v=dQw4w9WgXcQ")
+    link("agar.io")
