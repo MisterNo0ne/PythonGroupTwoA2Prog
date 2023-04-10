@@ -10,22 +10,17 @@ gameState = "fight"
 
 def setup():
     size(400, 600)
-
-    gameState = "map"
-    
-    
-    
-    #zacks stuff
-    ghoul = enemy(50,"ghoul")
-
-    
-    #initialize variables
     global gameState
+    gameState = "map"
+
     #global block
     global ghoul
+    #zacks stuff
+    ghoul = enemy(50,"ghoul", "ice")
+
     gameState = "map"
     #block = obstacle(100, 100, 50, 25)
-   # ghoul = enemy(50, "ghoul", "ice")
+    #ghoul = enemy(50, "ghoul", "ice")
     #print(str(ghoul.health))
 
 def draw():
