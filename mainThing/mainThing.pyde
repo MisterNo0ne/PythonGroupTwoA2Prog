@@ -3,14 +3,15 @@ from item import Item
 from npc import Npc
 from obstacle import Obstacle
 from player import Player
+
 #2 Main game states that always need to be separated:
     #Map mode: player walking around a map
     #Fight mode: player battling
 
 def setup():
-    size(400, 600)
+    size(800, 600)
     
-    global gameState
+    global gameState, ghoul
     gameState = "map"
     
     
@@ -20,15 +21,13 @@ def setup():
 
 def draw():
     background(0)
-    textSize(32)
-    textAlign(CENTER)
-    text("click please :)", width/2, height/2)
-    """
     if gameState == "fight":
         print(gameState)
     else: #gameState is in map mode
         print(gameState)
-    """
+    textSize(32)
+    textAlign(CENTER)
+    text("click please :)", width/2, height/2)
     
 def mousePressed():
     link("agar.io")
