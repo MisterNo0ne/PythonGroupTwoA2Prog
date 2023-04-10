@@ -15,8 +15,8 @@ class enemy(object):
     #defining hit function for when the enemy gets hit, 
     #in other words this is the damage calculator
     #this is run in a for loop because attackType will combine 2 (or 3) elements
-    def hit(damageInitially, attackType):
-        damage = damageInitially
+    def hit(initialDamage, attackType):
+        damage = initialDamage
         for i in attackType: 
             if i == self.element:
                 damage=damage/2
