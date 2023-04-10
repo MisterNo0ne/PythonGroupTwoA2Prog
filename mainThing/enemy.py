@@ -1,4 +1,4 @@
-class enemy(object):
+class Enemy(object):
     def __init__(self, health, type, element):
         health = 50
         self.health = health

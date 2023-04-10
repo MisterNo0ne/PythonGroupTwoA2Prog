@@ -1,4 +1,4 @@
-class player(object):
+class Player(object):
     def __init__(self, mapPosX, mapPosY):
         self.knownElements = [True, True, False, True]
         self.itemsOwned = [] #items is already a thing ig

@@ -1,4 +1,4 @@
-class item(object):
+class Item(object):
     def __init__(self, name, invslot, description):
         self.name = name
         self.invslot = invslot
