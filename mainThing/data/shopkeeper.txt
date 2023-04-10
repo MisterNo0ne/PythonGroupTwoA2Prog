@@ -1,2 +1,4 @@
 Yo, want something?
-no
+options: sure, let me see what you have / no
+if answer one show shopkeeper inventory
+else exit
