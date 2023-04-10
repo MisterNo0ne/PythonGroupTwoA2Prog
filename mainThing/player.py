@@ -4,6 +4,11 @@ class Player(object):
         self.itemsOwned = [] #items is already a thing ig
         self.mapPosX = mapPosX
         self.mapPosY = mapPosY
-    
-    def printValues(self):
-        println(str(self.knownElements[0]) + str(self.knownElements[1]))
+        
+    def showOnMap(self):
+        rectMode(CENTER)
+        stroke(0)
+        strokeWeight(4)
+        fill(255)
+        rect(self.mapPosX, self.mapPosY, 50, 50)
+        rectMode(CORNER)
