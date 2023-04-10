@@ -1,4 +1,4 @@
-class obstacle:
+class obstacle(object):
     #only on map screen
     def __init__(self, xPos, yPos, w, h):
         self.xPos = xPos

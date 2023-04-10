@@ -25,5 +25,7 @@ class enemy(object):
             if i == self.resistance:
                 damage=damage/2
         self.health -= damage
+        return self.health
+        print(self.health)
         #later add a mechanic for dying where the enemy disappears or soemthing
         
