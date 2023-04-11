@@ -46,7 +46,7 @@ class Enemy(object):
         
         #rendering on the screen in map mode. For now this will just be a triangle before we implement any actual 
         #enemy sprites with variation and coloration or indicators for elements. 
-    def mapDisplay(self, xpos, ypos):
+    def mapDisplay(self):
         stroke(255,0,0)
         strokeWeight(5)
         triangle(self.xpos, self.ypos, self.xpos+50,self.ypos,self.xpos+25, self.ypos+50)
