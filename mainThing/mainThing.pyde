@@ -40,9 +40,9 @@ def draw():
         if keyPresses[3]:
             gamer.mapPosX+=gamer.speed
     
-def mousePressed():
-    if gameState == "map" and mouseX > height-100:
-        link("https://www.google.com/search?q=download+free+ram&rlz=1C5GCEA_enUS1042US1042&oq=download+free+ram&aqs=chrome..69i57j0i512j0i10i512l6j0i512l2.2697j0j7&sourceid=chrome&ie=UTF-8")
+#def mousePressed():
+   # if gameState == "map" and mouseX > height-100:
+       # link("https://www.google.com/search?q=download+free+ram&rlz=1C5GCEA_enUS1042US1042&oq=download+free+ram&aqs=chrome..69i57j0i512j0i10i512l6j0i512l2.2697j0j7&sourceid=chrome&ie=UTF-8")
     
 def keyPressed():
     if key == 'w':
