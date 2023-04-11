@@ -4,7 +4,8 @@ class Player(object):
         self.itemsOwned = [] #items is already a thing ig
         self.mapPosX = mapPosX
         self.mapPosY = mapPosY
-        self.mapSpeed = 3
+        self.mapOrthogonalSpeed = 3
+        self.mapDiagonalSpeed = 2.12 #orthogonal means up down left right
         
     def showOnMap(self):
         rectMode(CENTER)
@@ -27,7 +28,16 @@ class Player(object):
             xMov += 1
         
         if xMov != 0 and yMov != 0: #if moving diagonally
-            print("diagonal movement")
-        else:
-            self.mapPosX += xMov * self.mapSpeed
-            self.mapPosY += yMov * self.mapSpeed
+            self.mapPosX += xMov * self.mapDiagonalSpeed
+            self.mapPosY += yMov * self.mapDiagonalSpeed
+        else: #if moving orthogonally
+            self.mapPosX += xMov * self.mapOrthogonalSpeed
+            self.mapPosY += yMov * self.mapOrthogonalSpeed
+            
+    def showInFight(self):
+        rectMode(CENTER)
+        stroke(0)
+        strokeWeight(4)
+        fill(255)
+        square(200, 520, 250)
+        rectMode(CORNER)
