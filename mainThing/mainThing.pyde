@@ -31,6 +31,8 @@ def draw():
         text("click please :)", width/2, height/2)
         block.display(debugMode)
         gamer.showOnMap()
+        
+        #rudimentary movement for the player while in map mode
         if keyPresses[0]: 
             gamer.mapPosY-=gamer.speed
         if keyPresses[1]:
