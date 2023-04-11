@@ -37,12 +37,12 @@ Maksim: Skeleton image and basic functionality of data folder
 
 ### [Assets](https://github.com/MisterNo0ne/PythonGroupTwoA2Prog/tree/main/mainThing/data)
 
-### GUI Mockups (out of date)
-![Space Based Adventure 1](https://github.com/MisterNo0ne/PythonGroupTwoA2Prog/blob/main/images/sba1.png?raw=true)
+### Running Program Mockups
+![Spell Based Adventure 1](https://github.com/MisterNo0ne/PythonGroupTwoA2Prog/blob/main/images/sba1.png?raw=true)
 
-![Space Based Adventure 2](https://github.com/MisterNo0ne/PythonGroupTwoA2Prog/blob/main/images/sba2.png?raw=true)
+![Spell Based Adventure 2](https://github.com/MisterNo0ne/PythonGroupTwoA2Prog/blob/main/images/sba2.png?raw=true)
 
-![Space Based Adventure 3](https://github.com/MisterNo0ne/PythonGroupTwoA2Prog/blob/main/images/sba3.png?raw=true)
+![Spell Based Adventure 3](https://github.com/MisterNo0ne/PythonGroupTwoA2Prog/blob/main/images/sba3.png?raw=true)
 
-### Class Diagram (out of date)
-![Space Based Adventure Class Diagram](https://github.com/MisterNo0ne/PythonGroupTwoA2Prog/blob/main/images/sba4.png?raw=true)
+### Class Diagram
+![Spell Based Adventure Class Diagram](https://github.com/MisterNo0ne/PythonGroupTwoA2Prog/blob/main/images/classDiagram.PNG?raw=true)
