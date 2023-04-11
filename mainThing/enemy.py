@@ -2,7 +2,7 @@
 
 class Enemy(object):
     def __init__(self, health, type, element):
-        health = 50
+        #health = 50
         self.health = health
         self.type = type
         self.element = element
@@ -11,7 +11,7 @@ class Enemy(object):
         #defining respective elemental weaknesses and resistances
         if self.element == "fire":
              self.weakness.append(["water", "rock"])
-             self.resistance.append(["ice", "grass"])
+             self.resistance.append(["ice", "grass", "fire"])
         #3 resistances (including it's own element) and 2 weaknesses (think Pokemon)
     
     #idea: some enemies have regenerative abilities
@@ -20,21 +20,19 @@ class Enemy(object):
     #this is run in a for loop because attackType will combine 2 (or 3) elements
     
     def hit(self, initialDamage, attackType):
-        attackType = ["", ""]
         damage = initialDamage
-        for i in [attackType]: 
-            if i == self.element:
-                damage=damage/2
-            if i == self.weakness:
+        for i in attackType: 
+            if i in self.weakness:
                 damage=damage*2
-            if i == self.resistance:
+            if i in self.resistance:
                 damage=damage/2
         self.health -= damage
-        if self.health < 0:
+        if self.health <= 0:
             print("the monster is kil!")
         else: 
-                print(self.health)
+            print("you did " + damage + "damage! \n" + "the monster's health is now " + self.health)
         return self.health
-    
         #later add a mechanic for dying where the enemy disappears or soemthing
-        
+   
+    def __repr__(self):
+        return f"enemy stats: type \= {self.type}, health \= {self.health}, element \= {self.element}"
