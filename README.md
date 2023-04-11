@@ -3,6 +3,9 @@
 ### Description
 Text-based adventure games are electronic games that uses a text-based user interface. This game concept allows the player to fully direct and make in-game decisions through input. Our game idea will be a spell casting game that involves exploring a world, discovering new spells, and fighting bosses.
 
+### How to use
+On the map screen, use WASD to move around. If you want to start a battle, walk towards the enemy in the bottom right corner (the red triangle). For now, "WASD" is the only usable layout, though arrow keys will be added soon. 
+
 ## Features
 
 ### Map game state
