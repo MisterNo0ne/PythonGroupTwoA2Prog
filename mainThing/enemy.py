@@ -1,7 +1,7 @@
 #zac=k did alla dis
 
 class Enemy(object):
-    def __init__(self, health, type, element, xpos, ypos, wdth, hght):
+    def __init__(self, health, type, element, xpos, ypos):
         #health = 50
         self.health = health
         self.type = type
@@ -10,8 +10,6 @@ class Enemy(object):
         self.resistance = []
         self.xpos=xpos
         self.ypos=ypos
-        self.wdth=wdth
-        self.hght=hght
         #defining respective elemental weaknesses and resistances
         if self.element == "fire":
              self.weakness.append("water")
@@ -48,8 +46,8 @@ class Enemy(object):
         
         #rendering on the screen in map mode. For now this will just be a triangle before we implement any actual 
         #enemy sprites with variation and coloration or indicators for elements. 
-    def mapDisplay(self, xpos, ypos, wdth, hght):
+    def mapDisplay(self, xpos, ypos):
         stroke(255,0,0)
         strokeWeight(5)
-        triangle(self.xpos, self.ypos, self.xpos+self.wdth,self.ypos,self.xpos+self.wdth/2, self.ypos+self.hght)
+        triangle(self.xpos, self.ypos, self.xpos+50,self.ypos,self.xpos+25, self.ypos+50)
         

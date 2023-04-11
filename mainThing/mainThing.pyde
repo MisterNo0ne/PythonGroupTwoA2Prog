@@ -15,7 +15,9 @@ def setup():
     bkgrnd = loadImage("grassBackground.png")
     image(bkgrnd,0,0)
     gameState = "map"
-    ghoul = Enemy(50,"ghoul", "fire",500,500,50,50)
+    
+    #testing to see if enemy being called and enemy being hit works
+    ghoul = Enemy(50,"ghoul", "fire",500,500)
     ghoul.hit(20,["water","rock"])
     block = Obstacle(100, 100, 300, 100)
     debugMode = True #displays obstacles
