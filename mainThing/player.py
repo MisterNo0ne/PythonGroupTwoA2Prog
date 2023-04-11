@@ -4,6 +4,7 @@ class Player(object):
         self.itemsOwned = [] #items is already a thing ig
         self.mapPosX = mapPosX
         self.mapPosY = mapPosY
+        self.speed = 2
         
     def showOnMap(self):
         rectMode(CENTER)
@@ -12,3 +13,13 @@ class Player(object):
         fill(255)
         rect(self.mapPosX, self.mapPosY, 50, 50)
         rectMode(CORNER)
+        
+   # def move(self):
+#        if leftPressed = true: 
+  #          self.mapPosX-=self.speed
+  #      if rightPressed = true:
+   #         self.mapPosX+=self.speed
+   #     if upPressed = true:
+   #         self.mapPosY-=self.speed
+    #    if downPressed = true:
+     #       self.mapPosY+=self.speed

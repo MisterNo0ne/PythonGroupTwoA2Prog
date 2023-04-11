@@ -31,6 +31,14 @@ def draw():
         text("click please :)", width/2, height/2)
         block.display(debugMode)
         gamer.showOnMap()
+        if keyPresses[0]: 
+            gamer.mapPosY-=gamer.speed
+        if keyPresses[1]:
+            gamer.mapPosX-=gamer.speed
+        if keyPresses[2]:
+            gamer.mapPosY+=gamer.speed
+        if keyPresses[3]:
+            gamer.mapPosX+=gamer.speed
     
 def mousePressed():
     if gameState == "map" and mouseX > height-100:
