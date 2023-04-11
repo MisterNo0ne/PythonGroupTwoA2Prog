@@ -1,13 +1,17 @@
 #zac=k did alla dis
 
 class Enemy(object):
-    def __init__(self, health, type, element):
+    def __init__(self, health, type, element, xpos, ypos, wdth, hght):
         #health = 50
         self.health = health
         self.type = type
         self.element = element
         self.weakness = []
         self.resistance = []
+        self.xpos=xpos
+        self.ypos=ypos
+        self.wdth=wdth
+        self.hght=hght
         #defining respective elemental weaknesses and resistances
         if self.element == "fire":
              self.weakness.append("water")
@@ -41,3 +45,11 @@ class Enemy(object):
             print("you did " + str(damage) + " damage! the monster's health is now " + str(self.health))
         return self.health
         #later add a mechanic for dying where the enemy disappears or soemthing
+        
+        #rendering on the screen in map mode. For now this will just be a triangle before we implement any actual 
+        #enemy sprites with variation and coloration or indicators for elements. 
+    def mapDisplay(self, xpos, ypos, wdth, hght):
+        stroke(255,0,0)
+        strokeWeight(5)
+        triangle(self.xpos, self.ypos, self.xpos+self.wdth,self.ypos,self.xpos+self.wdth/2, self.ypos+self.hght)
+        

@@ -15,7 +15,7 @@ def setup():
     bkgrnd = loadImage("grassBackground.png")
     image(bkgrnd,0,0)
     gameState = "map"
-    ghoul = Enemy(50,"ghoul", "fire")
+    ghoul = Enemy(50,"ghoul", "fire",500,500,50,50)
     ghoul.hit(20,["water","rock"])
     block = Obstacle(100, 100, 300, 100)
     debugMode = True #displays obstacles
@@ -36,7 +36,7 @@ def draw():
         block.display(debugMode)
         gamer.showOnMap()
         gamer.moveOnMap()
-        
+        ghoul.mapDisplay()
 def mousePressed():
     if gameState == "map" and mouseY > height-100 and mouseX > width-300:
         link("https://www.google.com/search?q=download+free+ram&rlz=1C5GCEA_enUS1042US1042&oq=download+free+ram&aqs=chrome..69i57j0i512j0i10i512l6j0i512l2.2697j0j7&sourceid=chrome&ie=UTF-8")
