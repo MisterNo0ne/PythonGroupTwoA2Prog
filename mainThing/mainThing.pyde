@@ -11,7 +11,9 @@ from player import Player
 def setup():
     size(800, 600)
     
-    global gameState, ghoul, block, debugMode, gamer, keyPresses
+    global gameState, ghoul, block, debugMode, gamer, keyPresses, bkgrnd
+    bkgrnd = loadImage("grassBackground.png")
+    image(bkgrnd,0,0)
     gameState = "map"
     ghoul = Enemy(50,"ghoul", "fire")
     ghoul.hit(20,["water","rock"])
