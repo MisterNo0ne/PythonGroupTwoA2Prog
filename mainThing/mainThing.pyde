@@ -20,7 +20,6 @@ def setup():
     
     #testing to see if enemy being called and enemy being hit works
     ghoul = Enemy(50,"ghoul", "fire",500,500)
-    
     ghoul.hit(20,["water","rock"])
     block = Obstacle(100, 100, 300, 100)
     debugMode = True #displays obstacles
@@ -44,11 +43,13 @@ def draw():
         # ---
         block.display(debugMode)
         gamer.showOnMap()
-        gamer.moveOnMap()
+        gamer.moveOnMap(keyPresses)
         ghoul.mapDisplay()
-        for e in enemyList:
-            if (gamer.xpos<e.xpos+50) and (gamer.ypos<e.ypos+50) and (gamer.xpos>e.xpos-50) and (gamer.ypos>e.ypos-50):
-                gameState == "fight"
+        print("yo")
+        #for e in enemyList:
+            #if (gamer.xpos<e.xpos+50) and (gamer.ypos<e.ypos+50) and (gamer.xpos>e.xpos-50) and (gamer.ypos>e.ypos-50):
+                #gameState == "fight"
+        
 def mousePressed():
     if gameState == "map" and mouseY > height-100 and mouseX > width-300:
         link("https://www.google.com/search?q=download+free+ram&rlz=1C5GCEA_enUS1042US1042&oq=download+free+ram&aqs=chrome..69i57j0i512j0i10i512l6j0i512l2.2697j0j7&sourceid=chrome&ie=UTF-8")
