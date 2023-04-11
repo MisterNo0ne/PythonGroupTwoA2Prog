@@ -15,12 +15,19 @@ class Player(object):
         rectMode(CORNER)
         
     def moveOnMap(self, keyHits):
+        xMov = 0 #horizontal movement (-1, 0, or 1)
+        yMov = 0 #vertical movement (-1, 0, or 1)
         if keyHits[0]: #w pressed
-            self.mapPosY -= self.mapSpeed
+            yMov -= 1
         if keyHits[1]: #a pressed
-            self.mapPosX -= self.mapSpeed
+            xMov -= 1
         if keyHits[2]: #s pressed
-            self.mapPosY += self.mapSpeed
+            yMov += 1
         if keyHits[3]: #d pressed
-            self.mapPosX += self.mapSpeed
-            
+            xMov += 1
+        
+        if xMov != 0 and yMov != 0: #if moving diagonally
+            print("diagonal movement")
+        else:
+            self.mapPosX += xMov * self.mapSpeed
+            self.mapPosY += yMov * self.mapSpeed
