@@ -1,5 +1,5 @@
 # PythonGroupTwoA2Prog
-We're deciding between a spell based text based adventure game and a MadLibs generator smiley face 
+Weve decided to make a spell-based adventure game.
 
 ## [Spell Based Adventure Game](https://github.com/MisterNo0ne/PythonGroupTwoA2Prog/tree/main/SpellBattleGame)
 
@@ -14,6 +14,10 @@ Zach: ghoul image and enemy.py
 Eddie: item.py and npc.py
 
 Maksim: skeleton image
+
+### [Source Code](https://github.com/MisterNo0ne/PythonGroupTwoA2Prog/tree/main/mainThing)
+
+### [Assets](https://github.com/MisterNo0ne/PythonGroupTwoA2Prog/tree/main/mainThing/data)
 
 ### GUI Mockups
 ![Space Based Adventure 1](https://github.com/MisterNo0ne/PythonGroupTwoA2Prog/blob/main/images/sba1.png?raw=true)
