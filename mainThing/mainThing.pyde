@@ -30,13 +30,16 @@ def draw():
         textSize(32)
         textAlign(RIGHT)
         text("click here please :)", width-25, height-30)
+        noFill()
+        stroke(255)
+        rect(width-300, height-80, 300, 80)
         # ---
         block.display(debugMode)
         gamer.showOnMap()
-        gamer.moveOnMap()
+        gamer.moveOnMap(keyPresses)
         
 def mousePressed():
-    if gameState == "map" and mouseY > height-100 and mouseX > width-300:
+    if gameState == "map" and mouseY > height-80 and mouseX > width-300:
         link("https://www.google.com/search?q=download+free+ram&rlz=1C5GCEA_enUS1042US1042&oq=download+free+ram&aqs=chrome..69i57j0i512j0i10i512l6j0i512l2.2697j0j7&sourceid=chrome&ie=UTF-8")
     
 def keyPressed():
