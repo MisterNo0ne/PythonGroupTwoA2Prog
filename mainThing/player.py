@@ -24,10 +24,6 @@ class Player(object):
         if keyHits[2]: #s pressed
             yMov += 1
         if keyHits[3]: #d pressed
-<<<<<<< Updated upstream
-            self.mapPosX += self.mapSpeed
-            
-=======
             xMov += 1
         
         if xMov != 0 and yMov != 0: #if moving diagonally
@@ -35,9 +31,3 @@ class Player(object):
         else:
             self.mapPosX += xMov * self.mapSpeed
             self.mapPosY += yMov * self.mapSpeed
-        
-"""
-    def bumbIntoObstaclesOnMap(self, obstacles):
-        for ob in obstacles:
-"""
->>>>>>> Stashed changes
