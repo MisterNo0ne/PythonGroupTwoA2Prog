@@ -1,7 +1,4 @@
-# PythonGroupTwoA2Prog
-Weve decided to make a spell-based adventure game.
-
-## [Spell Based Adventure Game](https://github.com/MisterNo0ne/PythonGroupTwoA2Prog/tree/main/SpellBattleGame)
+# Spell Based Adventure Game
 
 ### Description
 Text-based adventure games are electronic games that uses a text-based user interface. This game concept allows the player to fully direct and make in-game decisions through input. Our game idea will be a spell casting game that involves exploring a world, discovering new spells, and fighting bosses.
@@ -23,6 +20,8 @@ Added a simple grass background for flavor, and as a quick demonstration of how 
 Added weakness and resistance lists to the enemy class for damage calculation. This adds an element of strategy, so players have to think about the best way to attack a particular type of enemy.
 
 Added a damage calculator to enemy class. Now, the enemy class has a function called hit() that will take in variables for damage and element types to calculate the real damage. For example, if a player tries to attack a fire enemy with a grass attack, the damage will be halved. If they try a water type instead, the damage will be doubled. The calculations are based on the enemy's weakness and resistance stats.
+
+## Development
 
 ### Roles
 Micah: player.py and obstacle.py and all of their class functions, as well as keyPress system and gameState transition
