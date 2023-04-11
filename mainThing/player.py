@@ -14,14 +14,15 @@ class Player(object):
         rect(self.mapPosX, self.mapPosY, 50, 50)
         rectMode(CORNER)
         
-    def moveOnMap(self):
-        if keyPresses[0]: #w
-            self.mapPosY -= 3
-            """
-        if keyPresses[1]: #a
+    def moveOnMap(self, keyHits):
+        if keyHits[0]: #w pressed
+            self.mapPosY -= self.mapSpeed
+        if keyHits[1]: #a pressed
             self.mapPosX -= self.mapSpeed
-        if keyPresses[2]: #s
+        if keyHits[2]: #s pressed
             self.mapPosY += self.mapSpeed
-        if keyPresses[3]: #d
+        if keyHits[3]: #d pressed
             self.mapPosX += self.mapSpeed
-            """
+            
+    def bumbIntoObstaclesOnMap(self, obstacles):
+        
