@@ -24,4 +24,3 @@ class Player(object):
         if keyHits[3]: #d pressed
             self.mapPosX += self.mapSpeed
             
-   # def bumbIntoObstaclesOnMap(self, obstacles):

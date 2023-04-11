@@ -31,7 +31,7 @@ class Enemy(object):
             print(self.weakness) 
             if i in self.weakness:
                 damage=damage*2
-                print("Your attack was super effective!")
+                print("Your attack was super effective against the opposing " + self.element + " type!")
             if i in self.resistance:
                 damage=damage/2
                 print("Your attack was not very effective...")

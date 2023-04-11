@@ -9,7 +9,7 @@ from player import Player
     #Fight mode: player battling
 
 def setup():
-    size(800, 600)
+    size(600, 600)
     
     global gameState, ghoul, block, debugMode, gamer, keyPresses, bkgrnd
     bkgrnd = loadImage("grassBackground.png")
@@ -62,3 +62,4 @@ def keyReleased():
         keyPresses[2] = False
     if key == 'd':
         keyPresses[3] = False
+a
