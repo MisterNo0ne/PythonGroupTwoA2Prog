@@ -47,8 +47,8 @@ def draw():
         ghoul.mapDisplay()
         print("yo")
         #for e in enemyList:
-            #if (gamer.xpos<e.xpos+50) and (gamer.ypos<e.ypos+50) and (gamer.xpos>e.xpos-50) and (gamer.ypos>e.ypos-50):
-                #gameState == "fight"
+         #   if (gamer.xpos<e.xpos+50) and (gamer.ypos<e.ypos+50) and (gamer.xpos>e.xpos-50) and (gamer.ypos>e.ypos-50):
+          #      print("you ran into the monste!!!")
         
 def mousePressed():
     if gameState == "map" and mouseY > height-100 and mouseX > width-300:
