@@ -8,7 +8,7 @@ Text-based adventure games are electronic games that uses a text-based user inte
 
 ## Features
 
-### Map
+### Map game state
 Added new 'obstacle' class that players aren't allowed to walk through. It has a toggleable mode to turn on or off showing the hitboxes, but currently the obstacles have no effect.
 
 Added mapPosX and mapPosY variables to both the player and enemies so that both can render on the map. Additionally, the player and enemy have a showOnMap() and mapDisplay() function respectively to render each.
@@ -17,11 +17,12 @@ Added key detection variables, so that if for example the 'w' key is pressed, a 
 
 Added collision detection between player and enemies. When they collide, the gameState will change to fight mode, and players will enter a fight with enemies. Currently, though, there is no battle functionality.
 
+Added a simple grass background for flavor, and as a quick demonstration of how to use images in proccessing's python mode.
+
+### Fight game state
 Added weakness and resistance lists to the enemy class for damage calculation. This adds an element of strategy, so players have to think about the best way to attack a particular type of enemy.
 
 Added a damage calculator to enemy class. Now, the enemy class has a function called hit() that will take in variables for damage and element types to calculate the real damage. For example, if a player tries to attack a fire enemy with a grass attack, the damage will be halved. If they try a water type instead, the damage will be doubled. The calculations are based on the enemy's weakness and resistance stats.
-
-Added a simple grass background for flavor, and as a quick demonstration of how to use images in proccessing's python mode.
 
 ### Roles
 Micah: player.py and obstacle.py and all of their class functions, as well as keyPress system and gameState transition
@@ -36,12 +37,12 @@ Maksim: Skeleton image and basic functionality of data folder
 
 ### [Assets](https://github.com/MisterNo0ne/PythonGroupTwoA2Prog/tree/main/mainThing/data)
 
-### GUI Mockups
+### GUI Mockups (out of date)
 ![Space Based Adventure 1](https://github.com/MisterNo0ne/PythonGroupTwoA2Prog/blob/main/images/sba1.png?raw=true)
 
 ![Space Based Adventure 2](https://github.com/MisterNo0ne/PythonGroupTwoA2Prog/blob/main/images/sba2.png?raw=true)
 
 ![Space Based Adventure 3](https://github.com/MisterNo0ne/PythonGroupTwoA2Prog/blob/main/images/sba3.png?raw=true)
 
-### Class Diagram
+### Class Diagram (out of date)
 ![Space Based Adventure Class Diagram](https://github.com/MisterNo0ne/PythonGroupTwoA2Prog/blob/main/images/sba4.png?raw=true)
