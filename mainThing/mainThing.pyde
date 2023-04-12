@@ -22,7 +22,7 @@ def setup():
     block = Obstacle(100, 100, 300, 100)
     debugMode = True #displays obstacles
     freeRam = False
-    gamer = Player(width/2, height/2)
+    gamer = Player(width/2, height/2, 100)
     keyPresses = [False, False, False, False]
     
     #Enemy list is a list of all of the enemies, and grows with each time we add a new enemy 
@@ -46,7 +46,7 @@ def draw():
         fill(0)
         text("Health bar of player here", 340, 550)
         text("place to type spell here", 340, 480)
-        text("Health bar of enemy here", 50, 50)
+        text("Enemy health: " + str(enemyList[0].health), 50, 50)
         text("enemy type, stats, atributes, etc. here", 50, 120)
         textSize(32)
         text("enemy here", 425, 90)
