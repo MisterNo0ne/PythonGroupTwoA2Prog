@@ -4,6 +4,7 @@ class Enemy(object):
     def __init__(self, health, type, element, mapPosX, mapPosY):
         #health = 50
         self.health = health
+        self.maxHealth = health
         self.type = type
         self.element = element
         self.mapPosX = mapPosX
@@ -56,4 +57,8 @@ class Enemy(object):
         textSize(24)
         fill(0)
         text("not a yield sign", self.mapPosX-100, self.mapPosY+25)
+        
+    def healthBarInFight(self):
+        fractionOfHealth = self.health/self.maxHealth
+        print(fractionOfHealth)
         
