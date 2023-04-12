@@ -11,11 +11,11 @@ from player import Player
 def setup():
     size(600, 600)
     
-    global gameState, ghoul, block, debugMode, gamer, keyPresses, bkgrnd, enemyList, freeRam
+    global gameState, ghoul, block, debugMode, gamer, keyPresses, bkgrnd, enemyList, freeRam, currentEnemy
     
     bkgrnd = loadImage("grassBackground.png")
     gameState = "map"
-    
+    currentEnemy= -1
     
     #testing to see if enemy being called and enemy being hit works
     ghoul = Enemy(50, "ghoul", "fire", 500, 500)
@@ -50,6 +50,10 @@ def draw():
         text("enemy type, stats, atributes, etc. here", 50, 120)
         textSize(32)
         text("enemy here", 425, 90)
+        if enemyList[currentEnemy].health<=0:
+            del enemyList[currentEnemy]
+            gameState = "map"
+            
     else: #gameState is in map mode
         image(bkgrnd,0,0)
         if freeRam:
@@ -62,9 +66,9 @@ def draw():
         for e in enemyList:
             e.mapDisplay()
             if pointInsideRectangle(gamer.mapPosX, gamer.mapPosY, e.mapPosX-50, e.mapPosY-50, 100, 100): 
-                print("you ran into a fire monster D:")
+                print("you ran into a " + enemyList[0].element + " monster D:")
                 gameState = "fight"
-                
+                print(enemyList[0])
         
 def mousePressed():
     if gameState == "map" and mouseY > height-100 and mouseX > width-300 and freeRam:
