@@ -62,7 +62,7 @@ def draw():
         for e in enemyList:
             e.mapDisplay()
             if pointInsideRectangle(gamer.mapPosX, gamer.mapPosY, e.mapPosX-50, e.mapPosY-50, 100, 100): 
-                print("you ran into a fire monster D:")
+                print("you ran into a " + enemyList[0].element + ds" monster D:")
                 gameState = "fight"
                 
         

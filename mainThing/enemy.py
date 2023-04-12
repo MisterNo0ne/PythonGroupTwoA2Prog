@@ -2,7 +2,6 @@
 
 class Enemy(object):
     def __init__(self, health, type, element, mapPosX, mapPosY):
-        #health = 50
         self.health = health
         self.type = type
         self.element = element
