@@ -14,7 +14,7 @@ def setup():
     global gameState, ghoul, block, debugMode, gamer, keyPresses, bkgrnd, enemyList, freeRam
     
     bkgrnd = loadImage("grassBackground.png")
-    gameState = "fight"
+    gameState = "map"
     
     
     #testing to see if enemy being called and enemy being hit works

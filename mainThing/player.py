@@ -1,10 +1,11 @@
 class Player(object):
-    def __init__(self, mapPosX, mapPosY):
+    def __init__(self, mapPosX, mapPosY, health):
         self.knownElements = [True, True, False, True]
         self.itemsOwned = [] #items is already a thing ig
         self.mapPosX = mapPosX
         self.mapPosY = mapPosY
         self.mapOrthogonalSpeed = 3
+        self.health = health
         self.mapDiagonalSpeed = 2.12 #orthogonal means up down left right
         
     def showOnMap(self):
