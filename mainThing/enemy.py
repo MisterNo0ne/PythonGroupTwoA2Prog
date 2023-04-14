@@ -1,13 +1,14 @@
 #zack did alla dis
 
 class Enemy(object):
-    def __init__(self, health, type, element, mapPosX, mapPosY):
+    def __init__(self, health, type, element, mapPosX, mapPosY, enemyID):
         self.health = health
         self.maxHealth = health
         self.type = type
         self.element = element
         self.mapPosX = mapPosX
         self.mapPosY = mapPosY
+        self.enemyID = enemyID
         
         #defining respective elemental weaknesses and resistances
         self.weakness = []
