@@ -11,15 +11,17 @@ from player import Player
 def setup():
     size(600, 600)
     
-    global gameState, ghoul, skeleton, block, debugMode, gamer, keyPresses, bkgrnd, enemyList, freeRam, currentEnemy
+    global gameState, ghoul, skeleton, zombie, spider, block, debugMode, gamer, keyPresses, bkgrnd, enemyList, freeRam, currentEnemy
     
     bkgrnd = loadImage("grassBackground.png")
     gameState = "map"
     currentEnemy= -1
     
     #testing to see if enemy being called and enemy being hit works
-    ghoul = Enemy(50, "ghoul", "fire", 500, 500, 0)
-    skeleton = Enemy(100, "skeleton", "ice", 100, 400, 1)
+    ghoul = Enemy(50, "ghoul", "fire", 500, 500)
+    skeleton = Enemy(100, "skeleton", "ice", 100, 400)
+    spider = Enemy(42, "spider", "poison", 200, 200)
+    zombie = Enemy(153, "zombie", "water", 300,100)
     block = Obstacle(100, 100, 300, 100)
     debugMode = True #displays obstacles
     freeRam = False
@@ -28,7 +30,7 @@ def setup():
     
     #Enemy list is a list of all of the enemies, and grows with each time we add a new enemy 
     #Later on we can add something so that if any item in this list is off screen we don't render it
-    enemyList = [ghoul, skeleton]
+    enemyList = [ghoul, skeleton, spider, zombie]
     
     
     
@@ -49,12 +51,13 @@ def draw():
         text("Health bar of player here \n" + str(gamer.health), 340, 550)
         text("place to type spell here", 340, 480)
         text("Enemy health: " + str(enemyList[currentEnemy].health) + " ", 50, 50)
-        text("type: " + enemyList[currentEnemy].type + "\n enemyID: " + str(enemyList[currentEnemy].enemyID) + "\nsd enemy element: " + enemyList[currentEnemy].element, 50, 120)
+        text("type: " + enemyList[currentEnemy].type + "\n enemyID: " + str(currentEnemy) + "\nsd enemy element: " + enemyList[currentEnemy].element, 50, 120)
         textSize(32)
         text("enemy here", 425, 90)
         if enemyList[currentEnemy].health<=0:
             del enemyList[currentEnemy]
             gameState = "map"
+            currentEnemy = 12345
             
     else: #gameState is in map mode
         image(bkgrnd,0,0)
@@ -68,10 +71,9 @@ def draw():
         for e in enemyList:
             e.mapDisplay()
             if pointInsideRectangle(gamer.mapPosX, gamer.mapPosY, e.mapPosX-50, e.mapPosY-50, 100, 100): 
-                currentEnemy = e.enemyID
+                currentEnemy = enemyList.index(e)
                 print("you ran into a " + enemyList[currentEnemy].element +" " + enemyList[currentEnemy].type + " D:")
                 gameState = "fight"
-
         
 def mousePressed():
     if gameState == "map" and mouseY > height-100 and mouseX > width-300 and freeRam:
