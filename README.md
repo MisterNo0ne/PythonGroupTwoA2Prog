@@ -33,7 +33,7 @@ Zack: ghoul image, enemy.py, mapDisplay() and the damage calculator, as well as 
 
 Eddie: item.py, npc.py, and a basic dialogue file that npc can access
 
-Maksim: Skeleton image and basic functionality of data folder
+Maksim: Images and animation and basic functionality of data folder
 
 ### [Source Code](https://github.com/MisterNo0ne/PythonGroupTwoA2Prog/tree/main/mainThing)
 
