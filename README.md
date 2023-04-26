@@ -29,7 +29,7 @@ Added a damage calculator to enemy class. Now, the enemy class has a function ca
 ### Roles
 Micah: player.py and obstacle.py and all of their class functions, as well as keyPress system and gameState transition
 
-Zach: ghoul image, enemy.py, mapDisplay() and the damage calculator, as well as the basics of the element system
+Zack: ghoul image, enemy.py, mapDisplay() and the damage calculator, as well as the basics of the element system
 
 Eddie: item.py, npc.py, and a basic dialogue file that npc can access
 
