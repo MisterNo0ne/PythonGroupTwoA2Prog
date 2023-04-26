@@ -54,7 +54,7 @@ class Enemy(object):
         strokeWeight(5)
         image(self.img, self.mapPosX, self.mapPosY, )
         
-        textSize(24)
+        textSize(16)
         fill(0)
         text(self.element + " " + self.type, self.mapPosX, self.mapPosY+50)
         
