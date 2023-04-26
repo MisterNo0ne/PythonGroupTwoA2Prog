@@ -11,17 +11,20 @@ from player import Player
 def setup():
     size(600, 600)
     
-    global gameState, ghoul, skeleton, zombie, spider, block, debugMode, gamer, keyPresses, bkgrnd, enemyList, freeRam, currentEnemy
-    
+    global gameState, ghoul, skeleton, zombie, spider, block, debugMode, gamer, keyPresses, bkgrnd, enemyList, freeRam, currentEnemy, skltnimg, ghlimg, spdrimg, zomimg
+    skltnimg = loadImage("Player.png")
+    zomimg = loadImage("Player.png")
+    spdrimg = loadImage("smallenemyspider.png")
+    ghlimg = loadImage("spookyGhoul.png")
     bkgrnd = loadImage("grassBackground.png")
     gameState = "map"
     currentEnemy= -1
     
     #testing to see if enemy being called and enemy being hit works
-    ghoul = Enemy(50, "ghoul", "fire", 500, 500)
-    skeleton = Enemy(100, "skeleton", "ice", 100, 400)
-    spider = Enemy(42, "spider", "poison", 200, 200)
-    zombie = Enemy(153, "zombie", "water", 300,100)
+    ghoul = Enemy(50, "ghoul", "fire", 500, 500, ghlimg)
+    skeleton = Enemy(100, "skeleton", "ice", 100, 400, skltnimg)
+    spider = Enemy(42, "spider", "poison", 200, 200, spdrimg)
+    zombie = Enemy(153, "zombie", "water", 300,100, zomimg)
     block = Obstacle(100, 100, 300, 100)
     debugMode = True #displays obstacles
     freeRam = False

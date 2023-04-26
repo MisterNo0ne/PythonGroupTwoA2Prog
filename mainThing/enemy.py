@@ -1,14 +1,14 @@
 #zack did alla dis
 
 class Enemy(object):
-    def __init__(self, health, type, element, mapPosX, mapPosY):
+    def __init__(self, health, type, element, mapPosX, mapPosY, img):
         self.health = health
         self.maxHealth = health
         self.type = type
         self.element = element
         self.mapPosX = mapPosX
         self.mapPosY = mapPosY
-
+        self.img = img
         #defining respective elemental weaknesses and resistances
         self.weakness = []
         self.resistance = []
@@ -52,11 +52,11 @@ class Enemy(object):
         """
         stroke(255,0,0)
         strokeWeight(5)
-        triangle(self.mapPosX, self.mapPosY, self.mapPosX+50,self.mapPosY,self.mapPosX+25, self.mapPosY+50)
+        image(self.img, self.mapPosX, self.mapPosY, )
         
         textSize(24)
         fill(0)
-        text("not a yield sign", self.mapPosX-100, self.mapPosY+25)
+        text(self.element + " " + self.type, self.mapPosX, self.mapPosY+50)
         
     def healthBarInFight(self):
         fractionOfHealth = self.health/self.maxHealth

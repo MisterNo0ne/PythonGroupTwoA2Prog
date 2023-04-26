@@ -13,7 +13,9 @@ class Player(object):
         stroke(0)
         strokeWeight(4)
         fill(255)
-        rect(self.mapPosX, self.mapPosY, 50, 50)
+        wizard = loadImage("Wizard.png")
+        
+        image(wizard, self.mapPosX, self.mapPosY)
         rectMode(CORNER)
         
     def moveOnMap(self, keyHits):
