@@ -15,7 +15,7 @@ class Player(object):
         fill(255)
         wizard = loadImage("Wizard.png")
         
-        image(wizard, self.mapPosX, self.mapPosY)
+        image(wizard, width/2, height/2)
         rectMode(CORNER)
         
     def moveOnMap(self, keyHits):

@@ -66,7 +66,7 @@ def draw():
             currentEnemy = 12345
             
     else: #gameState is in map mode
-        image(bkgrnd,0,0)
+        image(bkgrnd,-gamer.mapPosX,-gamer.mapPosY)
         if freeRam:
             textSize(32)
             textAlign(RIGHT)
@@ -75,7 +75,7 @@ def draw():
         gamer.showOnMap()
         gamer.moveOnMap(keyPresses)
         for e in enemyList:
-            e.mapDisplay()
+            e.mapDisplay(gamer.mapPosX, gamer.mapPosY)
             if pointInsideRectangle(gamer.mapPosX, gamer.mapPosY, e.mapPosX-50, e.mapPosY-50, 100, 100): 
                 currentEnemy = enemyList.index(e)
                 print("you ran into a " + enemyList[currentEnemy].element +" " + enemyList[currentEnemy].type + " D:")
