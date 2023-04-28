@@ -11,7 +11,7 @@ from player import Player
 def setup():
     size(600, 600)
     
-    global gameState, ghoul, skeleton, zombie, spider, block, debugMode, gamer, keyPresses, bkgrnd, enemyList, freeRam, currentEnemy, skltnimg, ghlimg, spdrimg, zomimg
+    global gameState, ghoul, skeleton, zombie, spider, block, debugMode, gamer, keyPresses, bkgrnd, enemyList, freeRam, currentEnemy, skltnimg, ghlimg, spdrimg, zomimg, attacktype
     skltnimg = loadImage("Player.png")
     zomimg = loadImage("Player.png")
     spdrimg = loadImage("smallenemyspider.png")
@@ -19,6 +19,7 @@ def setup():
     bkgrnd = loadImage("grassBackground.png")
     gameState = "map"
     currentEnemy= -1
+    attacktype = []
     
     #testing to see if enemy being called and enemy being hit works
     ghoul = Enemy(50, "ghoul", "fire", 500, 500, ghlimg)
@@ -52,11 +53,13 @@ def draw():
         textSize(24)
         fill(0)
         text("Health bar of player here \n" + str(gamer.health), 340, 550)
-        text("place to type spell here", 340, 480)
         text("Enemy health: " + str(enemyList[currentEnemy].health) + " ", 50, 50)
         text("type: " + enemyList[currentEnemy].type + "\n enemyID: " + str(currentEnemy) + "\nsd enemy element: " + enemyList[currentEnemy].element, 50, 120)
         textSize(32)
         text("enemy here", 425, 90)
+        print(str(mouseX) + " " + str(mouseY))
+        fill(245,141,12)
+        rect(350,400,100,25)
         if enemyList[currentEnemy].health<=0:
             del enemyList[currentEnemy]
             gameState = "map"
@@ -82,7 +85,8 @@ def mousePressed():
     if gameState == "map" and mouseY > height-100 and mouseX > width-300 and freeRam:
         link("https://www.google.com/search?q=download+free+ram&rlz=1C5GCEA_enUS1042US1042&oq=download+free+ram&aqs=chrome..69i57j0i512j0i10i512l6j0i512l2.2697j0j7&sourceid=chrome&ie=UTF-8")
     elif gameState == "fight":
-        enemyList[currentEnemy].hit(20,["water","grass"]) 
+        if mouseX<450 and mouseX>350 and mouseY>400 and mouseY:
+            enemyList[currentEnemy].hit(20,["fire","fire"]) 
     
 def keyPressed():
     if key == 'w':
