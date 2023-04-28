@@ -24,7 +24,7 @@ def setup():
     #testing to see if enemy being called and enemy being hit works
     ghoul = Enemy(50, "ghoul", "fire", 500, 500, ghlimg)
     skeleton = Enemy(100, "skeleton", "ice", 100, 400, skltnimg)
-    spider = Enemy(42, "spider", "poison", 200, 200, spdrimg)
+    spider = Enemy(42, "spider", "rock", 200, 200, spdrimg)
     zombie = Enemy(153, "zombie", "water", 300,100, zomimg)
     block = Obstacle(100, 100, 300, 100)
     debugMode = True #displays obstacles

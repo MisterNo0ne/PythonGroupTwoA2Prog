@@ -19,18 +19,38 @@ class Enemy(object):
              self.resistance.append("ice")
              self.resistance.append("grass")
              self.resistance.append("fire")
-        if self.element == "ice": 
-             self.weakness.append("fire")
-             self.weakness.append("rock")
-             self.resistance.append("ice")
-             self.resistance.append("poison")
-             self.resistance.append("grass")
+       # if self.element == "ice": 
+        #     self.weakness.append("fire")
+         #    self.weakness.append("rock")
+          #   self.resistance.append("ice")
+           #  self.resistance.append("poison")
+          #   self.resistance.append("grass")
         if self.element == "water": 
-             self.weakness.append("grass")
+             self.weakness.append("lightning")
              self.weakness.append("ice")
+             self.weakness.append("grass")
              self.resistance.append("water")
              self.resistance.append("fire")
              self.resistance.append("rock")
+             self.resistance.append("air")
+        if self.element == "grass": 
+             self.weakness.append("fire")
+             self.weakness.append("ice")
+             self.resistance.append("rock")
+             self.resistance.append("water")
+             self.resistance.append("grass")
+       # if self.element == "lightning": 
+          #   self.weakness.append("fire")
+            # self.weakness.append("rock")
+           #  self.resistance.append("water")
+          #   self.resistance.append("lightning")
+         #    self.resistance.append("grass")
+      #  if self.element == "rock": 
+        #     self.weakness.append("water")
+        #     self.weakness.append("grass")
+         #    self.resistance.append("fire")
+          #   self.resistance.append("rock")
+           #  self.resistance.append("ice")
         #3 resistances including it's own element and 2 weaknesses kinda like Pokemon
         #idea: some enemies have regenerative abilities
 
