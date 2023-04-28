@@ -45,18 +45,18 @@ class Enemy(object):
         #later add a mechanic for dying where the enemy disappears or soemthing
         
         
-    def mapDisplay(self):
+    def mapDisplay(self, playerX, playerY):
         """
         rendering on the screen in map mode. For now this will just be a triangle before we implement any actual 
         enemy sprites with variation and coloration or indicators for elements. 
         """
         stroke(255,0,0)
         strokeWeight(5)
-        image(self.img, self.mapPosX, self.mapPosY, )
+        image(self.img, self.mapPosX-playerX+(width/2), self.mapPosY-playerY+(height/2))
         
         textSize(16)
         fill(0)
-        text(self.element + " " + self.type, self.mapPosX, self.mapPosY+50)
+        text(self.element + " " + self.type, self.mapPosX-playerX+(width/2), self.mapPosY-playerY+(height/2)+50)
         
     def healthBarInFight(self):
         fractionOfHealth = self.health/self.maxHealth
