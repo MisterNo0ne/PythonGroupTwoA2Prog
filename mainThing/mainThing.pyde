@@ -11,7 +11,7 @@ from player import Player
 def setup():
     size(600, 600)
     
-    global gameState, ghoul, skeleton, zombie, spider, block, debugMode, gamer, keyPresses, bkgrnd, enemyList, freeRam, currentEnemy, skltnimg, ghlimg, spdrimg, zomimg, attacktype
+    global gameState, ghoul, skeleton, zombie, spider, block, debugMode, gamer, keyPresses, bkgrnd, enemyList, freeRam, currentEnemy, skltnimg, ghlimg, spdrimg, zomimg, attacktype, turn
     skltnimg = loadImage("Player.png")
     zomimg = loadImage("Player.png")
     spdrimg = loadImage("smallenemyspider.png")
@@ -47,7 +47,7 @@ def draw():
     
     background(0)
     if gameState == "fight":
-        
+        turn = 1
         background(200)
         gamer.showInFight()
         textSize(24)
@@ -58,13 +58,29 @@ def draw():
         textSize(32)
         text("enemy here", 425, 90)
         print(str(mouseX) + " " + str(mouseY))
+        if turn == 2:
+            gamer.health -= 20
+            print("the gamer was hgurrt!1!1 ohhn  noo!1121!")
+            turn = 3
         fill(245,141,12)
         rect(350,400,100,25)
         fill(127,97,252)
         rect(475,400,100,25)
         fill(44,185,17)
         rect(350,450,100,25)
-        
+        if turn == 3:
+            if enemyList[currentEnemy].status == "burning": 
+                if enemyList[currentEnemy].element == "fire": 
+                    enemyList[currentEnemy].health+= 20
+                    enemyList[currentEnemy].status = "none"
+                    turn = 1
+                if enemyList[currentEnemy].element == "water": 
+                    enemyList[currentEnemy].status = "none"
+                    turn = 1
+                if enemyList[currentEnemy].element == "grass": 
+                    enemyList[currentEnemy].health-= 20
+                    turn = 1
+                    
         if enemyList[currentEnemy].health<=0:
             del enemyList[currentEnemy]
             gameState = "map"
@@ -85,17 +101,20 @@ def draw():
                 currentEnemy = enemyList.index(e)
                 print("you ran into a " + enemyList[currentEnemy].element +" " + enemyList[currentEnemy].type + " D:")
                 gameState = "fight"
-        
+        turn = -1
 def mousePressed():
     if gameState == "map" and mouseY > height-100 and mouseX > width-300 and freeRam:
         link("https://www.google.com/search?q=download+free+ram&rlz=1C5GCEA_enUS1042US1042&oq=download+free+ram&aqs=chrome..69i57j0i512j0i10i512l6j0i512l2.2697j0j7&sourceid=chrome&ie=UTF-8")
     elif gameState == "fight":
-        if mouseX<450 and mouseX>350 and mouseY>400 and mouseY<425:
+        if mouseX<450 and mouseX>350 and mouseY>400 and mouseY<425 and turn == 1:
             enemyList[currentEnemy].hit(20,["fire","none"]) 
-        if mouseX<575 and mouseX>475 and mouseY>400 and mouseY<425:
+            turn = 2
+        if mouseX<575 and mouseX>475 and mouseY>400 and mouseY<425 and turn == 1:
             enemyList[currentEnemy].hit(20,["water","none"]) 
-        if mouseX<450 and mouseX>350 and mouseY>450 and mouseY<475:
+            turn = 2
+        if mouseX<450 and mouseX>350 and mouseY>450 and mouseY<475 and turn == 1:
             enemyList[currentEnemy].hit(20,["grass","none"]) 
+            turn = 2
 def keyPressed():
     if key == 'w':
         keyPresses[0] = True
