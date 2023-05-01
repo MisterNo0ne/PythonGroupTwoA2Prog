@@ -22,10 +22,10 @@ def setup():
     attacktype = []
     
     #testing to see if enemy being called and enemy being hit works
-    ghoul = Enemy(50, "ghoul", "fire", 500, 500, ghlimg)
-    skeleton = Enemy(100, "skeleton", "ice", 100, 400, skltnimg)
-    spider = Enemy(42, "spider", "rock", 200, 200, spdrimg)
-    zombie = Enemy(153, "zombie", "water", 300,100, zomimg)
+    ghoul = Enemy(50, "ghoul", "fire", 500, 500, ghlimg, "none")
+    skeleton = Enemy(100, "skeleton", "grass", 100, 400, skltnimg, "none")
+    spider = Enemy(42, "spider", "fire", 200, 200, spdrimg, "none")
+    zombie = Enemy(153, "zombie", "water", 300,100, zomimg, "none")
     block = Obstacle(100, 100, 300, 100)
     debugMode = True #displays obstacles
     freeRam = False
@@ -60,6 +60,11 @@ def draw():
         print(str(mouseX) + " " + str(mouseY))
         fill(245,141,12)
         rect(350,400,100,25)
+        fill(127,97,252)
+        rect(475,400,100,25)
+        fill(44,185,17)
+        rect(350,450,100,25)
+        
         if enemyList[currentEnemy].health<=0:
             del enemyList[currentEnemy]
             gameState = "map"
@@ -85,9 +90,12 @@ def mousePressed():
     if gameState == "map" and mouseY > height-100 and mouseX > width-300 and freeRam:
         link("https://www.google.com/search?q=download+free+ram&rlz=1C5GCEA_enUS1042US1042&oq=download+free+ram&aqs=chrome..69i57j0i512j0i10i512l6j0i512l2.2697j0j7&sourceid=chrome&ie=UTF-8")
     elif gameState == "fight":
-        if mouseX<450 and mouseX>350 and mouseY>400 and mouseY:
-            enemyList[currentEnemy].hit(20,["fire","fire"]) 
-    
+        if mouseX<450 and mouseX>350 and mouseY>400 and mouseY<425:
+            enemyList[currentEnemy].hit(20,["fire","none"]) 
+        if mouseX<575 and mouseX>475 and mouseY>400 and mouseY<425:
+            enemyList[currentEnemy].hit(20,["water","none"]) 
+        if mouseX<450 and mouseX>350 and mouseY>450 and mouseY<475:
+            enemyList[currentEnemy].hit(20,["grass","none"]) 
 def keyPressed():
     if key == 'w':
         keyPresses[0] = True

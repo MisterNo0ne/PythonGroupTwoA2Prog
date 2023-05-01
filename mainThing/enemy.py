@@ -1,7 +1,7 @@
 #zack did alla dis
 
 class Enemy(object):
-    def __init__(self, health, type, element, mapPosX, mapPosY, img):
+    def __init__(self, health, type, element, mapPosX, mapPosY, img, status):
         self.health = health
         self.maxHealth = health
         self.type = type
@@ -9,6 +9,7 @@ class Enemy(object):
         self.mapPosX = mapPosX
         self.mapPosY = mapPosY
         self.img = img
+        self.status = status
     #    self.hitbox=hitbox
         #defining respective elemental weaknesses and resistances
         self.weakness = []
@@ -70,10 +71,17 @@ class Enemy(object):
             if i in self.resistance:
                 damage=damage/2
                 print("Your " + i + " attack was not very effective against the opposing " + self.element + " type...")
+            if i == "fire":
+                self.status = "burning"
+            if i == "water":
+                self.status = "wet"
+            if i == "grass":
+                self.status = "tangled"
         self.health -= damage
         print("You did " + str(damage) + " damage! The monster's health is now " + str(self.health))
         if self.health <= 0:
             print("The monster died!")
+        
         return self.health
         #later add a mechanic for dying where the enemy disappears or soemthing
         
