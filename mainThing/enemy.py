@@ -83,6 +83,7 @@ class Enemy(object):
             print("The monster died!")
         
         return self.health
+        #return self.status
         #later add a mechanic for dying where the enemy disappears or soemthing
         
         
