@@ -13,8 +13,8 @@ def setup():
     size(600, 600)
     
     global gameState, ghoul, skeleton, zombie, spider, block, debugMode, gamer, keyPresses, bkgrnd, enemyList, freeRam, currentEnemy, skltnimg, ghlimg, spdrimg, zomimg, attacktype, turn
-    skltnimg = loadImage("Player.png")
-    zomimg = loadImage("Player.png")
+    skltnimg = loadImage("skeletonIdle.png")
+    zomimg = loadImage("Zombie.png")
     spdrimg = loadImage("smallenemyspider.png")
     ghlimg = loadImage("spookyGhoul.png")
     bkgrnd = loadImage("grassBackground.png")
