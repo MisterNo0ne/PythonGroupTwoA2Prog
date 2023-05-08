@@ -4,6 +4,7 @@ from npc import Npc
 from obstacle import Obstacle
 from player import Player
 import time
+import pillow
 
 #2 Main game states that always need to be separated:
     #Map mode: player walking around a map
@@ -12,12 +13,16 @@ import time
 def setup():
     size(600, 600)
     
-    global gameState, ghoul, skeleton, zombie, spider, block, debugMode, gamer, keyPresses, bkgrnd, enemyList, freeRam, currentEnemy, skltnimg, ghlimg, spdrimg, zomimg, attacktype, turn
+    global gameState, ghoul, skeleton, zombie, spider, block, debugMode, gamer, keyPresses, bkgrnd, enemyList, freeRam, currentEnemy, skltnimg, ghlimg, spdrimg, zomimg, attacktype, turn, skeletoninfight, spiderinfight, zombieinfight, ghoulinfight
     skltnimg = loadImage("skeletonIdle.png")
     zomimg = loadImage("Zombie.png")
     spdrimg = loadImage("smallenemyspider.png")
     ghlimg = loadImage("spookyGhoul.png")
     bkgrnd = loadImage("grassBackground.png")
+    skeletoninfight = image.resize(("skeletonIdle.png",200,200))
+    zombieinfight = image.resize(("Zombie.png",200,200))
+    spiderinfight = image.resize(("smallenemyspider.png",200,200))
+    ghoulinfight = image.resize(("spookyGhoul.png",200,200))
     gameState = "map"
     currentEnemy= -1
     attacktype = []
@@ -60,7 +65,15 @@ def draw():
         text("type: " + enemyList[currentEnemy].type + "\n enemyID: " + str(currentEnemy) + "\nsd enemy element: " + enemyList[currentEnemy].element, 50, 120)
         text("status: " + enemyList[currentEnemy].status, 200,240)
         textSize(32)
-        image(enemyList[currentEnemy].img, 425, 90)
+        #image(enemyList[currentEnemy].img, 425, 90)
+        if enemyList[currentEnemy].img == spdrimg: 
+            image(spiderinfight, 425, 90)
+        if enemyList[currentEnemy].img == ghlimg: 
+            image(ghoulinfight, 425, 90)
+        if enemyList[currentEnemy].img == zomimg: 
+            image(zombieinfight, 425, 90)
+        if enemyList[currentEnemy].img == skltnimg: 
+            image(skeletoninfight, 425, 90)
     #    print(str(mouseX) + " " + str(mouseY))
         if turn == 2:
             gamer.health -= 20
