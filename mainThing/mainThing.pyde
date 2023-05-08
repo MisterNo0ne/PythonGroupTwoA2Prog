@@ -30,7 +30,7 @@ def setup():
     block = Obstacle(100, 100, 300, 100)
     debugMode = True #displays obstacles
     freeRam = False
-    gamer = Player(0, 0, 100)
+    gamer = Player(0, 0, 10000)
     keyPresses = [False, False, False, False]
     turn = 1
     
@@ -58,6 +58,7 @@ def draw():
         text("Health bar of player here \n" + str(gamer.health), 340, 550)
         text("Enemy health: " + str(enemyList[currentEnemy].health) + " ", 50, 50)
         text("type: " + enemyList[currentEnemy].type + "\n enemyID: " + str(currentEnemy) + "\nsd enemy element: " + enemyList[currentEnemy].element, 50, 120)
+        text("status: " + enemyList[currentEnemy].status, 200,240)
         textSize(32)
         text("enemy here", 425, 90)
     #    print(str(mouseX) + " " + str(mouseY))
@@ -104,12 +105,28 @@ def draw():
                     time.sleep(1)
                     turn = 1
                 if enemyList[currentEnemy].element == "water": 
-                    enemyList[currentEnemy].health-=20
-                  #  enemyList[currentEnemy].status = "overgrown"
+                    enemyList[currentEnemy].status = "overgrown"
+                if enemyList[currentEnemy].element == "grass": 
+                    enemyList[currentEnemy].health+= 20
+                    print("you can't entangled a grass type!")
+                    enemyList[currentEnemy].status = "none"
+                    time.sleep(1)
+                    turn = 1
+            if enemyList[currentEnemy].status == "overgrown": 
+                if enemyList[currentEnemy].element == "fire": 
+                    enemyList[currentEnemy].status = "none"
+                    print("you aree haxxor!1!!!1!11")
+                    time.sleep(1)
+                    turn = 1
+                if enemyList[currentEnemy].element == "water": 
+                    print("L water type")
+                    enemyList[currentEnemy].health-=40
+                    time.sleep(1)
                     turn = 1
                 if enemyList[currentEnemy].element == "grass": 
-                #    enemyList[currentEnemy].health+= 20
+                    enemyList[currentEnemy].health+= 20
                     print("you can't entangled a grass type!")
+                    enemyList[currentEnemy].status = "none"
                     time.sleep(1)
                     turn = 1
         if enemyList[currentEnemy].health<=0:
@@ -132,7 +149,7 @@ def draw():
         gamer.moveOnMap(keyPresses)
         for e in enemyList:
             e.mapDisplay(gamer.mapPosX, gamer.mapPosY)
-            if pointInsideRectangle(gamer.mapPosX, gamer.mapPosY, e.mapPosX-50, e.mapPosY-50, 100, 100): 
+            if pointInsideRectangle(gamer.mapPosX, gamer.mapPosY, e.mapPosX-50, e.mapPosY-50, 100, 100) and gamer.health>0: 
                 currentEnemy = enemyList.index(e)
                 print("you ran into a " + enemyList[currentEnemy].element +" " + enemyList[currentEnemy].type + " D:")
                 gameState = "fight"
