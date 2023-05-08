@@ -60,7 +60,7 @@ def draw():
         text("type: " + enemyList[currentEnemy].type + "\n enemyID: " + str(currentEnemy) + "\nsd enemy element: " + enemyList[currentEnemy].element, 50, 120)
         text("status: " + enemyList[currentEnemy].status, 200,240)
         textSize(32)
-        text("enemy here", 425, 90)
+        image(enemyList[currentEnemy].img, 425, 90)
     #    print(str(mouseX) + " " + str(mouseY))
         if turn == 2:
             gamer.health -= 20
