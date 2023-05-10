@@ -140,18 +140,29 @@ def draw():
                 currentEnemy = enemyList.index(e)
                 print("you ran into a " + enemyList[currentEnemy].element +" " + enemyList[currentEnemy].type + " D:")
                 gameState = "fight"
+def imgmove(imge,xpos,ypos): 
+    iamgege = loadImage(imge)
+    for i in range(200): 
+        ypos = i
+    image(iamgege, xpos, ypos)
 def mousePressed():
     global turn
     if gameState == "map" and mouseY > height-100 and mouseX > width-300 and freeRam:
         link("https://www.google.com/search?q=download+free+ram&rlz=1C5GCEA_enUS1042US1042&oq=download+free+ram&aqs=chrome..69i57j0i512j0i10i512l6j0i512l2.2697j0j7&sourceid=chrome&ie=UTF-8")
     elif gameState == "fight" and gamer.health>=1:
         if mouseX<450 and mouseX>350 and mouseY>400 and mouseY<425 and turn == 1:
+            imgmove("FireBall.png",200,600)
+            time.sleep(1)
             enemyList[currentEnemy].hit(20,["fire","none"]) 
             turn = 2
         if mouseX<575 and mouseX>475 and mouseY>400 and mouseY<425 and turn == 1:
+            imgmove("WaterBolt.png",200,600)
+            time.sleep(1)
             enemyList[currentEnemy].hit(20,["water","none"]) 
             turn = 2
         if mouseX<450 and mouseX>350 and mouseY>450 and mouseY<475 and turn == 1:
+            imgmove("LeafAttack.png",200,600)
+            time.sleep(1)
             enemyList[currentEnemy].hit(20,["grass","none"]) 
             turn = 2
 def keyPressed():
@@ -173,7 +184,6 @@ def keyReleased():
         keyPresses[2] = False
     if key == 'd':
         keyPresses[3] = False
-        
 def pointInsideRectangle(a, b, x, y, w, h):
     # just returns whether or not the coordinate of the first 2 parameters is in the rectangle defined by the last 4 parameters
     return ((a>x) and (a<x+w)) and ((b>y) and (b<y+h))
