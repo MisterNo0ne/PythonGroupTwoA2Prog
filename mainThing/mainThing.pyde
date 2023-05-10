@@ -29,6 +29,16 @@ def setup():
     skeleton = Enemy(100, "skeleton", "grass", 100, 400, skltnimg, "none")
     spider = Enemy(42, "spider", "fire", 200, 200, spdrimg, "none")
     zombie = Enemy(153, "zombie", "water", 300, 100, zomimg, "none")
+    """
+      for i in range(100):
+        for q in range(100): 
+            for n in range(50): 
+                e+=100
+                
+                str(n) = Enemy(100,"skeleton", "water", e, q, skltnimg, "none")
+     
+                           enemyList.append(n)
+                           """
     block = Obstacle(100, 100, 300, 100)
     debugMode = True #displays obstacles
     freeRam = False
