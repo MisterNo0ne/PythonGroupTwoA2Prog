@@ -144,7 +144,7 @@ def imgmove(imge,xpos,ypos):
     iamgege = loadImage(imge)
     for i in range(200): 
         ypos = i
-    image(iamgege, xpos, ypos)
+    image(iamgege, xpos, ypos, 75, 75)
 def mousePressed():
     global turn
     if gameState == "map" and mouseY > height-100 and mouseX > width-300 and freeRam:
