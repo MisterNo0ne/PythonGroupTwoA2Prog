@@ -103,4 +103,5 @@ class Enemy(object):
     def healthBarInFight(self):
         fractionOfHealth = self.health/self.maxHealth
         print(fractionOfHealth)
-        
+    def display(self, imag): 
+        image(imag, 220,50,420,250)

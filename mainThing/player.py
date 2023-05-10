@@ -38,9 +38,9 @@ class Player(object):
             self.mapPosY += yMov * self.mapOrthogonalSpeed
             
     def showInFight(self):
-        rectMode(CENTER)
+        rectMode(CORNER)
         stroke(0)
         strokeWeight(4)
         fill(255)
-        square(200, 520, 250)
-        rectMode(CORNER)
+        wizard = loadImage("Wizard.png")
+        image(wizard, 0, 260, 320, 340)
