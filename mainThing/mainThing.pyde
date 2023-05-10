@@ -32,7 +32,7 @@ def setup():
     block = Obstacle(100, 100, 300, 100)
     debugMode = True #displays obstacles
     freeRam = False
-    gamer = Player(0, 0, 10000)
+    gamer = Player(400, 400, 10000)
     keyPresses = [False, False, False, False]
     turn = 1
     
@@ -125,7 +125,8 @@ def draw():
             gameState = "map"
             
     else: #gameState is in map mode
-        image(bkgrnd,-gamer.mapPosX,-gamer.mapPosY)
+        background(0, 0, 255)
+        image(bkgrnd,(width/2)-gamer.mapPosX,(height/2)-gamer.mapPosY)
         #if /2 it looks cool
         if freeRam:
             textSize(32)
