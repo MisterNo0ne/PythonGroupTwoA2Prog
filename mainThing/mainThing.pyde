@@ -80,57 +80,42 @@ def draw():
                     enemyList[currentEnemy].health+= 20
                     enemyList[currentEnemy].status = "none"
                     print("Since the enemy is a fire type, they heal from fire attacks!")
-                    time.sleep(3)
-                    turn = 1
                 if enemyList[currentEnemy].element == "water": 
                     enemyList[currentEnemy].status = "none"
-                    turn = 1
                 if enemyList[currentEnemy].element == "grass": 
                     enemyList[currentEnemy].health-= 20
-                    turn = 1
             if enemyList[currentEnemy].status == "wet": 
                 if enemyList[currentEnemy].element == "fire": 
                     enemyList[currentEnemy].health-= 20
                     enemyList[currentEnemy].status = "none"
-                    turn = 1
                 if enemyList[currentEnemy].element == "water": 
                     enemyList[currentEnemy].health+=20
                     enemyList[currentEnemy].status = "none"
-                    turn = 1
                 if enemyList[currentEnemy].element == "grass": 
                     enemyList[currentEnemy].health+= 20
-                    turn = 1
             if enemyList[currentEnemy].status == "tangled": 
                 if enemyList[currentEnemy].element == "fire": 
                     enemyList[currentEnemy].status = "none"
                     print("fire types can't get entangled!")
-                    time.sleep(1)
-                    turn = 1
                 if enemyList[currentEnemy].element == "water": 
                     enemyList[currentEnemy].status = "overgrown"
                 if enemyList[currentEnemy].element == "grass": 
                     enemyList[currentEnemy].health+= 20
                     print("you can't entangled a grass type!")
                     enemyList[currentEnemy].status = "none"
-                    time.sleep(1)
-                    turn = 1
             if enemyList[currentEnemy].status == "overgrown": 
                 if enemyList[currentEnemy].element == "fire": 
                     enemyList[currentEnemy].status = "none"
                     print("you aree haxxor!1!!!1!11")
-                    time.sleep(1)
-                    turn = 1
                 if enemyList[currentEnemy].element == "water": 
                     print("L water type")
                     enemyList[currentEnemy].health-=40
-                    time.sleep(1)
-                    turn = 1
                 if enemyList[currentEnemy].element == "grass": 
                     enemyList[currentEnemy].health+= 20
                     print("you can't entangled a grass type!")
                     enemyList[currentEnemy].status = "none"
-                    time.sleep(1)
-                    turn = 1
+            time.sleep(1)
+            turn = 1
         if enemyList[currentEnemy].health<=0:
             del enemyList[currentEnemy]
             gameState = "map"
