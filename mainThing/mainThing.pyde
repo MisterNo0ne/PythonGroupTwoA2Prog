@@ -73,6 +73,7 @@ def draw():
         fill(44,185,17)
         rect(350,450,100,25)
         if turn == 3:
+            time.sleep(1)
             if enemyList[currentEnemy].status == "burning": 
                 if enemyList[currentEnemy].element == "fire": 
                     enemyList[currentEnemy].health+= 20
@@ -145,9 +146,10 @@ def draw():
                 
 def imgmove(imge,xpos,ypos): 
     iamgege = loadImage(imge)
-    for i in range(200): 
-        ypos = i
-    image(iamgege, xpos, ypos, 75, 75)
+    for i in range(20): 
+        ypos = 250-i
+        xpos = 250+i
+        image(iamgege, xpos, ypos, 75, 75)
     
 def mousePressed():
     global turn
