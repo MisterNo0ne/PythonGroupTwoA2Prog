@@ -19,7 +19,7 @@ def setup():
     zomimg = loadImage("Zombie.png")
     spdrimg = loadImage("smallenemyspider.png")
     ghlimg = loadImage("spookyGhoul.png")
-    bkgrnd = loadImage("grassBackground.png")
+    bkgrnd = loadImage("MapBackground.png")
     gameState = "map"
     currentEnemy= -1
     attacktype = []
@@ -125,7 +125,7 @@ def draw():
             gameState = "map"
             
     else: #gameState is in map mode
-        image(bkgrnd,-gamer.mapPosX/2,-gamer.mapPosY/2)
+        image(bkgrnd,-gamer.mapPosX,-gamer.mapPosY)
         #if /2 it looks cool
         if freeRam:
             textSize(32)
