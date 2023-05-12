@@ -13,7 +13,8 @@ from player import Player
 def setup():
     size(600, 600)
     
-    global gameState, ghoul, skeleton, zombie, spider, debugMode, gamer, keyPresses, bkgrnd, enemyList, freeRam, currentEnemy, skltnimg, ghlimg, spdrimg, zomimg, attacktype, turn, blocks
+    global gameState, ghoul, skeleton, zombie, spider, debugMode, gamer, keyPresses, bkgrnd, enemyList, freeRam, currentEnemy, skltnimg, ghlimg, spdrimg, zomimg, attacktype, turn, blocks, fightbackground
+    fightbackground = loadImage("epicfightbackground.jpeg")
     skltnimg = loadImage("skeletonIdle.png")
     zomimg = loadImage("Zombie.png")
     spdrimg = loadImage("smallenemyspider.png")
@@ -49,6 +50,7 @@ def draw():
     background(0)
     if gameState == "fight":
         background(200)
+        image(fightbackground, 0, 0, width, height)
         #why tf is it -1 grahhhh iuasdfipasdhr fiuoashf iouahsddiu fawdpfo 
       #  print(str(turn))
         gamer.showInFight()
@@ -56,7 +58,7 @@ def draw():
         fill(0)
         text("Health bar of player here \n" + str(gamer.health), 340, 550)
         text("Enemy health: " + str(enemyList[currentEnemy].health) + " ", 50, 50)
-        text("type: " + enemyList[currentEnemy].type + "\n enemyID: " + str(currentEnemy) + "\nsd enemy element: " + enemyList[currentEnemy].element, 50, 120)
+        text("type: " + enemyList[currentEnemy].type + "\n enemyID: " + str(currentEnemy) + "\n enemy element: " + enemyList[currentEnemy].element, 50, 120)
         text("status: " + enemyList[currentEnemy].status, 200,240)
         enemyList[currentEnemy].display(enemyList[currentEnemy].img)
         textSize(32)
