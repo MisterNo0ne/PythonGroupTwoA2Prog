@@ -3,7 +3,6 @@ from item import Item
 from npc import Npc
 from obstacle import Obstacle
 from player import Player
-import time
 
 
 
@@ -73,7 +72,6 @@ def draw():
         fill(44,185,17)
         rect(350,450,100,25)
         if turn == 3:
-            time.sleep(1)
             if enemyList[currentEnemy].status == "burning": 
                 if enemyList[currentEnemy].element == "fire": 
                     enemyList[currentEnemy].health+= 20
@@ -113,7 +111,6 @@ def draw():
                     enemyList[currentEnemy].health+= 20
                     print("you can't entangled a grass type!")
                     enemyList[currentEnemy].status = "none"
-            time.sleep(1)
             turn = 1
         if enemyList[currentEnemy].health<=0:
             del enemyList[currentEnemy]
@@ -158,17 +155,14 @@ def mousePressed():
     elif gameState == "fight" and gamer.health>=1 and turn == 1:
         if mouseX<450 and mouseX>350 and mouseY>400 and mouseY<425:
             imgmove("FireBall.png",200,600)
-            time.sleep(1)
             enemyList[currentEnemy].hit(20,["fire","none"]) 
             turn = 2
         if mouseX<575 and mouseX>475 and mouseY>400 and mouseY<425:
             imgmove("WaterBolt.png",200,600)
-            time.sleep(1)
             enemyList[currentEnemy].hit(20,["water","none"]) 
             turn = 2
         if mouseX<450 and mouseX>350 and mouseY>450 and mouseY<475:
             imgmove("LeafAttack.png",200,600)
-            time.sleep(1)
             enemyList[currentEnemy].hit(20,["grass","none"]) 
             turn = 2
             
@@ -191,6 +185,7 @@ def keyReleased():
         keyPresses[2] = False
     if key == 'd':
         keyPresses[3] = False
+
 def pointInsideRectangle(a, b, x, y, w, h):
     # just returns whether or not the coordinate of the first 2 parameters is in the rectangle defined by the last 4 parameters
     return ((a>x) and (a<x+w)) and ((b>y) and (b<y+h))
