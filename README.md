@@ -27,13 +27,13 @@ Added a damage calculator to enemy class. Now, the enemy class has a function ca
 ## Development
 
 ### Roles
-Micah: player.py and obstacle.py and all of their class functions, as well as keyPress system and gameState transition
+Micah: player.py and obstacle.py and all of their class functions, as well as keyPress system and gameState transition. Also made the map/island. 
 
-Zack: ghoul image, enemy.py, mapDisplay() and the damage calculator, as well as the basics of the element system
+Zack: enemy images, attack sprites,  enemy.py, mapDisplay() and the damage calculator, as well as the element and status effect system. 
 
 Eddie: item.py, npc.py, and a basic dialogue file that npc can access
 
-Maksim: Images and animation and basic functionality of data folder
+Maksim: Images and animation, npcs, bosses, and basic functionality of data folder
 
 ### [Source Code](https://github.com/MisterNo0ne/PythonGroupTwoA2Prog/tree/main/mainThing)
 
