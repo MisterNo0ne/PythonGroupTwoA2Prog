@@ -4,9 +4,9 @@ class Player(object):
         self.itemsOwned = [] #items is already a thing ig
         self.mapPosX = mapPosX
         self.mapPosY = mapPosY
-        self.mapOrthogonalSpeed = 3
+        self.mapOrthogonalSpeed = 30
         self.health = health
-        self.mapDiagonalSpeed = 2.12 #orthogonal means up down left right
+        self.mapDiagonalSpeed = 20.12 #orthogonal means up down left right
         
     def showOnMap(self):
         rectMode(CENTER)

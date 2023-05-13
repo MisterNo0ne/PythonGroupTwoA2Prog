@@ -4,7 +4,7 @@ from npc import Npc
 from obstacle import Obstacle
 from player import Player
 
-
+# **for right now, I have multipled speed by 10 for testing purposes**
 
 #2 Main game states that always need to be separated:
     #Map mode: player walking around a map
