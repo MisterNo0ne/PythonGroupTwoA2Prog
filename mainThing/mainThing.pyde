@@ -80,6 +80,8 @@ def draw():
         rect(475,400,100,25)
         fill(44,185,17)
         rect(350,450,100,25)
+        fill(127)
+        rect(475,450,100,25)
         
         fill(255)
         noStroke()
@@ -207,6 +209,11 @@ def mousePressed():
     if gameState == "map" and mouseY > height-100 and mouseX > width-300 and freeRam:
         link("https://www.google.com/search?q=download+free+ram&rlz=1C5GCEA_enUS1042US1042&oq=download+free+ram&aqs=chrome..69i57j0i512j0i10i512l6j0i512l2.2697j0j7&sourceid=chrome&ie=UTF-8")
     elif gameState == "fight" and gamer.health>=1 and turn == 1:
+        if pointInsideRectangle(mouseX, mouseY, 475,450,100,25): 
+            attackImage = loadImage("epicSword.png")
+            attackType = ["none", "none"]
+            turn = 2
+            animationWaitTimer = turn1wait
         if pointInsideRectangle(mouseX, mouseY, 350, 400, 100, 25):
             attackImage = loadImage("FireBall.png")
             attackType = ["fire", "none"]
