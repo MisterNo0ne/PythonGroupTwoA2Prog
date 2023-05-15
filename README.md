@@ -53,5 +53,13 @@ Maksim: Images and animation, npcs, bosses, and basic functionality of data fold
 
 ![Spell Based Adventure 3](https://github.com/MisterNo0ne/PythonGroupTwoA2Prog/blob/main/images/sbaMockup3.PNG?raw=true)
 
+### Current Program
+![New Map (Sea)]
+(https://github.com/MisterNo0ne/PythonGroupTwoA2Prog/blob/main/images/New%20Map%20(Sea).png?raw=true)
+
+![Castle]
+(https://github.com/MisterNo0ne/PythonGroupTwoA2Prog/assets/111779779/f1f419e4-30fa-4ce3-bd23-15614cc7b793)
+
+
 ### Class Diagram
 ![Spell Based Adventure Class Diagram](https://github.com/MisterNo0ne/PythonGroupTwoA2Prog/blob/main/images/classDiagram.PNG?raw=true)
