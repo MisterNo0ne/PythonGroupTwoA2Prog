@@ -121,3 +121,13 @@ class Enemy(object):
         rect(42, 62, 297*(float(self.health)/self.maxHealth), 30)
     def display(self, imag): 
         image(imag, 220,50,420,250)
+        if self.element == "grass": 
+            tint(100,255,100,127)
+        if self.element == "fire": 
+            tint(255,0,0,127)
+        if self.element == "water": 
+            tint(75,75,255,127)
+        image(imag, 220,50,420,250) #tinted one
+        
+        tint(255,255,255) # <-- regular
+ #   def 
