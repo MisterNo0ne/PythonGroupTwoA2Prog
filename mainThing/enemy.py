@@ -63,14 +63,18 @@ class Enemy(object):
         this is run in a for loop because attackType will combine 2 or 3 elements
         """
         damage = initialDamage
-        print("Your initial attack was " + str(initialDamage) + " damage")
+        #print("Your initial attack was " + str(initialDamage) + " damage")
         for i in attackType:
             if i in self.weakness:
                 damage=damage*2
-                print("Your " + i + " attack was super effective against the opposing " + self.element + " type!")
+                print("Your " + i + " attack was super effective against the opposing " + self.element + " type! (x2 damage)")
             if i in self.resistance:
                 damage=damage/2
-                print("Your " + i + " attack was not very effective against the opposing " + self.element + " type...")
+                print("Your " + i + " attack was not very effective against the opposing " + self.element + " type... (x0.5 damage)")
+            #fire attacks against overgrown should go crazy
+            if self.status == "overgrown" and i == "fire":
+                damage=damage*10
+                print("The overgrown vines burst into overwhelming flames! (x10 damage)")
             if i == "fire":
                 self.status = "burning"
             if i == "water":
@@ -78,9 +82,9 @@ class Enemy(object):
             if i == "grass":
                 self.status = "tangled"
         self.health -= damage
-        print("You did " + str(damage) + " damage! The monster's health is now " + str(self.health))
-        if self.health <= 0:
-            print("The monster died!")
+    
+        print("You did " + str(damage) + " damage!")
+            
         
         return self.health
         #return self.status
