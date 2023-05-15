@@ -13,48 +13,52 @@ from player import Player
 
 def setup():
     size(600, 600)
+    frameRate(24)
     
-    global gameState, ghoul, skeleton, zombie, spider, debugMode, gamer, keyPresses, bkgrnd, enemyList, freeRam, currentEnemy, skltnimg, ghlimg, spdrimg, zomimg, attacktype, turn, blocks, fightbackground, animationWaitTimer, endWaiting, attackImage, turn1wait, turn2wait, turn3wait, eq
+    #don't ask
+    global gameState, ghoul, skeleton, zombie, spider, debugMode, gamer, keyPresses, bkgrnd, enemyList, freeRam, currentEnemy, skltnimg, ghlimg, spdrimg, zomimg, attacktype, turn, blocks, fightbackground, animationWaitTimer, endWaiting, attackImage, turn1wait, turn2wait, turn3wait, wizard
+    
+    #load images
     fightbackground = loadImage("epicfightbackground.jpeg")
     skltnimg = loadImage("skeletonIdle.png")
     zomimg = loadImage("Zombie.png")
     spdrimg = loadImage("smallenemyspider.png")
     ghlimg = loadImage("spookyGhoul.png")
     bkgrnd = loadImage("MapBackground.png")
+    wizard = loadImage("Wizard.png")
     gameState = "map"
     currentEnemy= -1
     attackType = []
-    eq = True # literally just saying whether or not the waitTimer is up and no idfk why i named it "eq" sorry
-
     ghoul = Enemy(50, "ghoul", "fire", 500, 500, ghlimg, "none")
     skeleton = Enemy(100, "skeleton", "grass", 100, 400, skltnimg, "none")
     spider = Enemy(42, "spider", "fire", 200, 200, spdrimg, "none")
     zombie = Enemy(153, "zombie", "water", 300, 100, zomimg, "none")
+    enemyList = [ghoul, skeleton, spider, zombie]
+    
+    blocks = []
+    makeBlocks()
+    
+    gamer = Player(400, 400, 100, wizard)
     
     turn1wait = 50
     turn2wait = 30
     turn3wait = 60
+    animationWaitTimer = 0
+    endWaiting = False
     
     debugMode = True #displays obstacles
     freeRam = False
-    gamer = Player(400, 400, 100)
     keyPresses = [False, False, False, False]
     turn = 1
-    animationWaitTimer = 0
-    endWaiting = False
     attackImage = loadImage("WaterBolt.png")
     waitTimer = 0
-    #Lists
-    enemyList = [ghoul, skeleton, spider, zombie]
-    blocks = []
-    makeBlocks()
 
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 def draw():
-    global gameState, currentEnemy, enemyList, ghoul, skeleton, turn, animationWaitTimer, gamer, endWaiting, attackType, waitTimer, eq
+    global gameState, currentEnemy, enemyList, ghoul, skeleton, turn, animationWaitTimer, gamer, endWaiting, attackType, waitTimer
     #??????????????????????????????????????????????????????
     #if you wanna edit values of global variables you have to put them here
     
@@ -158,7 +162,7 @@ def draw():
     else: #gameState is in map mode
         background(0, 0, 255)
         image(bkgrnd,(width/2)-gamer.mapPosX,(height/2)-gamer.mapPosY)
-        
+    
         gamer.showOnMap()
         gamer.moveOnMap(keyPresses)
         
@@ -224,15 +228,6 @@ def pointInsideRectangle(a, b, x, y, w, h):
 
 def makeBlocks():
     blocks.append(Obstacle(0, 0, 400, 200))
-      
-                    
-                                  #zack's epic fail at moving images!1!1!!!1              
-#def imgmove(imge,xpos,ypos): 
- #   iamgege = loadImage(imge)
-  #  for i in range(20): 
-   #     ypos = 250-i
-    #    xpos = 250+i
-     #   image(iamgege, xpos, ypos, 75, 75)
         
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
 #------------------------------------------------------------------------------------------------------------------------------------------------------------

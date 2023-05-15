@@ -1,5 +1,5 @@
 class Player(object):
-    def __init__(self, mapPosX, mapPosY, health):
+    def __init__(self, mapPosX, mapPosY, health, playerImage):
         self.knownElements = [True, True, False, True]
         self.itemsOwned = [] #items is already a thing ig
         self.mapPosX = mapPosX
@@ -8,15 +8,15 @@ class Player(object):
         self.health = health
         self.maxHealth = health
         self.mapDiagonalSpeed = 20.12 #orthogonal means up down left right
+        self.playerImage = playerImage
         
     def showOnMap(self):
         rectMode(CENTER)
         stroke(0)
         strokeWeight(4)
         fill(255)
-        wizard = loadImage("Wizard.png")
         
-        image(wizard, width/2, height/2)
+        image(self.playerImage, width/2, height/2)
         rectMode(CORNER)
         
     def moveOnMap(self, keyHits):
@@ -39,8 +39,7 @@ class Player(object):
             self.mapPosY += yMov * self.mapOrthogonalSpeed
             
     def showInFight(self):
-        wizard = loadImage("Wizard.png")
-        image(wizard, 0, 260, 320, 340)
+        image(self.playerImage, 0, 260, 320, 340)
         
         #health bar
         strokeWeight(4)
