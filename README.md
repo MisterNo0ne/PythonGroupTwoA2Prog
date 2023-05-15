@@ -10,6 +10,7 @@ On the map screen, use WASD to move around. If you want to start a battle, walk 
 
 ### Map game state
 Added new 'obstacle' class that players aren't allowed to walk through. It has a toggleable mode to turn on or off showing the hitboxes, but currently the obstacles have no effect.
+Added a new variable for a list of variables that can looped over to detect collisions to move the player in case of in-game collision. 
 
 Added mapPosX and mapPosY variables to both the player and enemies so that both can render on the map. Additionally, the player and enemy have a showOnMap() and mapDisplay() function respectively to render each.
 
@@ -17,12 +18,17 @@ Added key detection variables, so that if for example the 'w' key is pressed, a 
 
 Added collision detection between player and enemies. When they collide, the gameState will change to fight mode, and players will enter a fight with enemies. Currently, though, there is no battle functionality.
 
-Added a simple grass background for flavor, and as a quick demonstration of how to use images in proccessing's python mode.
+Added highly detailed map background with many zones including high quality trees, cactuses, and a dangerous castle zone. We also have many easter eggs such as an impostor in the sea.
 
 ### Fight game state
 Added weakness and resistance lists to the enemy class for damage calculation. This adds an element of strategy, so players have to think about the best way to attack a particular type of enemy.
 
 Added a damage calculator to enemy class. Now, the enemy class has a function called hit() that will take in variables for damage and element types to calculate the real damage. For example, if a player tries to attack a fire enemy with a grass attack, the damage will be halved. If they try a water type instead, the damage will be doubled. The calculations are based on the enemy's weakness and resistance stats.
+
+Added new fight background.
+Added PNGs for the enemies and character.
+
+Added animations to the current possible attacks.
 
 ## Development
 
