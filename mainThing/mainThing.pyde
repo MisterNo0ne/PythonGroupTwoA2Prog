@@ -24,7 +24,7 @@ def setup():
     gameState = "map"
     currentEnemy= -1
     attackType = []
-    eq = True
+    eq = True # literally just saying whether or not the waitTimer is up and no idfk why i named it "eq" sorry
 
     ghoul = Enemy(50, "ghoul", "fire", 500, 500, ghlimg, "none")
     skeleton = Enemy(100, "skeleton", "grass", 100, 400, skltnimg, "none")
@@ -62,6 +62,8 @@ def draw():
         image(fightbackground, 0, 0, width, height)
         
         gamer.showInFight()
+        
+        #rendering the grass, fire, and water attack buttons yayayy
         fill(245,141,12)
         rect(350,400,100,25)
         fill(127,97,252)
@@ -75,7 +77,7 @@ def draw():
         textSize(24)
         fill(0)
         text("Health bar of player here \n" + str(gamer.health), 340, 550)
-        text("Enemy health: " + str(enemyList[currentEnemy].health) + " ", 50, 50)
+        text("Enemy health: " + str(enemyList[currentEnemy].health), 50, 50)
         text("type: " + enemyList[currentEnemy].type + "\n enemyID: " + str(currentEnemy) + "\n enemy element: " + enemyList[currentEnemy].element, 50, 120)
         text("status: " + enemyList[currentEnemy].status, 50, 240)
         enemyList[currentEnemy].display(enemyList[currentEnemy].img)
@@ -87,10 +89,21 @@ def draw():
         text(str(animationWaitTimer), width-100, 100)
         
         waitTimer -=1 if waitTimer>0 else 0 #this is for waiting in between turns so its not all instant lmao
+        #if waitTimer == 0:               <-- goofy thing
+        #    eq = False
+        #elif waitTimer !=0: 
+        #    eq = True
         text(str(waitTimer), width-100, 140)
+        text(str(eq), width-100, 180)
         
+        #sets the wait timer for 40 seconds after enemy gets hit (turn 1-ish)  and before player gets hit (turn 2) 
         if turn == 2 and animationWaitTimer == 0 and eq: 
             enemyList[currentEnemy].hit(20, attackType)
+            waitTimer = 40
+            eq = False
+            
+        #checks to see if the enemy should be dead and resetting everything for the next fight
+        if turn == 2 and animationWaitTimer == 0: 
             if enemyList[currentEnemy].health<=0:
                 print("The enemy's health dropped below 0, and it died!")
                 print("\nBack to the map...\n")
@@ -98,20 +111,27 @@ def draw():
                 gameState = "map"
                 endWaiting = False
                 currentEnemy = 12345
-            waitTimer = 40
-            eq = False
+                turn = 1
+                waitTimer = 0
+                eq = True
+        
+        #the player gets hit and the turn becomes 3 (status effects)
         if turn == 2 and animationWaitTimer == 0 and waitTimer == 0: 
             enemyHitDamage = 20
             gamer.health -= enemyHitDamage
             println("The gamer was hurt for " + str(enemyHitDamage) + " damage!")
             turn = 3
-        #        animationWaitTimer = 100
         
         #this is what actually renders the attackImage
         if turn == 2 and animationWaitTimer != 0:
             image(attackImage, 300-animationWaitTimer, 200+animationWaitTimer, 75, 75)
+        
+        #sets wait timer for 30 after player gets hit (turn 2) but before statuses get checked (turn 3)
+        if turn == 3 and animationWaitTimer == 0 and eq == False: 
+            waitTimer = 30
+            eq = True
             
-        if turn == 3 and animationWaitTimer == 0:
+        if turn == 3 and animationWaitTimer == 0 and waitTimer == 0:
             enemyFighting = enemyList[currentEnemy]
             
             healthChange = fightTurnThreeHealth(enemyFighting.status, enemyFighting.element)
@@ -126,7 +146,6 @@ def draw():
             print(displayText)
             enemyFighting.health += healthChange
             enemyFighting.status = fightTurnThreeStatus(enemyFighting.status, enemyFighting.element)
-            eq = True
             turn = 1
             
             # Enemy death logic
@@ -242,6 +261,8 @@ def fightTurnThreeStatus(enemyStatus, enemyType):
             return "none"
         if enemyType == "water": 
             return "none"
+        if enemyType == "grass": 
+            return "burning"
     if enemyStatus == "wet": 
         if enemyType == "fire":   
             return "none"
