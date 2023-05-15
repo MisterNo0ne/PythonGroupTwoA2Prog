@@ -96,7 +96,6 @@ class Enemy(object):
         
         return self.health
         #return self.status
-        #later add a mechanic for dying where the enemy disappears or soemthing
         
         
     def mapDisplay(self, playerX, playerY):

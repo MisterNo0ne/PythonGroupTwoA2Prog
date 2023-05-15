@@ -14,7 +14,7 @@ from player import Player
 def setup():
     size(600, 600)
     
-    global gameState, ghoul, skeleton, zombie, spider, debugMode, gamer, keyPresses, bkgrnd, enemyList, freeRam, currentEnemy, skltnimg, ghlimg, spdrimg, zomimg, attacktype, turn, blocks, fightbackground, animationWaitTimer, endWaiting, attackImage, turn1wait, turn2wait, turn3wait
+    global gameState, ghoul, skeleton, zombie, spider, debugMode, gamer, keyPresses, bkgrnd, enemyList, freeRam, currentEnemy, skltnimg, ghlimg, spdrimg, zomimg, attacktype, turn, blocks, fightbackground, animationWaitTimer, endWaiting, attackImage, turn1wait, turn2wait, turn3wait, eq
     fightbackground = loadImage("epicfightbackground.jpeg")
     skltnimg = loadImage("skeletonIdle.png")
     zomimg = loadImage("Zombie.png")
@@ -23,7 +23,8 @@ def setup():
     bkgrnd = loadImage("MapBackground.png")
     gameState = "map"
     currentEnemy= -1
-    attacktype = []
+    attackType = []
+    eq = True # literally just saying whether or not the waitTimer is up and no idfk why i named it "eq" sorry
 
     ghoul = Enemy(50, "ghoul", "fire", 500, 500, ghlimg, "none")
     skeleton = Enemy(100, "skeleton", "grass", 100, 400, skltnimg, "none")
@@ -42,7 +43,7 @@ def setup():
     animationWaitTimer = 0
     endWaiting = False
     attackImage = loadImage("WaterBolt.png")
-    
+    waitTimer = 0
     #Lists
     enemyList = [ghoul, skeleton, spider, zombie]
     blocks = []
@@ -53,7 +54,7 @@ def setup():
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 def draw():
-    global gameState, currentEnemy, enemyList, ghoul, skeleton, turn, animationWaitTimer, gamer, endWaiting
+    global gameState, currentEnemy, enemyList, ghoul, skeleton, turn, animationWaitTimer, gamer, endWaiting, attackType, waitTimer, eq
     #??????????????????????????????????????????????????????
     #if you wanna edit values of global variables you have to put them here
     
@@ -65,6 +66,8 @@ def draw():
         image(fightbackground, 0, 0, width, height)
         
         gamer.showInFight()
+        
+        #rendering the grass, fire, and water attack buttons yayayy
         fill(245,141,12)
         rect(350,400,100,25)
         fill(127,97,252)
@@ -85,7 +88,7 @@ def draw():
         stroke(0)
         
         # Turn logic
-        animationWaitTimer -= 1 if animationWaitTimer>0 else 0 #decrement the wait timer if it's above 0
+        animationWaitTimer -= 2 if animationWaitTimer>0 else 0 #decrement the wait timer if it's above 0
         text(str(animationWaitTimer), width-100, 100)
         
         ##Displays gamer's attack
@@ -126,7 +129,6 @@ def draw():
             print(displayText)
             enemyFighting.health += healthChange
             enemyFighting.status = fightTurnThreeStatus(enemyFighting.status, enemyFighting.element)
-            
             turn = 1
             
             # Enemy death logic
@@ -176,10 +178,10 @@ def draw():
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
     
 def mousePressed():
-    global turn, attackImage, animationWaitTimer
+    global turn, attackImage, animationWaitTimer, attackType
     if gameState == "map" and mouseY > height-100 and mouseX > width-300 and freeRam:
         link("https://www.google.com/search?q=download+free+ram&rlz=1C5GCEA_enUS1042US1042&oq=download+free+ram&aqs=chrome..69i57j0i512j0i10i512l6j0i512l2.2697j0j7&sourceid=chrome&ie=UTF-8")
-    elif gameState == "fight" and gamer.health>=1 and turn == 1 and animationWaitTimer == 0:
+    elif gameState == "fight" and gamer.health>=1 and turn == 1:
         if pointInsideRectangle(mouseX, mouseY, 350, 400, 100, 25):
             attackImage = loadImage("FireBall.png")
             enemyList[currentEnemy].hit(20,["fire","none"]) 
@@ -222,13 +224,15 @@ def pointInsideRectangle(a, b, x, y, w, h):
 
 def makeBlocks():
     blocks.append(Obstacle(0, 0, 400, 200))
+      
                     
-def imgmove(imge,xpos,ypos): 
-    iamgege = loadImage(imge)
-    for i in range(20): 
-        ypos = 250-i
-        xpos = 250+i
-        image(iamgege, xpos, ypos, 75, 75)
+                                  #zack's epic fail at moving images!1!1!!!1              
+#def imgmove(imge,xpos,ypos): 
+ #   iamgege = loadImage(imge)
+  #  for i in range(20): 
+   #     ypos = 250-i
+    #    xpos = 250+i
+     #   image(iamgege, xpos, ypos, 75, 75)
         
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -244,6 +248,8 @@ def fightTurnThreeStatus(enemyStatus, enemyType):
             return "none"
         if enemyType == "water": 
             return "none"
+        if enemyType == "grass": 
+            return "burning"
     if enemyStatus == "wet": 
         if enemyType == "fire":   
             return "none"
