@@ -134,12 +134,15 @@ class Enemy(object):
         if self.status == "burning": 
             statusimg = loadImage("burning.png")
             image(statusimg,220,50,420,250)
-        if self.status == "tangled" or self.status == "overgrown": 
+        if self.status == "tangled":
             statusimg = loadImage("vines.png")
-            image(statusimg,220,50,420,250)
+            image(statusimg,250,150,420,150)
+        if self.status == "overgrown":
+            statusimg = loadImage("vines.png")
+            image(statusimg,250,50,420,275)
         if self.status == "wet": 
             statusimg = loadImage("puddle.png")
-            image(statusimg,220,50,420,250)
+            image(statusimg,250,100,420,350)
         if self.status == "none": 
             rect(0,0,0,0)
       #  return amogguss!!!!

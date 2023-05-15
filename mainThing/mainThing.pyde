@@ -165,6 +165,9 @@ def draw():
         if gamer.health<=0:
             print("oh no!1!11!1!11 uy deied!!11! you are loser L game over")
             gameState = "map"
+            gamer.mapPosX = 400
+            gamer.mapPosX = 400
+            gamer.health = gamer.maxHealth
     
             """
         if turn == 1 and animationWaitTimer == 0 and endWaiting:
