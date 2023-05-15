@@ -112,7 +112,12 @@ class Enemy(object):
         text(self.element + " " + self.type, self.mapPosX-playerX+(width/2), self.mapPosY-playerY+(height/2)+50)
         
     def healthBarInFight(self):
-        fractionOfHealth = self.health/self.maxHealth
-        print(fractionOfHealth)
+        fractionOfHealth = float(self.health)/self.maxHealth
+        strokeWeight(4)
+        fill(255)
+        rect(140, 200, 300, 40)
+        fill(255, 0, 0)
+        noStroke()
+        rect(142, 202, 297*(float(self.health)/self.maxHealth), 37)
     def display(self, imag): 
         image(imag, 220,50,420,250)

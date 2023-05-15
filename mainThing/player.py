@@ -43,6 +43,7 @@ class Player(object):
         
         #health bar
         strokeWeight(4)
+        stroke(0)
         fill(255)
         rect(280, 500, 300, 40)
         fill(255, 0, 0)

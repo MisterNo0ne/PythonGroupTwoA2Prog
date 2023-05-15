@@ -91,6 +91,7 @@ def draw():
         textSize(32)
         stroke(0)
         
+        enemyList[currentEnemy].healthBarInFight()
         # Turn logic
         animationWaitTimer -= 2 if animationWaitTimer>0 else 0 #decrement the wait timer if it's above 0
         text(str(animationWaitTimer), width-100, 100)
@@ -226,6 +227,7 @@ def keyPressed():
         keyPresses[3] = True
     
 def keyReleased():
+    global gamer
     if key == 'w':
         keyPresses[0] = False
     if key == 'a':
@@ -234,7 +236,8 @@ def keyReleased():
         keyPresses[2] = False
     if key == 'd':
         keyPresses[3] = False
-
+    if key == 'h': 
+        gamer.health+=20
 def pointInsideRectangle(a, b, x, y, w, h):
     # just returns whether or not the coordinate of the first 2 parameters is in the rectangle defined by the last 4 parameters
     return ((a>x) and (a<x+w)) and ((b>y) and (b<y+h))
