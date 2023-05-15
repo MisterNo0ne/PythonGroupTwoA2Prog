@@ -94,7 +94,19 @@ def draw():
         # Turn logic
         animationWaitTimer -= 2 if animationWaitTimer>0 else 0 #decrement the wait timer if it's above 0
         text(str(animationWaitTimer), width-100, 100)
+        text(str(turn), width-100, 140)
         
+        if animationWaitTimer == 20 and turn == 2: 
+            enemyList[currentEnemy].hit(20, attackType)
+            
+        if endWaiting or enemyList[currentEnemy].health<=0: 
+            del enemyList[currentEnemy]
+            gameState = "map"
+            currentEnemy = 12345
+            endWaiting = False
+        #    gamer.health = gamer.maxHealth    why would they heal? shouldn't we have health potions or smth idk
+            turn = 1
+            animationWaitTimer = 0
         ##Displays gamer's attack
         timeForAnim = 30 #only the first 30 frames will get the animation
         if turn == 2 and animationWaitTimer >= turn1wait-timeForAnim:
@@ -146,17 +158,18 @@ def draw():
                 print(" ==-== New Cycle ==-==")
         
             # Gamer death logic
-            if gamer.health<=0:
-                print("oh no!1!11!1!11 uy deied!!11! you are loser L game over")
-                gameState = "map"
+        if gamer.health<=0:
+            print("oh no!1!11!1!11 uy deied!!11! you are loser L game over")
+            gameState = "map"
     
+            """
         if turn == 1 and animationWaitTimer == 0 and endWaiting:
             del enemyList[currentEnemy]
             gameState = "map"
             currentEnemy = 12345
             endWaiting = False
             gamer.health = gamer.maxHealth
-            
+            """
 #----------------------------------------------------------------------MAP MODE------------------------------------------------------------------------------
 
     else: #gameState is in map mode
@@ -188,17 +201,17 @@ def mousePressed():
     elif gameState == "fight" and gamer.health>=1 and turn == 1:
         if pointInsideRectangle(mouseX, mouseY, 350, 400, 100, 25):
             attackImage = loadImage("FireBall.png")
-            enemyList[currentEnemy].hit(20,["fire","none"]) 
+            attackType = ["fire", "none"]
             turn = 2
             animationWaitTimer = turn1wait
         if pointInsideRectangle(mouseX, mouseY, 475, 400, 100, 25):
             attackImage = loadImage("WaterBolt.png")
-            enemyList[currentEnemy].hit(20,["water","none"]) 
+            attackType = ["water", "none"]
             turn = 2
             animationWaitTimer = turn1wait
         if pointInsideRectangle(mouseX, mouseY, 350, 450, 100, 25):
             attackImage = loadImage("LeafAttack.png")
-            enemyList[currentEnemy].hit(20,["grass","none"]) 
+            attackType = ["grass", "none"]
             turn = 2
             animationWaitTimer = turn1wait
             
