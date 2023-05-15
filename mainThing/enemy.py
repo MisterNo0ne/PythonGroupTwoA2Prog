@@ -115,9 +115,9 @@ class Enemy(object):
         fractionOfHealth = float(self.health)/self.maxHealth
         strokeWeight(4)
         fill(255)
-        rect(260, 270, 300, 40)
+        rect(40, 60, 300, 33)
         fill(255, 0, 0)
         noStroke()
-        rect(262, 272, 297*(float(self.health)/self.maxHealth), 37)
+        rect(42, 62, 297*(float(self.health)/self.maxHealth), 30)
     def display(self, imag): 
         image(imag, 220,50,420,250)
