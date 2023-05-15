@@ -130,4 +130,16 @@ class Enemy(object):
         image(imag, 220,50,420,250) #tinted one
         
         tint(255,255,255) # <-- regular
- #   def 
+    def displayStatus(self): 
+        if self.status == "burning": 
+            statusimg = loadImage("burning.png")
+            image(statusimg,220,50,420,250)
+        if self.status == "tangled" or self.status == "overgrown": 
+            statusimg = loadImage("vines.png")
+            image(statusimg,220,50,420,250)
+        if self.status == "wet": 
+            statusimg = loadImage("puddle.png")
+            image(statusimg,220,50,420,250)
+        if self.status == "none": 
+            rect(0,0,0,0)
+      #  return amogguss!!!!

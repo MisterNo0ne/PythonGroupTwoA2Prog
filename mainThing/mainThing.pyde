@@ -90,6 +90,7 @@ def draw():
         text("type: " + enemyList[currentEnemy].type + "\n enemyID: " + str(currentEnemy) + "\n enemy element: " + enemyList[currentEnemy].element, 50, 120)
         text("status: " + enemyList[currentEnemy].status, 50, 240)
         enemyList[currentEnemy].display(enemyList[currentEnemy].img)
+        enemyList[currentEnemy].displayStatus()
         textSize(32)
         stroke(0)
         
