@@ -14,7 +14,7 @@ from player import Player
 def setup():
     size(600, 600)
     
-    global gameState, ghoul, skeleton, zombie, spider, debugMode, gamer, keyPresses, bkgrnd, enemyList, freeRam, currentEnemy, skltnimg, ghlimg, spdrimg, zomimg, attackType, turn, blocks, fightbackground, animationWaitTimer, endWaiting, attackImage
+    global gameState, ghoul, skeleton, zombie, spider, debugMode, gamer, keyPresses, bkgrnd, enemyList, freeRam, currentEnemy, skltnimg, ghlimg, spdrimg, zomimg, attackType, turn, blocks, fightbackground, animationWaitTimer, endWaiting, attackImage, waitTimer, eq
     fightbackground = loadImage("epicfightbackground.jpeg")
     skltnimg = loadImage("skeletonIdle.png")
     zomimg = loadImage("Zombie.png")
@@ -24,6 +24,7 @@ def setup():
     gameState = "map"
     currentEnemy= -1
     attackType = []
+    eq = True
 
     ghoul = Enemy(50, "ghoul", "fire", 500, 500, ghlimg, "none")
     skeleton = Enemy(100, "skeleton", "grass", 100, 400, skltnimg, "none")
@@ -38,7 +39,7 @@ def setup():
     animationWaitTimer = 0
     endWaiting = False
     attackImage = loadImage("WaterBolt.png")
-    
+    waitTimer = 0
     #Lists
     enemyList = [ghoul, skeleton, spider, zombie]
     blocks = []
@@ -49,7 +50,7 @@ def setup():
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 def draw():
-    global gameState, currentEnemy, enemyList, ghoul, skeleton, turn, animationWaitTimer, attackType
+    global gameState, currentEnemy, enemyList, ghoul, skeleton, turn, animationWaitTimer, attackType, waitTimer, eq
     #??????????????????????????????????????????????????????
     #if you wanna edit values of global variables you have to put them here
     
@@ -85,8 +86,10 @@ def draw():
         animationWaitTimer -= 2 if animationWaitTimer>0 else 0 #decrement the wait timer if it's above 0
         text(str(animationWaitTimer), width-100, 100)
         
+        waitTimer -=1 if waitTimer>0 else 0 #this is for waiting in between turns so its not all instant lmao
+        text(str(waitTimer), width-100, 140)
         
-        if turn == 2 and animationWaitTimer == 0:
+        if turn == 2 and animationWaitTimer == 0 and eq: 
             enemyList[currentEnemy].hit(20, attackType)
             if enemyList[currentEnemy].health<=0:
                 print("The enemy's health dropped below 0, and it died!")
@@ -95,13 +98,16 @@ def draw():
                 gameState = "map"
                 endWaiting = False
                 currentEnemy = 12345
-            else: 
-                enemyHitDamage = 20
-                gamer.health -= enemyHitDamage
-                println("The gamer was hurt for " + str(enemyHitDamage) + " damage!")
-                turn = 3
+            waitTimer = 40
+            eq = False
+        if turn == 2 and animationWaitTimer == 0 and waitTimer == 0: 
+            enemyHitDamage = 20
+            gamer.health -= enemyHitDamage
+            println("The gamer was hurt for " + str(enemyHitDamage) + " damage!")
+            turn = 3
         #        animationWaitTimer = 100
         
+        #this is what actually renders the attackImage
         if turn == 2 and animationWaitTimer != 0:
             image(attackImage, 300-animationWaitTimer, 200+animationWaitTimer, 75, 75)
             
@@ -120,7 +126,7 @@ def draw():
             print(displayText)
             enemyFighting.health += healthChange
             enemyFighting.status = fightTurnThreeStatus(enemyFighting.status, enemyFighting.element)
-            
+            eq = True
             turn = 1
             
             # Enemy death logic
