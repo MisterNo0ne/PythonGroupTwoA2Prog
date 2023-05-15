@@ -174,11 +174,12 @@ def draw():
 #----------------------------------------------------------------------MAP MODE------------------------------------------------------------------------------
 
     else: #gameState is in map mode
+        gamer.moveOnMap(keyPresses)
+        
         background(0, 0, 255)
         image(bkgrnd,(width/2)-gamer.mapPosX,(height/2)-gamer.mapPosY)
     
         gamer.showOnMap()
-        gamer.moveOnMap(keyPresses)
         
         for e in enemyList:
             e.mapDisplay(gamer.mapPosX, gamer.mapPosY)
