@@ -27,6 +27,7 @@ Added a damage calculator to enemy class. Now, the enemy class has a function ca
 
 Added new fight background.
 Added PNGs for the enemies and character.
+Added health bar to both enemies and character to show current health percentage. The bar decreases based on how much damage you dealt or taken.
 
 Added animations to the current possible attacks.
 
