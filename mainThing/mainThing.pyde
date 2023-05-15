@@ -14,7 +14,7 @@ from player import Player
 def setup():
     size(600, 600)
     
-    global gameState, ghoul, skeleton, zombie, spider, debugMode, gamer, keyPresses, bkgrnd, enemyList, freeRam, currentEnemy, skltnimg, ghlimg, spdrimg, zomimg, attacktype, turn, blocks, fightbackground, animationWaitTimer, endWaiting, attackImage
+    global gameState, ghoul, skeleton, zombie, spider, debugMode, gamer, keyPresses, bkgrnd, enemyList, freeRam, currentEnemy, skltnimg, ghlimg, spdrimg, zomimg, attacktype, turn, blocks, fightbackground, animationWaitTimer, endWaiting, attackImage, turn1wait, turn2wait, turn3wait
     fightbackground = loadImage("epicfightbackground.jpeg")
     skltnimg = loadImage("skeletonIdle.png")
     zomimg = loadImage("Zombie.png")
@@ -30,9 +30,13 @@ def setup():
     spider = Enemy(42, "spider", "fire", 200, 200, spdrimg, "none")
     zombie = Enemy(153, "zombie", "water", 300, 100, zomimg, "none")
     
+    turn1wait = 50
+    turn2wait = 30
+    turn3wait = 60
+    
     debugMode = True #displays obstacles
     freeRam = False
-    gamer = Player(400, 400, 10000)
+    gamer = Player(400, 400, 100)
     keyPresses = [False, False, False, False]
     turn = 1
     animationWaitTimer = 0
@@ -49,7 +53,7 @@ def setup():
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 def draw():
-    global gameState, currentEnemy, enemyList, ghoul, skeleton, turn, animationWaitTimer
+    global gameState, currentEnemy, enemyList, ghoul, skeleton, turn, animationWaitTimer, gamer, endWaiting
     #??????????????????????????????????????????????????????
     #if you wanna edit values of global variables you have to put them here
     
@@ -73,7 +77,6 @@ def draw():
         rect(45, 25, 250, 250) #highlight box
         textSize(24)
         fill(0)
-        text("Health bar of player here \n" + str(gamer.health), 340, 550)
         text("Enemy health: " + str(enemyList[currentEnemy].health) + " ", 50, 50)
         text("type: " + enemyList[currentEnemy].type + "\n enemyID: " + str(currentEnemy) + "\n enemy element: " + enemyList[currentEnemy].element, 50, 120)
         text("status: " + enemyList[currentEnemy].status, 50, 240)
@@ -85,16 +88,29 @@ def draw():
         animationWaitTimer -= 1 if animationWaitTimer>0 else 0 #decrement the wait timer if it's above 0
         text(str(animationWaitTimer), width-100, 100)
         
-        
+        ##Displays gamer's attack
+        timeForAnim = 30 #only the first 30 frames will get the animation
+        if turn == 2 and animationWaitTimer >= turn1wait-timeForAnim:
+            #ellipse(160, 440, 20, 20)
+            progressFraction = float(turn1wait-animationWaitTimer)/timeForAnim
+            pushMatrix()
+            translate(160+(progressFraction*200), 440-(progressFraction*200))
+            rotate(radians(315)) #rotates to make the attack diagonal
+            image(attackImage, 0, 0, 75, 75) #player attacking
+            popMatrix()
+        ##Makes gamer get hurt
         if turn == 2 and animationWaitTimer == 0:
             enemyHitDamage = 20
             gamer.health -= enemyHitDamage
             println("The gamer was hurt for " + str(enemyHitDamage) + " damage!")
             turn = 3
-            animationWaitTimer = 100
+            animationWaitTimer = turn2wait
         
+        ##Displays player hurting
         if turn == 3 and animationWaitTimer != 0:
-            image(attackImage, 300-animationWaitTimer, 200+animationWaitTimer, 75, 75)
+            #player getting hurt
+            casdfawefawsdfawef = 1
+        ##Resolve statuses
         if turn == 3 and animationWaitTimer == 0:
             enemyFighting = enemyList[currentEnemy]
             
@@ -118,10 +134,8 @@ def draw():
             if enemyList[currentEnemy].health<=0:
                 print("The enemy's health dropped below 0, and it died!")
                 print("\nBack to the map...\n")
-                del enemyList[currentEnemy]
-                gameState = "map"
-                endWaiting = False
-                currentEnemy = 12345
+                endWaiting = True
+                animationWaitTimer = turn3wait
             else:
                 print(" ==-== New Cycle ==-==")
         
@@ -129,7 +143,13 @@ def draw():
             if gamer.health<=0:
                 print("oh no!1!11!1!11 uy deied!!11! you are loser L game over")
                 gameState = "map"
-            
+    
+        if turn == 1 and animationWaitTimer == 0 and endWaiting:
+            del enemyList[currentEnemy]
+            gameState = "map"
+            currentEnemy = 12345
+            endWaiting = False
+            gamer.health = gamer.maxHealth
             
 #----------------------------------------------------------------------MAP MODE------------------------------------------------------------------------------
 
@@ -156,25 +176,25 @@ def draw():
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
     
 def mousePressed():
-    global turn, attackImage
+    global turn, attackImage, animationWaitTimer
     if gameState == "map" and mouseY > height-100 and mouseX > width-300 and freeRam:
         link("https://www.google.com/search?q=download+free+ram&rlz=1C5GCEA_enUS1042US1042&oq=download+free+ram&aqs=chrome..69i57j0i512j0i10i512l6j0i512l2.2697j0j7&sourceid=chrome&ie=UTF-8")
     elif gameState == "fight" and gamer.health>=1 and turn == 1 and animationWaitTimer == 0:
         if pointInsideRectangle(mouseX, mouseY, 350, 400, 100, 25):
             attackImage = loadImage("FireBall.png")
-            image(attackImage, 250, 250, 75, 75)
             enemyList[currentEnemy].hit(20,["fire","none"]) 
             turn = 2
+            animationWaitTimer = turn1wait
         if pointInsideRectangle(mouseX, mouseY, 475, 400, 100, 25):
             attackImage = loadImage("WaterBolt.png")
-            image(attackImage, 250, 250, 75, 75)
             enemyList[currentEnemy].hit(20,["water","none"]) 
             turn = 2
+            animationWaitTimer = turn1wait
         if pointInsideRectangle(mouseX, mouseY, 350, 450, 100, 25):
             attackImage = loadImage("LeafAttack.png")
-            image(attackImage, 250, 250, 75, 75)
             enemyList[currentEnemy].hit(20,["grass","none"]) 
             turn = 2
+            animationWaitTimer = turn1wait
             
 def keyPressed():
     if key == 'w':
@@ -234,14 +254,10 @@ def fightTurnThreeStatus(enemyStatus, enemyType):
             return "none"
         if enemyType == "water": 
             return "overgrown"
-        if enemyType == "grass": 
-            return "none"
     if enemyStatus == "overgrown": 
         if enemyType == "fire": 
             return "none"
-        if enemyType == "grass": 
-            return "none"
-    return ""
+    return enemyStatus
             
 def fightTurnThreeHealth(enemyStatus, enemyType):
     if enemyStatus == "burning":   
@@ -262,8 +278,6 @@ def fightTurnThreeHealth(enemyStatus, enemyType):
     elif enemyStatus == "overgrown": 
         if enemyType == "water": 
             return -40 #grass hurts water
-        elif enemyType == "grass": 
-            return 20 #grass helps grass
     return 0
 
 def fightTurnThreeDisplayText(enemyStatus, enemyType):
@@ -285,14 +299,14 @@ def fightTurnThreeDisplayText(enemyStatus, enemyType):
         if enemyType == "fire": 
             return "How did you tangle a fire enemy that's stupid"
         if enemyType == "water": 
-            return "The enemy shrivels from the grass!"
+            return "The enemy shrivels and the vines grow enormous!"
         if enemyType == "grass": 
-            return "How did you tangle a grass enemy that's stupid"
+            return "Your grassy vines remain."
     if enemyStatus == "overgrown": 
         if enemyType == "fire": 
             return "How did you tangle a fire enemy that's stupid"
         if enemyType == "water": 
             return "The enemy becomes much dryer!"
         if enemyType == "grass": 
-            return "How did you tangle a grass enemy that's stupid"
+            return "Your grassy vines remain."
     return "somefin happend idk what"

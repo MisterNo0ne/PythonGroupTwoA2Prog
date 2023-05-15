@@ -71,16 +71,24 @@ class Enemy(object):
             if i in self.resistance:
                 damage=damage/2
                 print("Your " + i + " attack was not very effective against the opposing " + self.element + " type... (x0.5 damage)")
-            #fire attacks against overgrown should go crazy
+                
+            #fire attacks against tangled and overgrown should go crazy
+            if self.status == "tangled" and i == "fire":
+                damage=damage*3
+                print("The vines burst into flames! (x3 damage)")
             if self.status == "overgrown" and i == "fire":
                 damage=damage*10
                 print("The overgrown vines burst into overwhelming flames! (x10 damage)")
+                
             if i == "fire":
                 self.status = "burning"
             if i == "water":
                 self.status = "wet"
             if i == "grass":
-                self.status = "tangled"
+                if self.status == "tangled":
+                    self.status = "overgrown"
+                else:
+                    self.status = "tangled"
         self.health -= damage
     
         print("You did " + str(damage) + " damage!")
