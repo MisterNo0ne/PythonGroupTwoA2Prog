@@ -16,7 +16,7 @@ def setup():
     frameRate(24)
     
     #don't ask
-    global gameState, ghoul, skeleton, zombie, spider, debugMode, gamer, keyPresses, bkgrnd, enemyList, freeRam, currentEnemy, skltnimg, ghlimg, spdrimg, zomimg, attacktype, turn, blocks, fightbackground, animationWaitTimer, endWaiting, attackImage, turn1wait, turn2wait, turn3wait, wizard
+    global gameState, ghoul, skeleton, zombie, spider, debugMode, gamer, keyPresses, bkgrnd, enemyList, freeRam, currentEnemy, skltnimg, ghlimg, spdrimg, zomimg, attacktype, turn, blocks, fightbackground, animationWaitTimer, endWaiting, attackImage, turn1wait, turn2wait, turn3wait, wizard, cactus
     
     #load images
     fightbackground = loadImage("epicfightbackground.jpeg")
