@@ -27,14 +27,14 @@ def setup():
     bkgrnd = loadImage("MapBackground.png")
     wizard = loadImage("Wizard.png")
     cactusimg = loadImage("Angry buff cactus.png") 
-    cactus = Enemy(200, "cactus", "grass", 150, 300, cactusimg, "none")
+    cactus = Enemy(200, "cactus", "grass", 150, 300, cactusimg, "none", 30)
     gameState = "map"
     currentEnemy= -1
     attackType = []
-    ghoul = Enemy(50, "ghoul", "fire", 500, 500, ghlimg, "none")
-    skeleton = Enemy(100, "skeleton", "grass", 100, 400, skltnimg, "none")
-    spider = Enemy(42, "spider", "fire", 200, 200, spdrimg, "none")
-    zombie = Enemy(153, "zombie", "water", 300, 100, zomimg, "none")
+    ghoul = Enemy(50, "ghoul", "fire", 500, 500, ghlimg, "none", 20)
+    skeleton = Enemy(100, "skeleton", "grass", 100, 400, skltnimg, "none", 20)
+    spider = Enemy(42, "spider", "fire", 200, 200, spdrimg, "none", 20)
+    zombie = Enemy(153, "zombie", "water", 300, 100, zomimg, "none", 20)
     enemyList = [ghoul, skeleton, spider, zombie, cactus] 
     
     blocks = []
@@ -103,7 +103,10 @@ def draw():
         text(str(turn), width-100, 140)
         
         if animationWaitTimer == 20 and turn == 2: 
-            enemyList[currentEnemy].hit(20, attackType)
+            if attackType[0] == "none": 
+                enemyList[currentEnemy].hit(40, attackType) 
+            else: 
+                enemyList[currentEnemy].hit(20, attackType)
             
         if endWaiting or enemyList[currentEnemy].health<=0: 
             del enemyList[currentEnemy]
@@ -113,6 +116,7 @@ def draw():
         #    gamer.health = gamer.maxHealth    why would they heal? shouldn't we have health potions or smth idk
             turn = 1
             animationWaitTimer = 0
+            
         ##Displays gamer's attack
         timeForAnim = 30 #only the first 30 frames will get the animation
         if turn == 2 and animationWaitTimer >= turn1wait-timeForAnim:
@@ -125,7 +129,7 @@ def draw():
             popMatrix()
         ##Makes gamer get hurt
         if turn == 2 and animationWaitTimer == 0:
-            enemyHitDamage = 20
+            enemyHitDamage = enemyList[currentEnemy].strength
             gamer.health -= enemyHitDamage
             println("The gamer was hurt for " + str(enemyHitDamage) + " damage!")
             turn = 3

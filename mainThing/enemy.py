@@ -1,7 +1,7 @@
 #zack did alla dis
 
 class Enemy(object):
-    def __init__(self, health, type, element, mapPosX, mapPosY, img, status):
+    def __init__(self, health, type, element, mapPosX, mapPosY, img, status, strength):
         self.health = health
         self.maxHealth = health
         self.type = type
@@ -10,6 +10,7 @@ class Enemy(object):
         self.mapPosY = mapPosY
         self.img = img
         self.status = status
+        self.strength = strength
     #    self.hitbox=hitbox
         #defining respective elemental weaknesses and resistances
         self.weakness = []
