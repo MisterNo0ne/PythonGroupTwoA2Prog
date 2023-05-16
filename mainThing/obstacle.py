@@ -2,10 +2,11 @@
 class Obstacle(object):
     #only on map screen
     def __init__(self, xPos, yPos, w, h):
-        self.xPos = xPos
-        self.yPos = yPos
-        self.w = w
-        self.h = h
+        #See makeBlocks() in mainThing
+        self.xPos = xPos*100
+        self.yPos = yPos*100
+        self.w = w*100
+        self.h = h*100
         
     def display(self, playerX, playerY):
         """

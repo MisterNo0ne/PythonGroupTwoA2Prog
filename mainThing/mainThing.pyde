@@ -16,9 +16,9 @@ def setup():
     frameRate(24)
     
     #don't ask
-    global gameState, ghoul, skeleton, zombie, spider, debugMode, gamer, keyPresses, bkgrnd, enemyList, freeRam, currentEnemy, skltnimg, ghlimg, spdrimg, zomimg, attacktype, turn, blocks, fightbackground, animationWaitTimer, endWaiting, attackImage, turn1wait, turn2wait, turn3wait, wizard, cactus, cactusimg, hpotcount, daggercount, chestimg, chestopened, amogus, sandBoss, sandimg, skltnbossimg, castleimg, skltnBoss, castleBoss
+    global gameState, ghoul, skeleton, zombie, spider, debugMode, gamer, keyPresses, bkgrnd, enemyList, freeRam, currentEnemy, skltnimg, ghlimg, spdrimg, zomimg, attacktype, turn, blocks, fightbackground, animationWaitTimer, endWaiting, attackImage, turn1wait, turn2wait, turn3wait, wizard, cactus, cactusimg, hpotcount, daggercount, chestimg, chestopened, amogus, sandBoss, sandimg, skltnbossimg, castleimg, skltnBoss, castleBoss, blockFile
     
-    #load images
+    #load files
     fightbackground = loadImage("epicfightbackground.jpeg")
     skltnimg = loadImage("skeletonIdle.png")
     zomimg = loadImage("Zombie.png")
@@ -31,6 +31,8 @@ def setup():
     sandimg = loadImage("sandboss.png")
     skltnbossimg = loadImage("Skeleton Boss.png")
     castleimg = loadImage("evilCastle.png")
+    blockFile = loadStrings("blockData.txt")
+    
     #other stuff
     chestopened = False
     gameState = "map"
@@ -122,11 +124,7 @@ def draw():
         text(str(animationWaitTimer), width-100, 100)
         text(str(turn), width-100, 140)
         
-        if animationWaitTimer == 20 and turn == 2: 
-            if attackType[0] == "none": 
-                enemyList[currentEnemy].hit(40, attackType) 
-            else: 
-                enemyList[currentEnemy].hit(20, attackType)
+        
             
         if endWaiting or enemyList[currentEnemy].health<=0: 
             del enemyList[currentEnemy]
@@ -154,7 +152,10 @@ def draw():
             turn = 3
             animationWaitTimer = turn2wait
         if animationWaitTimer == 20 and turn == 2: 
-            enemyList[currentEnemy].hit(20, attackType)
+            if attackType[0] == "none": 
+                enemyList[currentEnemy].hit(40, attackType) 
+            else: 
+                enemyList[currentEnemy].hit(20, attackType)
         
 ## 3rd turn
         ##Displays player hurting
@@ -182,7 +183,7 @@ def draw():
             # Enemy death logic
             print("The enemy's health is now " + str(enemyFighting.health))
             if enemyList[currentEnemy].health<=0:
-                print("The enemy's health dropped below 0, and it died!")
+                print("The enemy died!")
                 print("\nBack to the map...\n")
                 endWaiting = True
                 animationWaitTimer = turn3wait
@@ -306,8 +307,19 @@ def pointInsideRectangle(a, b, x, y, w, h):
     # just returns whether or not the coordinate of the first 2 parameters is in the rectangle defined by the last 4 parameters
     return ((a>x) and (a<x+w)) and ((b>y) and (b<y+h))
 
+
+#don't ask idk either
 def makeBlocks():
-    blocks.append(Obstacle(0, 0, 400, 200))
+    for vals in blockFile:
+        valList = []
+        while len(valList) < 3:
+            index = 0
+            while vals[index] != ' ':
+                index += 1
+            valList.append(float(vals[:index]))
+            vals = vals[index+1:]
+        valList.append(float(vals))
+        blocks.append(Obstacle(valList[0], valList[1], valList[2], valList[3]))
         
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
 #------------------------------------------------------------------------------------------------------------------------------------------------------------

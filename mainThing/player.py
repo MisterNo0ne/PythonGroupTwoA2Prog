@@ -9,6 +9,7 @@ class Player(object):
         self.maxHealth = health
         self.mapDiagonalSpeed = 5.66 #orthogonal means up down left right
         self.playerImage = playerImage
+        self.boundRadius = 15
         
     def showOnMap(self):
         stroke(0)
@@ -45,7 +46,7 @@ class Player(object):
             #check to see if player is intersecting with o
             xDist = abs(self.mapPosX - (o.xPos + (o.w/2)))
             yDist = abs(self.mapPosY - (o.yPos + (o.h/2)))
-            if xDist < 20+(o.w/2) and yDist < 20+(o.h/2):
+            if xDist < self.boundRadius+(o.w/2) and yDist < self.boundRadius+(o.h/2):
                 hitObstacle = True
                 #break
         
