@@ -16,7 +16,7 @@ def setup():
     frameRate(24)
     
     #don't ask
-    global gameState, ghoul, skeleton, zombie, spider, debugMode, gamer, keyPresses, bkgrnd, enemyList, freeRam, currentEnemy, skltnimg, ghlimg, spdrimg, zomimg, attacktype, turn, blocks, fightbackground, animationWaitTimer, endWaiting, attackImage, turn1wait, turn2wait, turn3wait, wizard, cactus, cactusimg
+    global gameState, ghoul, skeleton, zombie, spider, debugMode, gamer, keyPresses, bkgrnd, enemyList, freeRam, currentEnemy, skltnimg, ghlimg, spdrimg, zomimg, attacktype, turn, blocks, fightbackground, animationWaitTimer, endWaiting, attackImage, turn1wait, turn2wait, turn3wait, wizard, cactus, cactusimg, hpotcount, daggercount, chestimg, chestopened
     
     #load images
     fightbackground = loadImage("epicfightbackground.jpeg")
@@ -27,20 +27,28 @@ def setup():
     bkgrnd = loadImage("MapBackground.png")
     wizard = loadImage("Wizard.png")
     cactusimg = loadImage("Angry buff cactus.png") 
+    chestimg = loadImage("chest.png")
+    chestopened = False
+    #other stuff
     cactus = Enemy(200, "cactus", "grass", 150, 300, cactusimg, "none", 30)
     gameState = "map"
     currentEnemy= -1
     attackType = []
+    
+    #enemy declarators or smth
     ghoul = Enemy(50, "ghoul", "fire", 500, 500, ghlimg, "none", 20)
     skeleton = Enemy(100, "skeleton", "grass", 100, 400, skltnimg, "none", 20)
     spider = Enemy(42, "spider", "fire", 200, 200, spdrimg, "none", 20)
     zombie = Enemy(153, "zombie", "water", 300, 100, zomimg, "none", 20)
     enemyList = [ghoul, skeleton, spider, zombie, cactus] 
     
+    hpotcount = 0
+    daggercount = 0 #these will both change after bosses or smth like that yay
+    
     blocks = []
     makeBlocks()
     
-    gamer = Player(400, 400, 100, wizard)
+    gamer = Player(400, 400, 100, wizard) 
     
     turn1wait = 50
     turn2wait = 30
