@@ -76,7 +76,7 @@ def setup():
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 def draw():
-    global gameState, currentEnemy, enemyList, ghoul, skeleton, turn, animationWaitTimer, gamer, endWaiting, attackType, waitTimer,chestimg, daggercount, hpotcount
+    global gameState, currentEnemy, enemyList, ghoul, skeleton, turn, animationWaitTimer, gamer, endWaiting, attackType, waitTimer, chestimg, daggercount, hpotcount
     #??????????????????????????????????????????????????????
     #if you wanna edit values of global variables you have to put them here
     
@@ -219,9 +219,13 @@ def draw():
         text(str(daggercount) + " daggers", 5, height-65)
         text(str(hpotcount) + " health potions", 5, height-20)
         
+        #if chestopened == False:      <-- this would mean deleting the chest but that might look weird
+        image(chestimg, 450-gamer.mapPosX+(width/2), 150-gamer.mapPosY+(height/2)+50, 75, 75 )   
         
-        #i actually have zero clue why chest aint rendering ;-;
-        image(chestimg, 50, 50, 75, 75)   
+        if pointInsideRectangle(gamer.mapPosX, gamer.mapPosY, 450-gamer.mapPosX+(width/2), 150-gamer.mapPosY+(height/2)+50, 75, 75) and chestopened == False: 
+            daggercount+=10
+            hpotcount+=10
+            chestopened == True
         gamer.showOnMap()
         
         for e in enemyList:
