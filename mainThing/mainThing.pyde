@@ -16,7 +16,7 @@ def setup():
     frameRate(24)
     
     #don't ask
-    global gameState, ghoul, skeleton, zombie, spider, debugMode, gamer, keyPresses, bkgrnd, enemyList, freeRam, currentEnemy, skltnimg, ghlimg, spdrimg, zomimg, attacktype, turn, blocks, fightbackground, animationWaitTimer, endWaiting, attackImage, turn1wait, turn2wait, turn3wait, wizard, cactus, cactusimg, hpotcount, daggercount, chestimg, chestopened
+    global gameState, ghoul, skeleton, zombie, spider, debugMode, gamer, keyPresses, bkgrnd, enemyList, freeRam, currentEnemy, skltnimg, ghlimg, spdrimg, zomimg, attacktype, turn, blocks, fightbackground, animationWaitTimer, endWaiting, attackImage, turn1wait, turn2wait, turn3wait, wizard, cactus, cactusimg, hpotcount, daggercount, chestimg, chestopened, amogus, sandBoss, sandimg
     
     #load images
     fightbackground = loadImage("epicfightbackground.jpeg")
@@ -28,22 +28,26 @@ def setup():
     wizard = loadImage("Wizard.png")
     cactusimg = loadImage("Angry buff cactus.png") 
     chestimg = loadImage("chest.png")
-    chestopened = False
+    sandimg = loadImage("sandboss.png")
     #other stuff
-    cactus = Enemy(200, "cactus", "grass", 150, 300, cactusimg, "none", 30)
+    chestopened = False
     gameState = "map"
     currentEnemy= -1
     attackType = []
     
     #enemy declarators or smth
-    ghoul = Enemy(50, "ghoul", "fire", 500, 500, ghlimg, "none", 20)
-    skeleton = Enemy(100, "skeleton", "grass", 100, 400, skltnimg, "none", 20)
-    spider = Enemy(42, "spider", "fire", 200, 200, spdrimg, "none", 20)
-    zombie = Enemy(153, "zombie", "water", 300, 100, zomimg, "none", 20)
-    enemyList = [ghoul, skeleton, spider, zombie, cactus] 
-    
+    ghoul = Enemy(50, "ghoul", "fire", 500, 500, ghlimg, "none", 20, False)
+    skeleton = Enemy(100, "skeleton", "grass", 100, 400, skltnimg, "none", 20, False)
+    spider = Enemy(42, "spider", "fire", 200, 200, spdrimg, "none", 20, False)
+    zombie = Enemy(153, "zombie", "water", 300, 100, zomimg, "none", 20, False)
+    cactus = Enemy(200, "cactus", "grass", 150, 300, cactusimg, "none", 30, False)
+    sandBoss = Enemy(300, "sandBoss", "fire", 300, 1400, sandimg, "none", 40, True)
+    enemyList = [ghoul, skeleton, spider, zombie, cactus, sandBoss] 
     hpotcount = 0
     daggercount = 0 #these will both change after bosses or smth like that yay
+    
+    #amogus is like hax mode, where during this u can hack in more health pots and daggers and funi stuff
+    amogus  = True
     
     blocks = []
     makeBlocks()
@@ -269,7 +273,7 @@ def keyPressed():
         keyPresses[3] = True
     
 def keyReleased():
-    global gamer
+    global gamer, hpotcount, amogus, daggercount
     if key == 'w':
         keyPresses[0] = False
     if key == 'a':
@@ -278,8 +282,14 @@ def keyReleased():
         keyPresses[2] = False
     if key == 'd':
         keyPresses[3] = False
-    if key == 'h': 
+    if key == 'h' and hpotcount>0: 
         gamer.health+=20
+        hpotcount-=1
+    if key == 'v' and amogus: 
+        hpotcount+=1
+    if key == 'q' and amogus: 
+        daggercount+=1
+        
 def pointInsideRectangle(a, b, x, y, w, h):
     # just returns whether or not the coordinate of the first 2 parameters is in the rectangle defined by the last 4 parameters
     return ((a>x) and (a<x+w)) and ((b>y) and (b<y+h))
