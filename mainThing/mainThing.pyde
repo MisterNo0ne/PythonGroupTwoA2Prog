@@ -16,7 +16,7 @@ def setup():
     frameRate(24)
     
     #don't ask
-    global gameState, ghoul, skeleton, zombie, spider, debugMode, gamer, keyPresses, bkgrnd, enemyList, freeRam, currentEnemy, skltnimg, ghlimg, spdrimg, zomimg, attacktype, turn, blocks, fightbackground, animationWaitTimer, endWaiting, attackImage, turn1wait, turn2wait, turn3wait, wizard, cactus, cactusimg, hpotcount, daggercount, chestimg, chestopened, amogus, sandBoss, sandimg
+    global gameState, ghoul, skeleton, zombie, spider, debugMode, gamer, keyPresses, bkgrnd, enemyList, freeRam, currentEnemy, skltnimg, ghlimg, spdrimg, zomimg, attacktype, turn, blocks, fightbackground, animationWaitTimer, endWaiting, attackImage, turn1wait, turn2wait, turn3wait, wizard, cactus, cactusimg, hpotcount, daggercount, chestimg, chestopened, amogus, sandBoss, sandimg, skltnbossimg, castleimg, skltnBoss, castleBoss
     
     #load images
     fightbackground = loadImage("epicfightbackground.jpeg")
@@ -29,6 +29,8 @@ def setup():
     cactusimg = loadImage("Angry buff cactus.png") 
     chestimg = loadImage("chest.png")
     sandimg = loadImage("sandboss.png")
+    skltnbossimg = loadImage("Skeleton Boss.png")
+    castleimg = loadImage("evilCastle.png")
     #other stuff
     chestopened = False
     gameState = "map"
@@ -41,8 +43,10 @@ def setup():
     spider = Enemy(42, "spider", "fire", 200, 200, spdrimg, "none", 20, False)
     zombie = Enemy(153, "zombie", "water", 300, 100, zomimg, "none", 20, False)
     cactus = Enemy(200, "cactus", "grass", 150, 300, cactusimg, "none", 30, False)
-    sandBoss = Enemy(300, "sandBoss", "fire", 300, 1400, sandimg, "none", 40, True)
-    enemyList = [ghoul, skeleton, spider, zombie, cactus, sandBoss] 
+    sandBoss = Enemy(300, "Sand Boss", "fire", 300, 1400, sandimg, "none", 40, True)
+    skltnBoss = Enemy(400, "Skeleton Boss", "grass", 2200, 1600, skltnbossimg, "none", 40, True)
+    castleBoss = Enemy(500, "Final Boss", "fire", 1600, 200, castleimg, "none", 50, True)
+    enemyList = [ghoul, skeleton, spider, zombie, cactus, sandBoss, skltnBoss, castleBoss] 
     hpotcount = 0
     daggercount = 0 #these will both change after bosses or smth like that yay
     
