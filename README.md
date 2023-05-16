@@ -1,12 +1,15 @@
 # Spell Based Adventure Game
 ----------TO DO LIST (remove this later/once completed)----------: 
-- get obstacles to work and have them like removable for the forest and desert bosses
-- get map borders to work so u dont run into the ocean (i suppose we can just spam rectangles along the edge)
+- DONE - get obstacles to work 
+- removable obstales for the forest and desert bosses
 - get bosses with gimmicks working (like multiple phases? or changing elements stuff like that. maybe immunity to statuses for one)
-- to be specific we need castle boss, forest boss, and desert boss. 
+  - to be specific we need castle boss, forest boss, and desert boss. 
 - get moving enemies to work. this might just be for the cactus enemy jumpscare tho
 - get signs working, most likely just one informing the player the basic mechanics of the game (maybe another for easter eggs)
-- get a healing system to work. most likely consumable healing potions. (still gotta figure out where to get these?)
+- we got healing system to work, just gotta work it out so it replaces attacks and u can only do once per turn
+- get armor sprite visible in fight and map mode
+- fix goofy bug where attacks hit twice cuz that aint good :/
+- literally do everything in one day smiley face equals parentheses
 
 ----------IDEA LIST (this got deleted somehow)----------: 
 - ice and rock types, where rock types most likely just deal a little more damage, and ice types or maybe water+ice freezes the enemy and makes them brittle, making rock attack shatter them for massive damage. also have freezing enemies make them deal less damage and ofc fire types immune to freezing. 
