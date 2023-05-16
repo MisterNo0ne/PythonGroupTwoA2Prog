@@ -1,5 +1,17 @@
 # Spell Based Adventure Game
+----------TO DO LIST (remove this later/once completed)----------: 
+- get obstacles to work and have them like removable for the forest and desert bosses
+- get map borders to work so u dont run into the ocean (i suppose we can just spam rectangles along the edge)
+- get bosses with gimmicks working (like multiple phases? or changing elements stuff like that. maybe immunity to statuses for one)
+- to be specific we need castle boss, forest boss, and desert boss. 
+- get moving enemies to work. this might just be for the cactus enemy jumpscare tho
+- get signs working, most likely just one informing the player the basic mechanics of the game (maybe another for easter eggs)
+- get a healing system to work. most likely consumable healing potions. (still gotta figure out where to get these?)
 
+----------IDEA LIST (this got deleted somehow)----------: 
+- ice and rock types, where rock types most likely just deal a little more damage, and ice types or maybe water+ice freezes the enemy and makes them brittle, making rock attack shatter them for massive damage. also have freezing enemies make them deal less damage and ofc fire types immune to freezing. 
+- have bosses have different phases/gimmicks. for the final boss, most likely a thing where it's element changes every turn (or every other turn) and all status effects are removed. Maybe have it heal a bit too when transitioning to a new phase. 
+- have a shopkeeper and coin system, where killing enemies/bosses awards the player coins that they can use to buy items. basic items would just be health potions and daggers, but maybe have him sell ice/rock spells, armor, idk some other stuff etc. 
 ### Description
 This game will be a spell based adventure that involves exploring a world, discovering new spells, learning how the elements interact, and fighting enemies.
 
@@ -47,13 +59,6 @@ Maksim: Images and animation, npcs, bosses, and basic functionality of data fold
 ### [Assets](https://github.com/MisterNo0ne/PythonGroupTwoA2Prog/tree/main/mainThing/data)
 
 ### Running Program Mockups
-![Spell Based Adventure 1](https://github.com/MisterNo0ne/PythonGroupTwoA2Prog/blob/main/images/sbaMockup1.PNG?raw=true)
-
-![Spell Based Adventure 2](https://github.com/MisterNo0ne/PythonGroupTwoA2Prog/blob/main/images/sbaMockup2.PNG?raw=true)
-
-![Spell Based Adventure 3](https://github.com/MisterNo0ne/PythonGroupTwoA2Prog/blob/main/images/sbaMockup3.PNG?raw=true)
-
-### Current Program
 ![New Map (Sea)](https://github.com/MisterNo0ne/PythonGroupTwoA2Prog/blob/main/images/New%20Map%20(Sea).png?raw=true)
 
 ![Castle](https://github.com/MisterNo0ne/PythonGroupTwoA2Prog/assets/111779779/f1f419e4-30fa-4ce3-bd23-15614cc7b793)

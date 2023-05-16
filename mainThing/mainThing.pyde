@@ -16,7 +16,7 @@ def setup():
     frameRate(24)
     
     #don't ask
-    global gameState, ghoul, skeleton, zombie, spider, debugMode, gamer, keyPresses, bkgrnd, enemyList, freeRam, currentEnemy, skltnimg, ghlimg, spdrimg, zomimg, attacktype, turn, blocks, fightbackground, animationWaitTimer, endWaiting, attackImage, turn1wait, turn2wait, turn3wait, wizard, cactus, cactusimg
+    global gameState, ghoul, skeleton, zombie, spider, debugMode, gamer, keyPresses, bkgrnd, enemyList, freeRam, currentEnemy, skltnimg, ghlimg, spdrimg, zomimg, attacktype, turn, blocks, fightbackground, animationWaitTimer, endWaiting, attackImage, turn1wait, turn2wait, turn3wait, wizard, cactus, cactusimg, hpotcount, daggercount, chestimg, chestopened, amogus, sandBoss, sandimg, skltnbossimg, castleimg, skltnBoss, castleBoss
     
     #load images
     fightbackground = loadImage("epicfightbackground.jpeg")
@@ -27,20 +27,36 @@ def setup():
     bkgrnd = loadImage("MapBackground.png")
     wizard = loadImage("Wizard.png")
     cactusimg = loadImage("Angry buff cactus.png") 
-    cactus = Enemy(200, "cactus", "grass", 150, 300, cactusimg, "none")
+    chestimg = loadImage("chest.png")
+    sandimg = loadImage("sandboss.png")
+    skltnbossimg = loadImage("Skeleton Boss.png")
+    castleimg = loadImage("evilCastle.png")
+    #other stuff
+    chestopened = False
     gameState = "map"
     currentEnemy= -1
     attackType = []
-    ghoul = Enemy(50, "ghoul", "fire", 500, 500, ghlimg, "none")
-    skeleton = Enemy(100, "skeleton", "grass", 100, 400, skltnimg, "none")
-    spider = Enemy(42, "spider", "fire", 200, 200, spdrimg, "none")
-    zombie = Enemy(153, "zombie", "water", 300, 100, zomimg, "none")
-    enemyList = [ghoul, skeleton, spider, zombie, cactus] 
+    
+    #enemy declarators or smth
+    ghoul = Enemy(50, "ghoul", "fire", 500, 500, ghlimg, "none", 20, False)
+    skeleton = Enemy(100, "skeleton", "grass", 100, 400, skltnimg, "none", 20, False)
+    spider = Enemy(42, "spider", "fire", 200, 200, spdrimg, "none", 20, False)
+    zombie = Enemy(153, "zombie", "water", 300, 100, zomimg, "none", 20, False)
+    cactus = Enemy(200, "cactus", "grass", 150, 300, cactusimg, "none", 30, False)
+    sandBoss = Enemy(300, "Sand Boss", "fire", 300, 1400, sandimg, "none", 40, True)
+    skltnBoss = Enemy(400, "Skeleton Boss", "grass", 2200, 1600, skltnbossimg, "none", 40, True)
+    castleBoss = Enemy(500, "Final Boss", "fire", 1600, 200, castleimg, "none", 50, True)
+    enemyList = [ghoul, skeleton, spider, zombie, cactus, sandBoss, skltnBoss, castleBoss] 
+    hpotcount = 0
+    daggercount = 0 #these will both change after bosses or smth like that yay
+    
+    #amogus is like hax mode, where during this u can hack in more health pots and daggers and funi stuff
+    amogus  = True
     
     blocks = []
     makeBlocks()
     
-    gamer = Player(400, 400, 100, wizard)
+    gamer = Player(400, 400, 100, wizard) 
     
     turn1wait = 50
     turn2wait = 30
@@ -60,7 +76,7 @@ def setup():
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 def draw():
-    global gameState, currentEnemy, enemyList, ghoul, skeleton, turn, animationWaitTimer, gamer, endWaiting, attackType, waitTimer
+    global gameState, currentEnemy, enemyList, ghoul, skeleton, turn, animationWaitTimer, gamer, endWaiting, attackType, waitTimer, chestimg, daggercount, hpotcount
     #??????????????????????????????????????????????????????
     #if you wanna edit values of global variables you have to put them here
     
@@ -98,14 +114,19 @@ def draw():
         stroke(0)
         
         enemyList[currentEnemy].healthBarInFight()
-        
+        # Turn logic
         animationWaitTimer -= 2 if animationWaitTimer>0 else 0 #decrement the wait timer if it's above 0
-        if debugMode:
-            text(str(animationWaitTimer), width-100, 100)
-            text(str(turn), width-100, 140)
+        textSize(20)
+        text("You have " + str(daggercount) + " daggers!", width-200, 25)
+        textSize(32)
+        text(str(animationWaitTimer), width-100, 100)
+        text(str(turn), width-100, 140)
         
-        
-#-------------------------------------------------------------------------------TURN LOGIC-------------------------------------------------------------------
+        if animationWaitTimer == 20 and turn == 2: 
+            if attackType[0] == "none": 
+                enemyList[currentEnemy].hit(40, attackType) 
+            else: 
+                enemyList[currentEnemy].hit(20, attackType)
             
         if endWaiting or enemyList[currentEnemy].health<=0: 
             del enemyList[currentEnemy]
@@ -127,7 +148,7 @@ def draw():
             popMatrix()
         
         if turn == 2 and animationWaitTimer == 0:
-            enemyHitDamage = 20
+            enemyHitDamage = enemyList[currentEnemy].strength
             gamer.health -= enemyHitDamage
             println("The gamer was hurt for " + str(enemyHitDamage) + " damage!")
             turn = 3
@@ -191,7 +212,24 @@ def draw():
         
         background(12, 89, 183)
         image(bkgrnd,(width/2)-gamer.mapPosX,(height/2)-gamer.mapPosY)
-    
+        
+        #rendering inventory box (currently just health pots and daggers): 
+        stroke(0)
+        strokeWeight(4)
+        fill(120,60,60)
+        rect(0,height-100, 200, 100)
+        fill(0)
+        textSize(28)
+        text(str(daggercount) + " daggers", 5, height-65)
+        text(str(hpotcount) + " health potions", 5, height-20)
+        
+        #if chestopened == False:      <-- this would mean deleting the chest but that might look weird
+        image(chestimg, 450-gamer.mapPosX+(width/2), 150-gamer.mapPosY+(height/2)+50, 75, 75 )   
+        
+        if pointInsideRectangle(gamer.mapPosX, gamer.mapPosY, 450-gamer.mapPosX+(width/2), 150-gamer.mapPosY+(height/2)+50, 75, 75) and chestopened == False: 
+            daggercount+=10
+            hpotcount+=10
+            chestopened == True
         gamer.showOnMap()
         
         for e in enemyList:
@@ -210,13 +248,14 @@ def draw():
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
     
 def mousePressed():
-    global turn, attackImage, animationWaitTimer, attackType
+    global turn, attackImage, animationWaitTimer, attackType, daggercount
     if gameState == "map" and mouseY > height-100 and mouseX > width-300 and freeRam:
         link("https://www.google.com/search?q=download+free+ram&rlz=1C5GCEA_enUS1042US1042&oq=download+free+ram&aqs=chrome..69i57j0i512j0i10i512l6j0i512l2.2697j0j7&sourceid=chrome&ie=UTF-8")
     elif gameState == "fight" and gamer.health>=1 and turn == 1:
-        if pointInsideRectangle(mouseX, mouseY, 475,450,100,25): 
+        if pointInsideRectangle(mouseX, mouseY, 475,450,100,25) and daggercount>0: 
             attackImage = loadImage("epicSword.png")
             attackType = ["none", "none"]
+            daggercount-=1
             turn = 2
             animationWaitTimer = turn1wait
         if pointInsideRectangle(mouseX, mouseY, 350, 400, 100, 25):
@@ -246,7 +285,7 @@ def keyPressed():
         keyPresses[3] = True
     
 def keyReleased():
-    global gamer
+    global gamer, hpotcount, amogus, daggercount
     if key == 'w':
         keyPresses[0] = False
     if key == 'a':
@@ -255,9 +294,14 @@ def keyReleased():
         keyPresses[2] = False
     if key == 'd':
         keyPresses[3] = False
-    if key == 'h': 
+    if key == 'h' and hpotcount>0: 
         gamer.health+=20
-
+        hpotcount-=1
+    if key == 'v' and amogus: 
+        hpotcount+=1
+    if key == 'q' and amogus: 
+        daggercount+=1
+        
 def pointInsideRectangle(a, b, x, y, w, h):
     # just returns whether or not the coordinate of the first 2 parameters is in the rectangle defined by the last 4 parameters
     return ((a>x) and (a<x+w)) and ((b>y) and (b<y+h))
