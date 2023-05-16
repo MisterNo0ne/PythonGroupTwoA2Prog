@@ -53,7 +53,7 @@ def setup():
     keyPresses = [False, False, False, False]
     turn = 1
     attackImage = loadImage("WaterBolt.png")
-    waitTimer = 0
+    waitTimer = 0 
 
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -68,7 +68,7 @@ def draw():
 
     if gameState == "fight":
         # Display logic
-        background(200)
+        #background(200)
         image(fightbackground, 0, 0, width, height)
         
         gamer.showInFight()
@@ -88,31 +88,33 @@ def draw():
         rect(45, 25, 250, 250) #highlight box
         textSize(24)
         fill(0)
-        text("Enemy health: " + str(enemyList[currentEnemy].health) + " ", 50, 50)
-        text("type: " + enemyList[currentEnemy].type + "\n enemyID: " + str(currentEnemy) + "\n enemy element: " + enemyList[currentEnemy].element, 50, 120)
-        text("status: " + enemyList[currentEnemy].status, 50, 240)
+        if debugMode:
+            text("Enemy health: " + str(enemyList[currentEnemy].health) + " ", 50, 50)
+            text("type: " + enemyList[currentEnemy].type + "\n enemyID: " + str(currentEnemy) + "\n enemy element: " + enemyList[currentEnemy].element, 50, 120)
+            text("status: " + enemyList[currentEnemy].status, 50, 240)
         enemyList[currentEnemy].display(enemyList[currentEnemy].img)
         enemyList[currentEnemy].displayStatus()
         textSize(32)
         stroke(0)
         
         enemyList[currentEnemy].healthBarInFight()
-        # Turn logic
-        animationWaitTimer -= 2 if animationWaitTimer>0 else 0 #decrement the wait timer if it's above 0
-        text(str(animationWaitTimer), width-100, 100)
-        text(str(turn), width-100, 140)
         
-        if animationWaitTimer == 20 and turn == 2: 
-            enemyList[currentEnemy].hit(20, attackType)
+        animationWaitTimer -= 2 if animationWaitTimer>0 else 0 #decrement the wait timer if it's above 0
+        if debugMode:
+            text(str(animationWaitTimer), width-100, 100)
+            text(str(turn), width-100, 140)
+        
+        
+#-------------------------------------------------------------------------------TURN LOGIC-------------------------------------------------------------------
             
         if endWaiting or enemyList[currentEnemy].health<=0: 
             del enemyList[currentEnemy]
             gameState = "map"
             currentEnemy = 12345
             endWaiting = False
-        #    gamer.health = gamer.maxHealth    why would they heal? shouldn't we have health potions or smth idk
             turn = 1
             animationWaitTimer = 0
+## 2nd turn
         ##Displays gamer's attack
         timeForAnim = 30 #only the first 30 frames will get the animation
         if turn == 2 and animationWaitTimer >= turn1wait-timeForAnim:
@@ -123,14 +125,17 @@ def draw():
             rotate(radians(315)) #rotates to make the attack diagonal
             image(attackImage, 0, 0, 75, 75) #player attacking
             popMatrix()
-        ##Makes gamer get hurt
+        
         if turn == 2 and animationWaitTimer == 0:
             enemyHitDamage = 20
             gamer.health -= enemyHitDamage
             println("The gamer was hurt for " + str(enemyHitDamage) + " damage!")
             turn = 3
             animationWaitTimer = turn2wait
+        if animationWaitTimer == 20 and turn == 2: 
+            enemyList[currentEnemy].hit(20, attackType)
         
+## 3rd turn
         ##Displays player hurting
         if turn == 3 and animationWaitTimer != 0:
             #player getting hurt
@@ -182,9 +187,9 @@ def draw():
 #----------------------------------------------------------------------MAP MODE------------------------------------------------------------------------------
 
     else: #gameState is in map mode
-        gamer.moveOnMap(keyPresses)
+        gamer.moveOnMap(keyPresses, blocks)
         
-        background(0, 0, 255)
+        background(12, 89, 183)
         image(bkgrnd,(width/2)-gamer.mapPosX,(height/2)-gamer.mapPosY)
     
         gamer.showOnMap()
@@ -252,6 +257,7 @@ def keyReleased():
         keyPresses[3] = False
     if key == 'h': 
         gamer.health+=20
+
 def pointInsideRectangle(a, b, x, y, w, h):
     # just returns whether or not the coordinate of the first 2 parameters is in the rectangle defined by the last 4 parameters
     return ((a>x) and (a<x+w)) and ((b>y) and (b<y+h))
