@@ -68,7 +68,7 @@ def setup():
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 def draw():
-    global gameState, currentEnemy, enemyList, ghoul, skeleton, turn, animationWaitTimer, gamer, endWaiting, attackType, waitTimer
+    global gameState, currentEnemy, enemyList, ghoul, skeleton, turn, animationWaitTimer, gamer, endWaiting, attackType, waitTimer,chestimg, daggercount, hpotcount
     #??????????????????????????????????????????????????????
     #if you wanna edit values of global variables you have to put them here
     
@@ -107,6 +107,9 @@ def draw():
         enemyList[currentEnemy].healthBarInFight()
         # Turn logic
         animationWaitTimer -= 2 if animationWaitTimer>0 else 0 #decrement the wait timer if it's above 0
+        textSize(20)
+        text("You have " + str(daggercount) + " daggers!", width-200, 25)
+        textSize(32)
         text(str(animationWaitTimer), width-100, 100)
         text(str(turn), width-100, 140)
         
@@ -195,10 +198,22 @@ def draw():
 
     else: #gameState is in map mode
         gamer.moveOnMap(keyPresses)
-        
         background(0, 0, 255)
         image(bkgrnd,(width/2)-gamer.mapPosX,(height/2)-gamer.mapPosY)
-    
+        
+        #rendering inventory box (currently just health pots and daggers): 
+        stroke(0)
+        strokeWeight(4)
+        fill(120,60,60)
+        rect(0,height-100, 200, 100)
+        fill(0)
+        textSize(28)
+        text(str(daggercount) + " daggers", 5, height-65)
+        text(str(hpotcount) + " health potions", 5, height-20)
+        
+        
+        #i actually have zero clue why chest aint rendering ;-;
+        image(chestimg, 50, 50, 75, 75)   
         gamer.showOnMap()
         
         for e in enemyList:
@@ -217,13 +232,14 @@ def draw():
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
     
 def mousePressed():
-    global turn, attackImage, animationWaitTimer, attackType
+    global turn, attackImage, animationWaitTimer, attackType, daggercount
     if gameState == "map" and mouseY > height-100 and mouseX > width-300 and freeRam:
         link("https://www.google.com/search?q=download+free+ram&rlz=1C5GCEA_enUS1042US1042&oq=download+free+ram&aqs=chrome..69i57j0i512j0i10i512l6j0i512l2.2697j0j7&sourceid=chrome&ie=UTF-8")
     elif gameState == "fight" and gamer.health>=1 and turn == 1:
-        if pointInsideRectangle(mouseX, mouseY, 475,450,100,25): 
+        if pointInsideRectangle(mouseX, mouseY, 475,450,100,25) and daggercount>0: 
             attackImage = loadImage("epicSword.png")
             attackType = ["none", "none"]
+            daggercount-=1
             turn = 2
             animationWaitTimer = turn1wait
         if pointInsideRectangle(mouseX, mouseY, 350, 400, 100, 25):
