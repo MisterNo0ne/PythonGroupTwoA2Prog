@@ -16,7 +16,7 @@ def setup():
     frameRate(24)
     
     #don't ask
-    global gameState, ghoul, skeleton, zombie, spider, debugMode, gamer, keyPresses, bkgrnd, enemyList, freeRam, currentEnemy, skltnimg, ghlimg, spdrimg, zomimg, attacktype, turn, blocks, fightbackground, animationWaitTimer, endWaiting, attackImage, turn1wait, turn2wait, turn3wait, wizard, cactus, cactusimg, hpotcount, daggercount, chestimg, chestopened, amogus, sandBoss, sandimg, skltnbossimg, castleimg, skltnBoss, castleBoss
+    global gameState, ghoul, skeleton, zombie, spider, debugMode, gamer, keyPresses, bkgrnd, enemyList, freeRam, currentEnemy, skltnimg, ghlimg, spdrimg, zomimg, attacktype, turn, blocks, fightbackground, animationWaitTimer, endWaiting, attackImage, turn1wait, turn2wait, turn3wait, wizard, cactus, cactusimg, hpotcount, daggercount, chestimg, chestopened, amogus, sandBoss, sandimg, skltnbossimg, castleimg, skltnBoss, castleBoss, hasArmor
     
     #load images
     fightbackground = loadImage("epicfightbackground.jpeg")
@@ -36,6 +36,7 @@ def setup():
     gameState = "map"
     currentEnemy= -1
     attackType = []
+    hasArmor = False
     
     #enemy declarators or smth
     ghoul = Enemy(50, "ghoul", "fire", 500, 500, ghlimg, "none", 20, False)
@@ -76,7 +77,7 @@ def setup():
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 def draw():
-    global gameState, currentEnemy, enemyList, ghoul, skeleton, turn, animationWaitTimer, gamer, endWaiting, attackType, waitTimer, chestimg, daggercount, hpotcount
+    global gameState, currentEnemy, enemyList, ghoul, skeleton, turn, animationWaitTimer, gamer, endWaiting, attackType, waitTimer, chestimg, daggercount, hpotcount, chestopened, hasArmor
     #??????????????????????????????????????????????????????
     #if you wanna edit values of global variables you have to put them here
     
@@ -129,6 +130,13 @@ def draw():
                 enemyList[currentEnemy].hit(20, attackType)
             
         if endWaiting or enemyList[currentEnemy].health<=0: 
+            if enemyList[currentEnemy].isBoss == True: 
+                print("yippee you killed the " + enemyList[currentEnemy].type + " congrations you (probably) got loot!11!!11!")
+                hpotcount+=5
+                daggercount+=5
+                if hasArmor == False:
+                    print("You found an iron chestplate! This will provide 25% damage reduction from enemy attacks!") 
+                    hasArmor = True
             del enemyList[currentEnemy]
             gameState = "map"
             currentEnemy = 12345
@@ -149,6 +157,8 @@ def draw():
         
         if turn == 2 and animationWaitTimer == 0:
             enemyHitDamage = enemyList[currentEnemy].strength
+            if hasArmor == True: 
+                enemyHitDamage *= 0.75
             gamer.health -= enemyHitDamage
             println("The gamer was hurt for " + str(enemyHitDamage) + " damage!")
             turn = 3
@@ -222,14 +232,16 @@ def draw():
         textSize(28)
         text(str(daggercount) + " daggers", 5, height-65)
         text(str(hpotcount) + " health potions", 5, height-20)
-        
+        if hasArmor == True: 
+            text("iron armor", 5, height-100)
         #if chestopened == False:      <-- this would mean deleting the chest but that might look weird
-        image(chestimg, 450-gamer.mapPosX+(width/2), 150-gamer.mapPosY+(height/2)+50, 75, 75 )   
+        image(chestimg, 420-gamer.mapPosX+(width/2), 140-gamer.mapPosY+(height/2)+50, 75, 75 )   
         
+        #so currently chest hitbox is super jank sorry
         if pointInsideRectangle(gamer.mapPosX, gamer.mapPosY, 450-gamer.mapPosX+(width/2), 150-gamer.mapPosY+(height/2)+50, 75, 75) and chestopened == False: 
             daggercount+=10
             hpotcount+=10
-            chestopened == True
+            chestopened = True
         gamer.showOnMap()
         
         for e in enemyList:
