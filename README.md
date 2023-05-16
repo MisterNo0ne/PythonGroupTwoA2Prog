@@ -7,7 +7,11 @@
 - get moving enemies to work. this might just be for the cactus enemy jumpscare tho
 - get signs working, most likely just one informing the player the basic mechanics of the game (maybe another for easter eggs)
 - get a healing system to work. most likely consumable healing potions. (still gotta figure out where to get these?)
-- 
+
+----------IDEA LIST (this got deleted somehow)----------: 
+- ice and rock types, where rock types most likely just deal a little more damage, and ice types or maybe water+ice freezes the enemy and makes them brittle, making rock attack shatter them for massive damage. also have freezing enemies make them deal less damage and ofc fire types immune to freezing. 
+- have bosses have different phases/gimmicks. for the final boss, most likely a thing where it's element changes every turn (or every other turn) and all status effects are removed. Maybe have it heal a bit too when transitioning to a new phase. 
+- have a shopkeeper and coin system, where killing enemies/bosses awards the player coins that they can use to buy items. basic items would just be health potions and daggers, but maybe have him sell ice/rock spells, armor, idk some other stuff etc. 
 ### Description
 This game will be a spell based adventure that involves exploring a world, discovering new spells, learning how the elements interact, and fighting enemies.
 
