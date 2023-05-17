@@ -10,13 +10,14 @@ from player import Player
 #2 Main game states that always need to be separated:
     #Map mode: player walking around a map
     #Fight mode: player battling
+    #Store mode: player buying stuff from store guy/blacksmith(?)
 
 def setup():
     size(600, 600)
     frameRate(24)
     print("hello gamer welcom to epic spell adventure game smiley face =)")
     #don't ask
-    global gameState, ghoul, skeleton, zombie, spider, debugMode, gamer, keyPresses, bkgrnd, enemyList, freeRam, currentEnemy, skltnimg, ghlimg, spdrimg, zomimg, attacktype, turn, blocks, fightbackground, animationWaitTimer, endWaiting, attackImage, turn1wait, turn2wait, turn3wait, wizard, cactus, cactusimg, hpotcount, daggercount, chestimg, chestopened, amogus, sandBoss, sandimg, skltnbossimg, castleimg, skltnBoss, castleBoss, hasArmor, blockFile
+    global gameState, ghoul, skeleton, zombie, spider, debugMode, gamer, keyPresses, bkgrnd, enemyList, freeRam, currentEnemy, skltnimg, ghlimg, spdrimg, zomimg, attacktype, turn, blocks, fightbackground, animationWaitTimer, endWaiting, attackImage, turn1wait, turn2wait, turn3wait, wizard, cactus, cactusimg, hpotcount, daggercount, chestimg, chestopened, amogus, sandBoss, sandimg, skltnbossimg, castleimg, skltnBoss, castleBoss, hasArmor, blockFile, coins, merchant
     
     #load files
     fightbackground = loadImage("epicfightbackground.jpeg")
@@ -32,7 +33,7 @@ def setup():
     skltnbossimg = loadImage("Skeleton Boss.png")
     castleimg = loadImage("evilCastle.png")
     blockFile = loadStrings("blockData.txt")
-    
+    merchant = loadImage("Shopkeeper.png")
     #other stuff
     
     chestopened = False
@@ -40,10 +41,11 @@ def setup():
     currentEnemy= -1
     attackType = []
     hasArmor = False
+    coins = 10.0
     
     #enemy declarators or smth
     ghoul = Enemy(50, "ghoul", "fire", 500, 500, ghlimg, "none", 20, False)
-    skeleton = Enemy(100, "skeleton", "grass", 100, 400, skltnimg, "none", 20, False)
+    skeleton = Enemy(100, "skeleton", "grass", 200, 400, skltnimg, "none", 20, False)
     spider = Enemy(42, "spider", "fire", 200, 200, spdrimg, "none", 20, False)
     zombie = Enemy(153, "zombie", "water", 300, 100, zomimg, "none", 20, False)
     cactus = Enemy(200, "cactus", "grass", 150, 300, cactusimg, "none", 30, False)
@@ -80,7 +82,7 @@ def setup():
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 def draw():
-    global gameState, currentEnemy, enemyList, ghoul, skeleton, turn, animationWaitTimer, gamer, endWaiting, attackType, waitTimer, chestimg, daggercount, hpotcount, chestopened, hasArmor
+    global gameState, currentEnemy, enemyList, ghoul, skeleton, turn, animationWaitTimer, gamer, endWaiting, attackType, waitTimer, chestimg, daggercount, hpotcount, chestopened, hasArmor, coins, merchant
     #??????????????????????????????????????????????????????
     #if you wanna edit values of global variables you have to put them here
     
@@ -157,6 +159,7 @@ def draw():
                 print("yippee you killed the " + enemyList[currentEnemy].type + " congrations you (probably) got loot!11!!11!")
                 hpotcount+=5
                 daggercount+=5
+                coins+=100
                 if hasArmor == False:
                     print("You found an iron chestplate! This will provide 25% damage reduction from enemy attacks!") 
                     hasArmor = True
@@ -164,6 +167,8 @@ def draw():
             gameState = "map"
             currentEnemy = 12345
             endWaiting = False
+            #coins += (0.5*enemyList[currentEnemy].health)    <-- idea is the amount of gold u get scales with enemy hp
+            coins+=10
             turn = 1
             animationWaitTimer = 0
 ## 2nd turn 
@@ -254,7 +259,7 @@ def draw():
             """
 #----------------------------------------------------------------------MAP MODE------------------------------------------------------------------------------
 
-    else: #gameState is in map mode
+    elif gameState == "map": #gameState is in map mode
         gamer.moveOnMap(keyPresses, blocks)
         
         background(12, 89, 183)
@@ -264,11 +269,12 @@ def draw():
         stroke(0)
         strokeWeight(4)
         fill(120,60,60)
-        rect(0,height-100, 200, 100)
+        rect(0,height-100, 250, 100)
         fill(0)
         textSize(28)
         text(str(daggercount) + " daggers", 5, height-65)
         text(str(hpotcount) + " health potions", 5, height-20)
+        text(str(coins) + " coins", 133, height-65)
         if hasArmor == True: 
             text("iron armor", 5, height-100)
         #if chestopened == False:      <-- this would mean deleting the chest but that might look weird
@@ -280,10 +286,15 @@ def draw():
             hpotcount+=10
             chestopened = True
         gamer.showOnMap()
-        
+        image(merchant, 1500-gamer.mapPosX+(width/2), 1500-gamer.mapPosY+(height/2), 100, 100) # this aint rendering fo same reason
+        text("epic merchant man come here to buy stuff :)", 1500-gamer.mapPosX+(width/2), 1500-gamer.mapPosY+(height/2))
+        if pointInsideRectangle(gamer.mapPosX, gamer.mapPosY, 1500-gamer.mapPosX+(width/2), 1500-gamer.mapPosY+(height/2), 100, 100): 
+            print("You entered the merchant's shop!")
+            gameState = "store"
+            
         for e in enemyList:
             e.mapDisplay(gamer.mapPosX, gamer.mapPosY)
-            if pointInsideRectangle(gamer.mapPosX, gamer.mapPosY, e.mapPosX-50, e.mapPosY-50, 100, 100) and gamer.health>0: 
+            if pointInsideRectangle(gamer.mapPosX, gamer.mapPosY, e.mapPosX, e.mapPosY, 100, 100) and gamer.health>0: 
                 currentEnemy = enemyList.index(e)
                 print(" ==-== " + enemyList[currentEnemy].element + " " + enemyList[currentEnemy].type + " ==-== ")
                 gameState = "fight"
@@ -291,7 +302,11 @@ def draw():
         if debugMode:
             for o in blocks:
                 o.display(gamer.mapPosX, gamer.mapPosY)
-                
+#-------------------------------------------------------STORE MODE--------------------------------------------------------------------#
+    else: #gameState is in store mode
+        #i have no clue what to do here yet, prolly something similar to fight mode though where if u have coins and
+        #if u click in the boxes then u buy stuff and also render some store guy too
+        image(merchant, 200, 200)
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
 #------------------------------------------------------------------------------------------------------------------------------------------------------------

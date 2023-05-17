@@ -117,7 +117,7 @@ class Enemy(object):
         """
         stroke(255,0,0)
         strokeWeight(5)
-        image(self.img, self.mapPosX-playerX+(width/2), self.mapPosY-playerY+(height/2))
+        image(self.img, self.mapPosX-playerX+(width/2), self.mapPosY-playerY+(height/2), 100, 100)
         
         textSize(16)
         fill(0)
