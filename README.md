@@ -9,7 +9,7 @@
 - DONE - we got healing system to work
 - get armor sprite visible in fight and map mode
 - Balance literally everything, especially grass being really weak and fire being really op. Idea: if u do water attack twice or smth, they get doused and take more damage or smth idk. 
-- literally do everything in one day smiley face equals parentheses
+- literally do everything in 5 days cuz we got extension yay =)
 
 ----------IDEA LIST (this got deleted somehow)----------: 
 - ice and rock types, where rock types most likely just deal a little more damage, and ice types or maybe water+ice freezes the enemy and makes them brittle, making rock attack shatter them for massive damage. also have freezing enemies make them deal less damage and ofc fire types immune to freezing. 
