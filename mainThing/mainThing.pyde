@@ -132,13 +132,16 @@ def draw():
         # Turn logic
         animationWaitTimer -= 2 if animationWaitTimer>0 else 0 #decrement the wait timer if it's above 0
         textSize(20)
-        text("You have " + str(daggercount) + " daggers!", width-200, 25)
+        fill(255)
+        text("You have " + str(daggercount) + " daggers!", width-200, height-30)
+        text("You have " + str(hpotcount) + " health potions!", width-520, height-30)
         textSize(32)
+        
         text(str(animationWaitTimer), width-100, 100)
         text(str(turn), width-100, 140)
         
         
-            
+            ##KILLED ENEMY LOGIC
         if endWaiting or enemyList[currentEnemy].health<=0: 
             if enemyList[currentEnemy].isBoss == True: 
                 print("yippee you killed the " + enemyList[currentEnemy].type + " congrations you (probably) got loot!11!!11!")
@@ -153,7 +156,7 @@ def draw():
             endWaiting = False
             turn = 1
             animationWaitTimer = 0
-## 2nd turn
+## 2nd turn 
         ##Displays gamer's attack
         timeForAnim = 30 #only the first 30 frames will get the animation
         if turn == 2 and animationWaitTimer >= turn1wait-timeForAnim and attackType[0] != "heal":
@@ -184,6 +187,8 @@ def draw():
                 enemyList[currentEnemy].hit(40, attackType) 
             elif attackType[0] == "heal": 
                 rect(0,0,0,0)
+            elif attackType[0] == "lightning": 
+                enemyList[currentEnemy].hit(30, attackType)
             else: 
                 enemyList[currentEnemy].hit(20, attackType)
         
