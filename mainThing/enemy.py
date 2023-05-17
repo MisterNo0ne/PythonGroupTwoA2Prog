@@ -34,12 +34,10 @@ class Enemy(object):
              self.weakness.append("grass")
              self.resistance.append("water")
              self.resistance.append("fire")
-             self.resistance.append("rock")
              self.resistance.append("air")
         if self.element == "grass": 
              self.weakness.append("fire")
              self.weakness.append("ice")
-             self.resistance.append("rock")
              self.resistance.append("water")
              self.resistance.append("grass")
        # if self.element == "lightning": 
@@ -100,7 +98,7 @@ class Enemy(object):
                     self.status = "tangled"
                     
             if i == "ice": 
-                if self.status == "wet": 
+                if self.status == "wet" or self.element == "water": 
                     self.status = "frozen"
         self.health -= damage
     
