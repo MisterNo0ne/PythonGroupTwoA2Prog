@@ -6,9 +6,9 @@
   - to be specific we need castle boss, forest boss, and desert boss. 
 - get moving enemies to work. this might just be for the cactus enemy jumpscare tho
 - get signs working, most likely just one informing the player the basic mechanics of the game (maybe another for easter eggs)
-- we got healing system to work, just gotta work it out so it replaces attacks and u can only do once per turn
+- DONE - we got healing system to work
 - get armor sprite visible in fight and map mode
-- fix goofy bug where attacks hit twice cuz that aint good :/
+- Balance literally everything, especially grass being really weak and fire being really op. Idea: if u do water attack twice or smth, they get doused and take more damage or smth idk. 
 - literally do everything in one day smiley face equals parentheses
 
 ----------IDEA LIST (this got deleted somehow)----------: 
