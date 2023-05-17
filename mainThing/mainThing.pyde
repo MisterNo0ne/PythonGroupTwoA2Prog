@@ -92,24 +92,33 @@ def draw():
         
         gamer.showInFight()
         
-        #rendering the grass, fire, and water attack buttons yayayy
+        #rendering the attack buttons yayayy
+        
+        #fire
         fill(245,141,12)
         rect(350,400,100,25)
-        
+        #water
         fill(127,97,252)
         rect(475,400,100,25)
-        
+        #grass
         fill(44,185,17)
         rect(350,450,100,25)
         
+        
+        #dagger
         fill(127)
         rect(475,450,100,25)
+        
+        
         #lightning
         fill(202,176,25)
         rect(350,350,100,25)
         #ice
         fill(8,187,209)
         rect(475,350,100,25)
+        #rock
+        fill(113,80,81)
+        rect(225,350,100,25)
         
         fill(255)
         noStroke()
@@ -187,7 +196,7 @@ def draw():
                 enemyList[currentEnemy].hit(40, attackType) 
             elif attackType[0] == "heal": 
                 rect(0,0,0,0)
-            elif attackType[0] == "lightning": 
+            elif attackType[0] == "lightning" or attackType[0] == "rock": 
                 enemyList[currentEnemy].hit(30, attackType)
             else: 
                 enemyList[currentEnemy].hit(20, attackType)
@@ -320,6 +329,11 @@ def mousePressed():
         if pointInsideRectangle(mouseX, mouseY, 350, 350, 100, 25):
             attackImage = loadImage("lightningBolt.png")
             attackType = ["lightning", "none"]
+            turn = 2
+            animationWaitTimer = turn1wait
+        if pointInsideRectangle(mouseX, mouseY, 225, 350, 100, 25):
+            attackImage = loadImage("rock1.png")
+            attackType = ["rock", "none"]
             turn = 2
             animationWaitTimer = turn1wait
             
@@ -456,4 +470,4 @@ def fightTurnThreeDisplayText(enemyStatus, enemyType):
             return "The enemy becomes much dryer!"
         if enemyType == "grass": 
             return "Your grassy vines remain."
-    return "somefin happend idk what"
+    return "somefin happend idk what (this is a placeholder for no status being inflicted :P)"
