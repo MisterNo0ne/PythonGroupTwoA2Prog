@@ -9,12 +9,15 @@
 - DONE - we got healing system to work
 - get armor sprite visible in fight and map mode
 - Balance literally everything, especially grass being really weak and fire being really op. Idea: if u do water attack twice or smth, they get doused and take more damage or smth idk. 
-- literally do everything in 5 days cuz we got extension yay =)
+- do everything in 5 days cuz we got extension yay =)
 
 ----------IDEA LIST (this got deleted somehow)----------: 
-- ice and rock types, where rock types most likely just deal a little more damage, and ice types or maybe water+ice freezes the enemy and makes them brittle, making rock attack shatter them for massive damage. also have freezing enemies make them deal less damage and ofc fire types immune to freezing. 
+- rock+ice+lightning types done
+- some detriment/debuff to using the same element multiple times in one battle so u cant just spam rock 120938901283901283091 times (seriously why is rock so op). 
 - have bosses have different phases/gimmicks. for the final boss, most likely a thing where it's element changes every turn (or every other turn) and all status effects are removed. Maybe have it heal a bit too when transitioning to a new phase. 
 - have a shopkeeper and coin system, where killing enemies/bosses awards the player coins that they can use to buy items. basic items would just be health potions and daggers, but maybe have him sell ice/rock spells, armor, idk some other stuff etc. 
+- have shopkeeper man sell different foods/buffs, so that u can eat them in the map mode to get buffs to certain attack, like eating ice cream makes ice attacks stronger, or eating spicy food makes fire type attacks stronger. 
+- better boss loot and progression to make the game feel like it has order and not just kill anything
 ### Description
 This game will be a spell based adventure that involves exploring a world, discovering new spells, learning how the elements interact, and fighting enemies.
 
