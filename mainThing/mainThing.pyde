@@ -17,7 +17,7 @@ def setup():
     frameRate(24)
     print("hello gamer welcom to epic spell adventure game smiley face =)")
     #don't ask
-    global gameState, ghoul, skeleton, zombie, spider, debugMode, gamer, keyPresses, bkgrnd, enemyList, freeRam, currentEnemy, skltnimg, ghlimg, spdrimg, zomimg, attacktype, turn, blocks, fightbackground, animationWaitTimer, endWaiting, attackImage, turn1wait, turn2wait, turn3wait, wizard, cactus, cactusimg, hpotcount, daggercount, chestimg, chestopened, amogus, sandBoss, sandimg, skltnbossimg, castleimg, skltnBoss, castleBoss, hasArmor, blockFile, coins, merchant
+    global gameState, ghoul, skeleton, zombie, spider, debugMode, gamer, keyPresses, bkgrnd, enemyList, freeRam, currentEnemy, skltnimg, ghlimg, spdrimg, zomimg, attacktype, turn, blocks, fightbackground, animationWaitTimer, endWaiting, attackImage, turn1wait, turn2wait, turn3wait, wizard, cactus, cactusimg, hpotcount, daggercount, chestimg, chestopened, amogus, sandBoss, sandimg, skltnbossimg, castleimg, skltnBoss, castleBoss, hasArmor, blockFile, coins, merchant, shopimg, hasRock
     
     #load files
     fightbackground = loadImage("epicfightbackground.jpeg")
@@ -34,6 +34,7 @@ def setup():
     castleimg = loadImage("evilCastle.png")
     blockFile = loadStrings("blockData.txt")
     merchant = loadImage("Shopkeeper.png")
+    shopimg = loadImage("Shop.png")
     #other stuff
     
     chestopened = False
@@ -42,6 +43,7 @@ def setup():
     attackType = []
     hasArmor = False
     coins = 10.0
+    hasRock = False
     
     #enemy declarators or smth
     ghoul = Enemy(50, "ghoul", "fire", 500, 500, ghlimg, "none", 20, False)
@@ -82,7 +84,7 @@ def setup():
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 def draw():
-    global gameState, currentEnemy, enemyList, ghoul, skeleton, turn, animationWaitTimer, gamer, endWaiting, attackType, waitTimer, chestimg, daggercount, hpotcount, chestopened, hasArmor, coins, merchant
+    global gameState, currentEnemy, enemyList, ghoul, skeleton, turn, animationWaitTimer, gamer, endWaiting, attackType, waitTimer, chestimg, daggercount, hpotcount, chestopened, hasArmor, coins, merchant, shoping, hasRock
     #??????????????????????????????????????????????????????
     #if you wanna edit values of global variables you have to put them here
     
@@ -96,32 +98,45 @@ def draw():
         gamer.showInFight()
         
         #rendering the attack buttons yayayy
-        
+        textSize(18)
         #fire
         fill(245,141,12)
         rect(350,400,100,25)
+        fill(0)
+        text("fire", 370,400,100,25)
         #water
         fill(127,97,252)
         rect(475,400,100,25)
+        fill(0)
+        text("water", 495,400,100,25)
         #grass
         fill(44,185,17)
         rect(350,450,100,25)
-        
-        
+        fill(0)
+        text("grass", 370,450,100,25)
         #dagger
         fill(127)
         rect(475,450,100,25)
+        fill(0)
+        text("dagger", 495,450,100,25)
         
         
         #lightning
         fill(202,176,25)
         rect(350,350,100,25)
+        fill(0)
+        text("lightning", 370,350,100,25)
         #ice
         fill(8,187,209)
         rect(475,350,100,25)
+        fill(0)
+        text("ice", 495,350,100,25)
         #rock
-        fill(113,80,81)
-        rect(225,350,100,25)
+        if hasRock: 
+            fill(113,80,81)
+            rect(225,350,100,25)
+            fill(0)
+            text("rock", 245,350,100,25)
         
         fill(255)
         noStroke()
@@ -160,9 +175,11 @@ def draw():
                 hpotcount+=5
                 daggercount+=5
                 coins+=100
-                if hasArmor == False:
-                    print("You found an iron chestplate! This will provide 25% damage reduction from enemy attacks!") 
-                    hasArmor = True
+                #if hasArmor == False:
+                 #   print("You found an iron chestplate! This will provide 25% damage reduction from enemy attacks!") 
+                  #  hasArmor = True
+                if enemyList[currentEnemy].type == "Sand Boss": 
+                    hasRock = True
             del enemyList[currentEnemy]
             gameState = "map"
             currentEnemy = 12345
@@ -189,8 +206,8 @@ def draw():
             enemyHitDamage = enemyList[currentEnemy].strength
             if hasArmor == True: 
                 enemyHitDamage *= 0.75
-            if enemyList[currentEnemy].status == "frozen": 
-                enemyHitDamage *= 0.5
+            if enemyList[currentEnemy].status == "frozen" or (enemyList[currentEnemy].element == "fire" and enemyList[currentEnemy].status == "wet"): 
+                enemyHitDamage *= 0.6
             gamer.health -= enemyHitDamage
             println("The gamer was hurt for " + str(enemyHitDamage) + " damage!")
             turn = 3
@@ -277,8 +294,8 @@ def draw():
         text(str(coins) + " coins", 133, height-65)
         if hasArmor == True: 
             text("iron armor", 5, height-100)
-        #if chestopened == False:      <-- this would mean deleting the chest but that might look weird
-        image(chestimg, 420-gamer.mapPosX+(width/2), 140-gamer.mapPosY+(height/2)+50, 75, 75 )   
+        if chestopened == False:      #<-- this would mean deleting the chest but that might look weird
+            image(chestimg, 380-gamer.mapPosX+(width/2), 160-gamer.mapPosY+(height/2)+50, 75, 75 )   
         
         #so currently chest hitbox is super jank sorry
         if pointInsideRectangle(gamer.mapPosX, gamer.mapPosY, 450-gamer.mapPosX+(width/2), 150-gamer.mapPosY+(height/2)+50, 75, 75) and chestopened == False: 
@@ -286,10 +303,12 @@ def draw():
             hpotcount+=10
             chestopened = True
         gamer.showOnMap()
-        image(merchant, 1500-gamer.mapPosX+(width/2), 1500-gamer.mapPosY+(height/2), 100, 100) # this aint rendering fo same reason
-        text("epic merchant man come here to buy stuff :)", 1500-gamer.mapPosX+(width/2), 1500-gamer.mapPosY+(height/2))
+        
+        image(merchant, 1600-gamer.mapPosX+(width/2), 1600-gamer.mapPosY+(height/2), 100, 100) # this aint rendering fo same reason
+        image(shopimg, 1500-gamer.mapPosX+(width/2), 1500-gamer.mapPosY+(height/2), 100, 100)
+        text("epic merchant man come here to buy stuff :)", 1600-gamer.mapPosX+(width/2), 1600-gamer.mapPosY+(height/2))
         # vvv THIS AINT WORKING FOR SOME REASON vvv
-        if pointInsideRectangle(gamer.mapPosX, gamer.mapPosY, 1500-gamer.mapPosX+(width/2), 1500-gamer.mapPosY+(height/2), 100, 100): 
+        if pointInsideRectangle(gamer.mapPosX, gamer.mapPosY, 3000-gamer.mapPosX+(width/2), 3000-gamer.mapPosY+(height/2), 100, 100): 
             print("You entered the merchant's shop!")
             gameState = "store"
             
@@ -306,14 +325,26 @@ def draw():
 #-------------------------------------------------------STORE MODE--------------------------------------------------------------------#
     else: #gameState is in store mode
         #i have no clue what to do here yet, prolly something similar to fight mode though where if u have coins and
-        #if u click in the boxes then u buy stuff and also render some store guy too
+        #if u click in the boxes then u buy stuff and also render some store guy toob
+        background(127)
         image(merchant, 200, 200)
+        stroke(0)
+        strokeWeight(4)
+        fill(120,60,60)
+        rect(0,height-100, 250, 100)
+        fill(0)
+        textSize(28)
+        text(str(daggercount) + " daggers", 5, height-65)
+        text(str(hpotcount) + " health potions", 5, height-20)
+        text(str(coins) + " coins", 133, height-65)
+        if hasArmor == True: 
+            text("iron armor", 5, height-100)
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
     
 def mousePressed():
-    global turn, attackImage, animationWaitTimer, attackType, daggercount
+    global turn, attackImage, animationWaitTimer, attackType, daggercount, hasRock
     if gameState == "map" and mouseY > height-100 and mouseX > width-300 and freeRam:
         link("https://www.google.com/search?q=download+free+ram&rlz=1C5GCEA_enUS1042US1042&oq=download+free+ram&aqs=chrome..69i57j0i512j0i10i512l6j0i512l2.2697j0j7&sourceid=chrome&ie=UTF-8")
     elif gameState == "fight" and gamer.health>=1 and turn == 1:
@@ -348,7 +379,7 @@ def mousePressed():
             attackType = ["lightning", "none"]
             turn = 2
             animationWaitTimer = turn1wait
-        if pointInsideRectangle(mouseX, mouseY, 225, 350, 100, 25):
+        if pointInsideRectangle(mouseX, mouseY, 225, 350, 100, 25) and hasRock:
             attackImage = loadImage("rock1.png")
             attackType = ["rock", "none"]
             turn = 2
@@ -424,7 +455,7 @@ def fightTurnThreeStatus(enemyStatus, enemyType):
             return "burning"
     if enemyStatus == "wet": 
         if enemyType == "fire":   
-            return "none"
+            return "wet"
         if enemyType == "water": 
             return "none"
     if enemyStatus == "tangled": 
@@ -444,9 +475,7 @@ def fightTurnThreeHealth(enemyStatus, enemyType):
         elif enemyType == "grass": 
             return -20 #fire hurts grass
     elif enemyStatus == "wet": 
-        if enemyType == "fire": 
-            return -20 #water hurts fire
-        elif enemyType == "water": 
+        if enemyType == "water": 
             return 20 #water helps water
         elif enemyType == "grass": 
             return 20 #water helps grass

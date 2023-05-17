@@ -35,7 +35,7 @@ class Enemy(object):
              self.weakness.append("grass")
              self.resistance.append("water")
              self.resistance.append("fire")
-             self.resistance.append("air")
+             self.resistance.append("rock")
         if self.element == "grass": 
              self.weakness.append("fire")
              self.weakness.append("ice")
