@@ -17,20 +17,13 @@ def setup():
     print("hello gamer welcom to epic spell adventure game smiley face =)")
     #don't ask
     global gameState, ghoul, skeleton, zombie, spider, debugMode, gamer, keyPresses, bkgrnd, enemyList, freeRam, currentEnemy, skltnimg, ghlimg, spdrimg, zomimg, attacktype, turn, blocks, fightbackground, animationWaitTimer, endWaiting, attackImage, turn1wait, turn2wait, turn3wait, wizard, cactus, cactusimg, hpotcount, daggercount, chestimg, chestopened, amogus, sandBoss, sandimg, skltnbossimg, castleimg, skltnBoss, castleBoss, hasArmor, blockFile
-    print("WORK PLEASE")
     #load files
     fightbackground = loadImage("epicfightbackground.jpeg")
-    print("1")
     skltnimg = loadImage("skeletonIdle.png")
-    print("2")
     zomimg = loadImage("Zombie.png")
-    print("3")
     spdrimg = loadImage("smallenemyspider.png")
-    print("4")
     ghlimg = loadImage("spookyGhoul.png")
-    print("5")
     bkgrnd = loadImage("MapBackground.png") #WHY IS THIS BREAKING????????
-    print("6")
     wizard = loadImage("Wizard.png")
     cactusimg = loadImage("Angry buff cactus.png") 
     chestimg = loadImage("chest.png")
@@ -39,7 +32,6 @@ def setup():
     castleimg = loadImage("evilCastle.png")
     blockFile = loadStrings("blockData.txt")
     
-    print("please print if not then i cry cuz its broken")
     #other stuff
     
     chestopened = False
@@ -122,8 +114,11 @@ def draw():
         fill(255)
         noStroke()
         rect(45, 25, 250, 250) #highlight box
-        textSize(24)
         fill(0)
+        textSize(18)
+        text("Player health: " + str(gamer.health) + "/" + str(gamer.maxHealth), 350, 525)
+        textSize(24)
+        
         if debugMode:
             text("Enemy health: " + str(enemyList[currentEnemy].health) + " ", 50, 50)
             text("type: " + enemyList[currentEnemy].type + "\n enemyID: " + str(currentEnemy) + "\n enemy element: " + enemyList[currentEnemy].element, 50, 120)
@@ -161,7 +156,7 @@ def draw():
 ## 2nd turn
         ##Displays gamer's attack
         timeForAnim = 30 #only the first 30 frames will get the animation
-        if turn == 2 and animationWaitTimer >= turn1wait-timeForAnim:
+        if turn == 2 and animationWaitTimer >= turn1wait-timeForAnim and attackType[0] != "heal":
             #ellipse(160, 440, 20, 20)
             progressFraction = float(turn1wait-animationWaitTimer)/timeForAnim
             pushMatrix()
@@ -170,17 +165,25 @@ def draw():
             image(attackImage, 0, 0, 75, 75) #player attacking
             popMatrix()
         
+        
+        ##PLAYER HIT LOGIC
         if turn == 2 and animationWaitTimer == 0:
             enemyHitDamage = enemyList[currentEnemy].strength
             if hasArmor == True: 
                 enemyHitDamage *= 0.75
+            if enemyList[currentEnemy].status == "frozen": 
+                enemyHitDamage *= 0.5
             gamer.health -= enemyHitDamage
             println("The gamer was hurt for " + str(enemyHitDamage) + " damage!")
             turn = 3
             animationWaitTimer = turn2wait
+            
+            ##ENEMY HIT LOGIC
         if animationWaitTimer == 20 and turn == 2: 
             if attackType[0] == "none": 
                 enemyList[currentEnemy].hit(40, attackType) 
+            elif attackType[0] == "heal": 
+                rect(0,0,0,0)
             else: 
                 enemyList[currentEnemy].hit(20, attackType)
         
@@ -209,6 +212,7 @@ def draw():
             
             # Enemy death logic
             print("The enemy's health is now " + str(enemyFighting.health))
+            print("Your health is now " + str(gamer.health) + " out of " + str(gamer.maxHealth))
             if enemyList[currentEnemy].health<=0:
                 print("The enemy died!")
                 print("\nBack to the map...\n")
@@ -303,7 +307,6 @@ def mousePressed():
             attackType = ["grass", "none"]
             turn = 2
             animationWaitTimer = turn1wait
-            """
         if pointInsideRectangle(mouseX, mouseY, 475, 350, 100, 25):
             attackImage = loadImage("icicleAttack.png")
             attackType = ["ice", "none"]
@@ -314,7 +317,7 @@ def mousePressed():
             attackType = ["lightning", "none"]
             turn = 2
             animationWaitTimer = turn1wait
-            """
+            
             
 def keyPressed():
     if key == 'w':
@@ -327,7 +330,7 @@ def keyPressed():
         keyPresses[3] = True
     
 def keyReleased():
-    global gamer, hpotcount, amogus, daggercount
+    global gamer, hpotcount, amogus, daggercount, turn, attackImage, gameState, attackType, animationWaitTimer, turn1wait
     if key == 'w':
         keyPresses[0] = False
     if key == 'a':
@@ -336,9 +339,14 @@ def keyReleased():
         keyPresses[2] = False
     if key == 'd':
         keyPresses[3] = False
-    if key == 'h' and hpotcount>0: 
-        gamer.health+=20
+    if key == 'h' and hpotcount>0 and turn == 1 and gameState == "fight": 
+        print("You used a health potion! You healed 30 hp!")
+        gamer.health+=30
         hpotcount-=1
+        attackImage = loadImage("LeafAttack.png")
+        attackType = ["heal", "none"]
+        turn = 2
+        animationWaitTimer = turn1wait
     if key == 'v' and amogus: 
         hpotcount+=1
     if key == 'q' and amogus: 
