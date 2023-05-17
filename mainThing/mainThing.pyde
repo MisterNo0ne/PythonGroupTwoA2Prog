@@ -288,6 +288,7 @@ def draw():
         gamer.showOnMap()
         image(merchant, 1500-gamer.mapPosX+(width/2), 1500-gamer.mapPosY+(height/2), 100, 100) # this aint rendering fo same reason
         text("epic merchant man come here to buy stuff :)", 1500-gamer.mapPosX+(width/2), 1500-gamer.mapPosY+(height/2))
+        # vvv THIS AINT WORKING FOR SOME REASON vvv
         if pointInsideRectangle(gamer.mapPosX, gamer.mapPosY, 1500-gamer.mapPosX+(width/2), 1500-gamer.mapPosY+(height/2), 100, 100): 
             print("You entered the merchant's shop!")
             gameState = "store"
