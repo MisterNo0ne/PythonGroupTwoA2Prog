@@ -14,17 +14,23 @@ from player import Player
 def setup():
     size(600, 600)
     frameRate(24)
-    
+    print("hello gamer welcom to epic spell adventure game smiley face =)")
     #don't ask
     global gameState, ghoul, skeleton, zombie, spider, debugMode, gamer, keyPresses, bkgrnd, enemyList, freeRam, currentEnemy, skltnimg, ghlimg, spdrimg, zomimg, attacktype, turn, blocks, fightbackground, animationWaitTimer, endWaiting, attackImage, turn1wait, turn2wait, turn3wait, wizard, cactus, cactusimg, hpotcount, daggercount, chestimg, chestopened, amogus, sandBoss, sandimg, skltnbossimg, castleimg, skltnBoss, castleBoss, hasArmor, blockFile
-    
+    print("WORK PLEASE")
     #load files
     fightbackground = loadImage("epicfightbackground.jpeg")
+    print("1")
     skltnimg = loadImage("skeletonIdle.png")
+    print("2")
     zomimg = loadImage("Zombie.png")
+    print("3")
     spdrimg = loadImage("smallenemyspider.png")
+    print("4")
     ghlimg = loadImage("spookyGhoul.png")
-    bkgrnd = loadImage("MapBackground.png")
+    print("5")
+    bkgrnd = loadImage("MapBackground.png") #WHY IS THIS BREAKING????????
+    print("6")
     wizard = loadImage("Wizard.png")
     cactusimg = loadImage("Angry buff cactus.png") 
     chestimg = loadImage("chest.png")
@@ -33,7 +39,9 @@ def setup():
     castleimg = loadImage("evilCastle.png")
     blockFile = loadStrings("blockData.txt")
     
+    print("please print if not then i cry cuz its broken")
     #other stuff
+    
     chestopened = False
     gameState = "map"
     currentEnemy= -1
@@ -95,12 +103,21 @@ def draw():
         #rendering the grass, fire, and water attack buttons yayayy
         fill(245,141,12)
         rect(350,400,100,25)
+        
         fill(127,97,252)
         rect(475,400,100,25)
+        
         fill(44,185,17)
         rect(350,450,100,25)
+        
         fill(127)
         rect(475,450,100,25)
+        #lightning
+        fill(202,176,25)
+        rect(350,350,100,25)
+        #ice
+        fill(8,187,209)
+        rect(475,350,100,25)
         
         fill(255)
         noStroke()
@@ -286,6 +303,18 @@ def mousePressed():
             attackType = ["grass", "none"]
             turn = 2
             animationWaitTimer = turn1wait
+            """
+        if pointInsideRectangle(mouseX, mouseY, 475, 350, 100, 25):
+            attackImage = loadImage("icicleAttack.png")
+            attackType = ["ice", "none"]
+            turn = 2
+            animationWaitTimer = turn1wait
+        if pointInsideRectangle(mouseX, mouseY, 350, 350, 100, 25):
+            attackImage = loadImage("lightningBolt.png")
+            attackType = ["lightning", "none"]
+            turn = 2
+            animationWaitTimer = turn1wait
+            """
             
 def keyPressed():
     if key == 'w':

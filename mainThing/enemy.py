@@ -82,6 +82,13 @@ class Enemy(object):
                 damage=damage*10
                 print("The overgrown vines burst into overwhelming flames! (x10 damage)")
                 
+            if self.status == "frozen" and i == "rock": 
+                damage=damage*10
+                print("The rock attack smashed through the brittle enemy, dealing massive damage! (x10 damage)")
+            if self.status == "wet" and i == "lightning": 
+                damage=damage*3
+                print("The lightning attack electrocuted the wet enemy, dealing extra damage! (x3 damage)")
+                
             if i == "fire":
                 self.status = "burning"
             if i == "water":
@@ -91,6 +98,11 @@ class Enemy(object):
                     self.status = "overgrown"
                 else:
                     self.status = "tangled"
+                    
+            if i == "ice": 
+                if self.status == "wet": 
+                    self.status = "frozen"
+                    "
         self.health -= damage
     
         print("You did " + str(damage) + " damage!")
@@ -147,4 +159,10 @@ class Enemy(object):
             image(statusimg,250,100,420,350)
         if self.status == "none": 
             rect(0,0,0,0)
+            
+        if self.status == "frozen": 
+            rect(0,0,0,0)
+        else: 
+            rect(0,0,0,0)
+            
       #  return amogguss!!!!
