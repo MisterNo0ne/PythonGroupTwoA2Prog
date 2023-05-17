@@ -17,20 +17,14 @@ def setup():
     print("hello gamer welcom to epic spell adventure game smiley face =)")
     #don't ask
     global gameState, ghoul, skeleton, zombie, spider, debugMode, gamer, keyPresses, bkgrnd, enemyList, freeRam, currentEnemy, skltnimg, ghlimg, spdrimg, zomimg, attacktype, turn, blocks, fightbackground, animationWaitTimer, endWaiting, attackImage, turn1wait, turn2wait, turn3wait, wizard, cactus, cactusimg, hpotcount, daggercount, chestimg, chestopened, amogus, sandBoss, sandimg, skltnbossimg, castleimg, skltnBoss, castleBoss, hasArmor, blockFile
-    print("WORK PLEASE")
+    
     #load files
     fightbackground = loadImage("epicfightbackground.jpeg")
-    print("1")
     skltnimg = loadImage("skeletonIdle.png")
-    print("2")
     zomimg = loadImage("Zombie.png")
-    print("3")
     spdrimg = loadImage("smallenemyspider.png")
-    print("4")
     ghlimg = loadImage("spookyGhoul.png")
-    print("5")
-    bkgrnd = loadImage("MapBackground.png") #WHY IS THIS BREAKING????????
-    print("6")
+    bkgrnd = loadImage("MapBackground.png")
     wizard = loadImage("Wizard.png")
     cactusimg = loadImage("Angry buff cactus.png") 
     chestimg = loadImage("chest.png")
@@ -38,8 +32,7 @@ def setup():
     skltnbossimg = loadImage("Skeleton Boss.png")
     castleimg = loadImage("evilCastle.png")
     blockFile = loadStrings("blockData.txt")
-    
-    print("please print if not then i cry cuz its broken")
+
     #other stuff
     
     chestopened = False

@@ -102,7 +102,6 @@ class Enemy(object):
             if i == "ice": 
                 if self.status == "wet": 
                     self.status = "frozen"
-                    "
         self.health -= damage
     
         print("You did " + str(damage) + " damage!")
