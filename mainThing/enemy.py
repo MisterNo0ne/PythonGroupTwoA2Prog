@@ -20,6 +20,7 @@ class Enemy(object):
              self.weakness.append("water")
              self.weakness.append("rock")
              self.resistance.append("ice")
+             self.resistance.append("lightning")
              self.resistance.append("grass")
              self.resistance.append("fire")
        # if self.element == "ice": 
