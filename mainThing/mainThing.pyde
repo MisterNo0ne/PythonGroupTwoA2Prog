@@ -326,7 +326,7 @@ def draw():
             for o in blocks:
                 o.display(gamer.mapPosX, gamer.mapPosY)
 #-------------------------------------------------------STORE MODE--------------------------------------------------------------------#
-    else: #gameState is in store mode
+    else: #gameState is in store mode                   also i apologize for the 1290380129 lines of code im bad ok
         #i have no clue what to do here yet, prolly something similar to fight mode though where if u have coins and
         #if u click in the boxes then u buy stuff and also render some store guy toob
         background(127)
