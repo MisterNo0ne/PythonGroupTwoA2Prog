@@ -160,7 +160,7 @@ class Enemy(object):
             
         if self.status == "frozen": 
             statusimg = loadImage("Frozen.png") 
-            tint(127,127,127,127)
+            tint(255,255,255,127)
             image(statusimg,180,60,420,350)
             tint(255,255,255)
         else: 
