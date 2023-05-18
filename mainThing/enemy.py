@@ -159,8 +159,12 @@ class Enemy(object):
             rect(0,0,0,0)
             
         if self.status == "frozen": 
-            rect(0,0,0,0)
+            statusimg = loadImage("Frozen.png") 
+            tint(127,127,127,127)
+            image(statusimg,180,60,420,350)
+            tint(255,255,255)
         else: 
             rect(0,0,0,0)
+            tint(255,255,255)
             
       #  return amogguss!!!!
