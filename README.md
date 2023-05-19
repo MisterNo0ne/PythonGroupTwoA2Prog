@@ -1,13 +1,13 @@
 # Spell Based Adventure Game
 
-##----------TO DO LIST (remove this later/once completed)----------: 
+## ----------TO DO LIST (remove this later/once completed)----------: 
 
-###Done
+### Done
 - obstacles
 - signs
 - healing
 - 
-###Friday
+### Friday
 - removable obstales for the forest and desert bosses
 - item class
 - item list
@@ -21,14 +21,14 @@
     - Add a weapons list separate from the items list to make this easier
 ![mockup of element wheel](https://github.com/MisterNo0ne/PythonGroupTwoA2Prog/blob/main/images/mockupOfElementWheel.png?raw=true)
 
-###Saturday
+### Saturday
 - obstacle speedrun
 - get moving enemies to work for epic jumpscare
 - get armor sprite visible in fight and map mode
 - Make a staling mechanic where you cant use the same attack 100 times for easy win
 - probably brainstorm the gimmicks we'll do on Sunday
 - 
-###Sunday
+### Sunday
 - get bosses with gimmicks working (like multiple phases? or changing elements stuff like that. maybe immunity to statuses for one)
   - to be specific we need castle boss, forest boss, and desert boss. 
 - Balance literally everything, especially grass being really weak and fire being really op. 
