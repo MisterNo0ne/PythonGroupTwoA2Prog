@@ -3,21 +3,16 @@ from item import Item
 from npc import Npc
 from obstacle import Obstacle
 from player import Player
+from sign import Sign
 
-# **for right now, I have multipled speed by 10 for testing purposes**
-# **for right now smiley face i promise
-
-#2 Main game states that always need to be separated:
-    #Map mode: player walking around a map
-    #Fight mode: player battling
-    #Store mode: player buying stuff from store guy/blacksmith(?)
+#why can you freeze a water type hello??
 
 def setup():
     size(600, 600)
     frameRate(24)
     print("hello gamer welcom to epic spell adventure game smiley face =)")
     #don't ask
-    global gameState, ghoul, skeleton, zombie, spider, debugMode, gamer, keyPresses, bkgrnd, enemyList, freeRam, currentEnemy, skltnimg, ghlimg, spdrimg, zomimg, attacktype, turn, blocks, fightbackground, animationWaitTimer, endWaiting, attackImage, turn1wait, turn2wait, turn3wait, wizard, cactus, cactusimg, hpotcount, daggercount, chestimg, chestopened, amogus, sandBoss, sandimg, skltnbossimg, castleimg, skltnBoss, castleBoss, hasArmor, blockFile, coins, merchant, shopimg, hasRock, shopBackground
+    global gameState, ghoul, skeleton, zombie, spider, debugMode, gamer, keyPresses, bkgrnd, enemyList, freeRam, currentEnemy, skltnimg, ghlimg, spdrimg, zomimg, attacktype, turn, blocks, fightbackground, animationWaitTimer, endWaiting, attackImage, turn1wait, turn2wait, turn3wait, wizard, cactus, cactusimg, hpotcount, daggercount, chestimg, chestopened, amogus, sandBoss, sandimg, skltnbossimg, castleimg, skltnBoss, castleBoss, hasArmor, blockFile, coins, merchant, shopimg, hasRock, shopBackground, signimg, signs
     
     #load files
     fightbackground = loadImage("epicfightbackground.jpeg")
@@ -36,6 +31,7 @@ def setup():
     merchant = loadImage("Shopkeeper.png")
     shopimg = loadImage("Shop.png")
     shopBackground = loadImage("grassBackground.png")
+    signimg = loadImage("Sign.png")
     #other stuff
     
     chestopened = False
@@ -67,6 +63,12 @@ def setup():
     
     gamer = Player(400, 400, 100, wizard) 
     
+    signs = []
+    signs.append(Sign(725, 600, "This is a sign", signimg, 32, 1))
+    signs.append(Sign(725, 700, "This is a sign\nwith a line break :O", signimg, 16, 2))
+    signs.append(Sign(725, 800, "Two\nline\nbreaks", signimg, 12, 3))
+    signs.append(Sign(725, 900, "Small text with one line wowie", signimg, 10, 1))
+    
     turn1wait = 50
     turn2wait = 30
     turn3wait = 60
@@ -85,7 +87,7 @@ def setup():
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 def draw():
-    global gameState, currentEnemy, enemyList, ghoul, skeleton, turn, animationWaitTimer, gamer, endWaiting, attackType, waitTimer, chestimg, daggercount, hpotcount, chestopened, hasArmor, coins, merchant, shoping, hasRock, shopBackground
+    global gameState, currentEnemy, enemyList, ghoul, skeleton, turn, animationWaitTimer, gamer, endWaiting, attackType, waitTimer, chestimg, daggercount, hpotcount, chestopened, hasArmor, coins, merchant, shoping, hasRock, shopBackground, signs
     #??????????????????????????????????????????????????????
     #if you wanna edit values of global variables you have to put them here
     
@@ -293,17 +295,21 @@ def draw():
         text(str(daggercount) + " daggers", 5, height-65)
         text(str(hpotcount) + " health potions", 5, height-20)
         text(str(coins) + " coins", 133, height-65)
-        if hasArmor == True: 
-            text("iron armor", 5, height-100)
-        if chestopened == False:      #<-- this would mean deleting the chest but that might look weird
-            image(chestimg, 380-gamer.mapPosX+(width/2), 160-gamer.mapPosY+(height/2)+50, 75, 75 )   
+        #i moved the armor text into debugMode at the bottom of mapMode
         
+    #chest
         #so currently chest hitbox is super jank sorry
         if pointInsideRectangle(gamer.mapPosX, gamer.mapPosY, 450-gamer.mapPosX+(width/2), 150-gamer.mapPosY+(height/2)+50, 75, 75) and chestopened == False: 
             daggercount+=10
             hpotcount+=10
             chestopened = True
+        if chestopened == False:      #<-- this would mean deleting the chest but that might look weird
+            image(chestimg, 380-gamer.mapPosX+(width/2), 160-gamer.mapPosY+(height/2)+50, 75, 75 )   
+        
         gamer.showOnMap()
+    
+        for s in signs:
+            s.showSign(gamer.mapPosX, gamer.mapPosY)
         
         image(merchant, 1600-gamer.mapPosX+(width/2), 1600-gamer.mapPosY+(height/2), 100, 100) # this aint rendering fo same reason
         image(shopimg, 1700-gamer.mapPosX+(width/2), 1615-gamer.mapPosY+(height/2), 150, 150)
@@ -321,8 +327,9 @@ def draw():
                 currentEnemy = enemyList.index(e)
                 print(" ==-== " + enemyList[currentEnemy].element + " " + enemyList[currentEnemy].type + " ==-== ")
                 gameState = "fight"
-                
+        
         if debugMode:
+            text("iron armor", 5, height-100)
             for o in blocks:
                 o.display(gamer.mapPosX, gamer.mapPosY)
 #-------------------------------------------------------STORE MODE--------------------------------------------------------------------#
@@ -341,7 +348,7 @@ def draw():
         rect(0,height-100, 250, 100)
         fill(0)
         textSize(22)
-        text("Welcome to my shop. \nFeel free to  buy \nanything you need!", 60, 75)
+        text("Welcome to my shop. \nFeel free to  buy \nanything you need!\nunless we dont have it lol", 60, 75)
         textSize(28)
         text(str(daggercount) + " daggers", 5, height-65)
         text(str(hpotcount) + " health potions", 5, height-20)
@@ -371,6 +378,8 @@ def draw():
         rect(500,500,100,25)
         fill(0)
         text("Exit to map", 450, 490)
+        
+        #zach what is this code help
         
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
 #------------------------------------------------------------------------------------------------------------------------------------------------------------

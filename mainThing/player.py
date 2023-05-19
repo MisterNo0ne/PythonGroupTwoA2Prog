@@ -15,7 +15,9 @@ class Player(object):
         stroke(0)
         strokeWeight(4)
         fill(255)
-        image(self.playerImage, (width/2)-32, (height/2)-32)
+        imageMode(CENTER)
+        image(self.playerImage, width/2, height/2)
+        imageMode(CORNER)
         
     def moveOnMap(self, keyHits, obs):
         xMov = 0 #horizontal movement (-1, 0, or 1)
