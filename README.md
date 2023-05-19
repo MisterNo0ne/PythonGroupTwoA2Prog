@@ -1,23 +1,44 @@
 # Spell Based Adventure Game
 ----------TO DO LIST (remove this later/once completed)----------: 
 - DONE - get obstacles to work 
-- removable obstales for the forest and desert bosses
-- get bosses with gimmicks working (like multiple phases? or changing elements stuff like that. maybe immunity to statuses for one)
-  - to be specific we need castle boss, forest boss, and desert boss. 
-- get moving enemies to work. this might just be for the cactus enemy jumpscare tho
-- get signs working, most likely just one informing the player the basic mechanics of the game (maybe another for easter eggs)
+- DONE - get signs working, most likely just one informing the player the basic mechanics of the game (maybe another for easter eggs)
 - DONE - we got healing system to work
-- get armor sprite visible in fight and map mode
-- Balance literally everything, especially grass being really weak and fire being really op. Idea: if u do water attack twice or smth, they get doused and take more damage or smth idk. 
+
+- FRI: removable obstales for the forest and desert bosses
+- FRI: Get item class working and make everything use an items list instead of the variables we have rn
+- FRI: display costs in shop
+- FRI: make the shop buying boxes change colors if the player can afford it 
+- FRI: make player spawn in the middle of the map and move all the enemies to actual places
+- FRI: Beeg thing is to change the attack system
+  - Each attack has an element and a weapon (sword, dagger, bow+arrow, maybe other like mace or spear or whatever you can think of)
+  - Certain weapons go good/bad with certain elements (arrow good with fire air and poison, bad with rock and water)
+  - Something like this below, with the middle circle being clickable; when clicked the player can select what weapon they want to use
+    - Add a weapons list separate from the items list to make this easier
+
+- SAT: obstacle speedrun
+- SAT: get moving enemies to work for epic jumpscare
+- SAT: get armor sprite visible in fight and map mode
+- SAT: Make a staling mechanic where you cant use the same attack 100 times for easy win
+- SAT: probably brainstorm the gimmicks we'll do on Sunday
+
+- SUN: get bosses with gimmicks working (like multiple phases? or changing elements stuff like that. maybe immunity to statuses for one)
+  - to be specific we need castle boss, forest boss, and desert boss. 
+- SUN: Balance literally everything, especially grass being really weak and fire being really op. 
+  - Idea: if u do water attack twice or smth, they get doused and take more damage or smth idk. 
+- SUN: make the readme look nice and pretty
+
 - do everything in 5 days cuz we got extension yay =)
 
 ----------IDEA LIST (this got deleted somehow)----------: 
-- rock+ice+lightning types done
-- some detriment/debuff to using the same element multiple times in one battle so u cant just spam rock 120938901283901283091 times (seriously why is rock so op). 
+- DONE - rock+ice+lightning elements
+- add poison type that counters fire to balance game
+- staling mechanic (same attacks weaken if used multiple times)
+- balance rock (make rock only good with certain statuses and bad without that, or maybe rock could get really stale)
 - have bosses have different phases/gimmicks. for the final boss, most likely a thing where it's element changes every turn (or every other turn) and all status effects are removed. Maybe have it heal a bit too when transitioning to a new phase. 
 - have a shopkeeper and coin system, where killing enemies/bosses awards the player coins that they can use to buy items. basic items would just be health potions and daggers, but maybe have him sell ice/rock spells, armor, idk some other stuff etc. 
 - have shopkeeper man sell different foods/buffs, so that u can eat them in the map mode to get buffs to certain attack, like eating ice cream makes ice attacks stronger, or eating spicy food makes fire type attacks stronger. 
 - better boss loot and progression to make the game feel like it has order and not just kill anything
+
 ### Description
 This game will be a spell based adventure that involves exploring a world, discovering new spells, learning how the elements interact, and fighting enemies.
 
