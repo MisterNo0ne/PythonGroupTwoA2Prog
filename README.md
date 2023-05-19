@@ -1,32 +1,39 @@
 # Spell Based Adventure Game
-----------TO DO LIST (remove this later/once completed)----------: 
-- DONE - get obstacles to work 
-- DONE - get signs working, most likely just one informing the player the basic mechanics of the game (maybe another for easter eggs)
-- DONE - we got healing system to work
 
-- FRI: removable obstales for the forest and desert bosses
-- FRI: Get item class working and make everything use an items list instead of the variables we have rn
-- FRI: display costs in shop
-- FRI: make the shop buying boxes change colors if the player can afford it 
-- FRI: make player spawn in the middle of the map and move all the enemies to actual places
-- FRI: Beeg thing is to change the attack system
+##----------TO DO LIST (remove this later/once completed)----------: 
+
+###Done
+- obstacles
+- signs
+- healing
+- 
+###Friday
+- removable obstales for the forest and desert bosses
+- item class
+- item list
+- display costs in shop
+- make the shop buying boxes change colors if the player can afford it 
+- make player spawn in the middle of the map and move all the enemies to actual places
+- Beeg thing is to change the attack system
   - Each attack has an element and a weapon (sword, dagger, bow+arrow, maybe other like mace or spear or whatever you can think of)
   - Certain weapons go good/bad with certain elements (arrow good with fire air and poison, bad with rock and water)
   - Something like this below, with the middle circle being clickable; when clicked the player can select what weapon they want to use
     - Add a weapons list separate from the items list to make this easier
 ![mockup of element wheel](https://github.com/MisterNo0ne/PythonGroupTwoA2Prog/blob/main/images/mockupOfElementWheel.png?raw=true)
 
-- SAT: obstacle speedrun
-- SAT: get moving enemies to work for epic jumpscare
-- SAT: get armor sprite visible in fight and map mode
-- SAT: Make a staling mechanic where you cant use the same attack 100 times for easy win
-- SAT: probably brainstorm the gimmicks we'll do on Sunday
-
-- SUN: get bosses with gimmicks working (like multiple phases? or changing elements stuff like that. maybe immunity to statuses for one)
+###Saturday
+- obstacle speedrun
+- get moving enemies to work for epic jumpscare
+- get armor sprite visible in fight and map mode
+- Make a staling mechanic where you cant use the same attack 100 times for easy win
+- probably brainstorm the gimmicks we'll do on Sunday
+- 
+###Sunday
+- get bosses with gimmicks working (like multiple phases? or changing elements stuff like that. maybe immunity to statuses for one)
   - to be specific we need castle boss, forest boss, and desert boss. 
-- SUN: Balance literally everything, especially grass being really weak and fire being really op. 
+- Balance literally everything, especially grass being really weak and fire being really op. 
   - Idea: if u do water attack twice or smth, they get doused and take more damage or smth idk. 
-- SUN: make the readme look nice and pretty
+- make the readme look nice and pretty
 
 - do everything in 5 days cuz we got extension yay =)
 
