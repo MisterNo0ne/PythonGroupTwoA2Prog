@@ -1,17 +1,19 @@
 # Spell Based Adventure Game
 
-## ----------TO DO LIST (remove this later/once completed)----------: 
+## To-do List
 
 ### Done
 - obstacles
 - signs
 - healing
-- 
+- rock, ice, lightning
+
 ### Friday
 - removable obstales for the forest and desert bosses
 - item class
 - item list
 - display costs in shop
+- add arrow key functionality (micah)
 - make the shop buying boxes change colors if the player can afford it 
 - make player spawn in the middle of the map and move all the enemies to actual places
 - Beeg thing is to change the attack system
@@ -37,8 +39,7 @@
 
 - do everything in 5 days cuz we got extension yay =)
 
-----------IDEA LIST (this got deleted somehow)----------: 
-- DONE - rock+ice+lightning elements
+### Idea List
 - add poison type that counters fire to balance game
 - staling mechanic (same attacks weaken if used multiple times)
 - balance rock (make rock only good with certain statuses and bad without that, or maybe rock could get really stale)
