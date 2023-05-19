@@ -14,6 +14,7 @@
   - Certain weapons go good/bad with certain elements (arrow good with fire air and poison, bad with rock and water)
   - Something like this below, with the middle circle being clickable; when clicked the player can select what weapon they want to use
     - Add a weapons list separate from the items list to make this easier
+![mockup of element wheel](https://github.com/MisterNo0ne/PythonGroupTwoA2Prog/blob/main/images/mockupOfElementWheel.png?raw=true)
 
 - SAT: obstacle speedrun
 - SAT: get moving enemies to work for epic jumpscare
