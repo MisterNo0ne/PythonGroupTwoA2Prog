@@ -29,7 +29,8 @@
 - get armor sprite visible in fight and map mode
 - Make a staling mechanic where you cant use the same attack 100 times for easy win
 - probably brainstorm the gimmicks we'll do on Sunday
-- 
+- Turn 4 for death animations and post-battle things (money earned etc)
+
 ### Sunday
 - get bosses with gimmicks working (like multiple phases? or changing elements stuff like that. maybe immunity to statuses for one)
   - to be specific we need castle boss, forest boss, and desert boss. 
