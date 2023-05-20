@@ -110,11 +110,7 @@ class Enemy(object):
         #return self.status
         
         
-    def mapDisplay(self, playerX, playerY):
-        """
-        rendering on the screen in map mode. For now this will just be a triangle before we implement any actual 
-        enemy sprites with variation and coloration or indicators for elements. 
-        """
+    def mapDisplay(self, playerX, playerY, debugMode):
         stroke(255,0,0)
         strokeWeight(5)
         image(self.img, self.mapPosX-playerX+(width/2), self.mapPosY-playerY+(height/2), 100, 100)
@@ -122,6 +118,11 @@ class Enemy(object):
         textSize(16)
         fill(0)
         text(self.element + " " + self.type, self.mapPosX-playerX+(width/2), self.mapPosY-playerY+(height/2)+50)
+        
+        if debugMode:
+            noFill()
+            stroke(0, 255, 255)
+            rect(self.mapPosX-playerX+(width/2), self.mapPosY-playerY+(height/2), 100, 100)
         
     def healthBarInFight(self):
         fractionOfHealth = float(self.health)/self.maxHealth

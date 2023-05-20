@@ -12,7 +12,7 @@ def setup():
     frameRate(24)
     print("hello gamer welcom to epic spell adventure game smiley face =)")
     #don't ask
-    global gameState, ghoul, skeleton, zombie, spider, debugMode, gamer, keyPresses, bkgrnd, enemyList, freeRam, currentEnemy, skltnimg, ghlimg, spdrimg, zomimg, attacktype, turn, blocks, fightbackground, animationWaitTimer, endWaiting, attackImage, turn1wait, turn2wait, turn3wait, wizard, cactus, cactusimg, hpotcount, daggercount, chestimg, chestopened, amogus, sandBoss, sandimg, skltnbossimg, castleimg, skltnBoss, castleBoss, hasArmor, blockFile, coins, merchant, shopimg, hasRock, shopBackground, signimg, signs
+    global gameState, ghoul, skeleton, zombie, spider, debugMode, gamer, keyPresses, bkgrnd, enemyList, freeRam, currentEnemy, skltnimg, ghlimg, spdrimg, zomimg, attacktype, turn, blocks, fightbackground, animationWaitTimer, endWaiting, attackImage, turn1wait, turn2wait, turn3wait, wizard, cactus, cactusimg, hpotcount, daggercount, chestimg, chestopened, amogus, sandBoss, sandimg, skltnbossimg, castleimg, skltnBoss, castleBoss, hasArmor, blockFile, coins, merchant, shopimg, hasRock, shopBackground, signimg, signs, bushBlock, sandBlock, skeletonBossBeaten, sandBossBeaten
     
     #load files
     fightbackground = loadImage("epicfightbackground.jpeg")
@@ -32,6 +32,8 @@ def setup():
     shopimg = loadImage("Shop.png")
     shopBackground = loadImage("grassBackground.png")
     signimg = loadImage("Sign.png")
+    bushBlock = loadImage("Bush Blocking area.png")
+    sandBlock = loadImage("Sandstone blocking area.png")
     #other stuff
     
     chestopened = False
@@ -49,7 +51,7 @@ def setup():
     zombie = Enemy(153, "zombie", "water", 300, 100, zomimg, "none", 20, False)
     cactus = Enemy(200, "cactus", "grass", 150, 300, cactusimg, "none", 30, False)
     sandBoss = Enemy(300, "Sand Boss", "fire", 300, 1400, sandimg, "none", 40, True)
-    skltnBoss = Enemy(400, "Skeleton Boss", "grass", 2200, 1600, skltnbossimg, "none", 40, True)
+    skltnBoss = Enemy(400, "Skeleton Boss", "grass", 2500, 1600, skltnbossimg, "none", 40, True)
     castleBoss = Enemy(500, "Final Boss", "fire", 1600, 200, castleimg, "none", 50, True)
     enemyList = [ghoul, skeleton, spider, zombie, cactus, sandBoss, skltnBoss, castleBoss] 
     hpotcount = 0
@@ -77,6 +79,8 @@ def setup():
     
     debugMode = True #displays obstacles
     freeRam = False
+    skeletonBossBeaten = False
+    sandBossBeaten = False
     keyPresses = [False, False, False, False]
     turn = 1
     attackImage = loadImage("WaterBolt.png")
@@ -87,7 +91,7 @@ def setup():
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 def draw():
-    global gameState, currentEnemy, enemyList, ghoul, skeleton, turn, animationWaitTimer, gamer, endWaiting, attackType, waitTimer, chestimg, daggercount, hpotcount, chestopened, hasArmor, coins, merchant, shoping, hasRock, shopBackground, signs
+    global gameState, currentEnemy, enemyList, ghoul, skeleton, turn, animationWaitTimer, gamer, endWaiting, attackType, waitTimer, chestimg, daggercount, hpotcount, chestopened, hasArmor, coins, merchant, shoping, hasRock, shopBackground, signs, sandBossBeaten, skeletonBossBeaten
     #??????????????????????????????????????????????????????
     #if you wanna edit values of global variables you have to put them here
     
@@ -183,14 +187,23 @@ def draw():
                   #  hasArmor = True
                 if enemyList[currentEnemy].type == "Sand Boss": 
                     hasRock = True
+                    sandBossBeaten = True
+                    del blocks[0]
+                if enemyList[currentEnemy].type == "Skeleton Boss":
+                    skeletonBossBeaten = True
+                    if not sandBossBeaten:
+                        del blocks[1]
+                    else:
+                        del blocks[0]
             del enemyList[currentEnemy]
             gameState = "map"
             currentEnemy = 12345
             endWaiting = False
-            #coins += (0.5*enemyList[currentEnemy].health)    <-- idea is the amount of gold u get scales with enemy hp
+            #coins += (0.5*enemyList[currentEnemy].maxHealth)    <-- idea is the amount of gold u get scales with enemy hp
             coins+=10
             turn = 1
             animationWaitTimer = 0
+            
 ## 2nd turn 
         ##Displays gamer's attack
         timeForAnim = 30 #only the first 30 frames will get the animation
@@ -299,7 +312,7 @@ def draw():
         
     #chest
         #so currently chest hitbox is super jank sorry
-        if pointInsideRectangle(gamer.mapPosX, gamer.mapPosY, 450-gamer.mapPosX+(width/2), 150-gamer.mapPosY+(height/2)+50, 75, 75) and chestopened == False: 
+        if pointInsideRectangle(gamer.mapPosX, gamer.mapPosY, 450-gamer.mapPosX+(width/2), 200-gamer.mapPosY+(height/2), 100, 100) and chestopened == False: 
             daggercount+=10
             hpotcount+=10
             chestopened = True
@@ -322,7 +335,7 @@ def draw():
             gameState = "store"
             
         for e in enemyList:
-            e.mapDisplay(gamer.mapPosX, gamer.mapPosY)
+            e.mapDisplay(gamer.mapPosX, gamer.mapPosY, debugMode)
             if pointInsideRectangle(gamer.mapPosX, gamer.mapPosY, e.mapPosX, e.mapPosY, 100, 100) and gamer.health>0: 
                 currentEnemy = enemyList.index(e)
                 print(" ==-== " + enemyList[currentEnemy].element + " " + enemyList[currentEnemy].type + " ==-== ")
@@ -332,6 +345,12 @@ def draw():
             text("iron armor", 5, height-100)
             for o in blocks:
                 o.display(gamer.mapPosX, gamer.mapPosY)
+        
+        if not sandBossBeaten:
+            image(sandBlock, 247-gamer.mapPosX+(width/2), 1220-gamer.mapPosY+(height/2))
+        if not skeletonBossBeaten:
+            image(bushBlock, 1900-gamer.mapPosX+(width/2), 1680-gamer.mapPosY+(height/2))
+            
 #-------------------------------------------------------STORE MODE--------------------------------------------------------------------#
     else: #gameState is in store mode                   also i apologize for the 1290380129 lines of code im bad ok
         #i have no clue what to do here yet, prolly something similar to fight mode though where if u have coins and
@@ -372,14 +391,12 @@ def draw():
         if hasArmor == False: 
             text("Iron armor", 400, 390)
         elif hasArmor == True: 
-            text("Sold out!", 400, 390)
+            text("no more armor sorry", 400, 390)
         #Exit button
         fill(200,50,50)
         rect(500,500,100,25)
         fill(0)
         text("Exit to map", 450, 490)
-        
-        #zach what is this code help
         
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -443,24 +460,24 @@ def mousePressed():
             
             
 def keyPressed():
-    if key == 'w':
+    if key == 'w' or keyCode == UP:
         keyPresses[0] = True
-    if key == 'a':
+    if key == 'a' or keyCode == LEFT:
         keyPresses[1] = True
-    if key == 's':
+    if key == 's' or keyCode == DOWN:
         keyPresses[2] = True
-    if key == 'd':
+    if key == 'd' or keyCode == RIGHT:
         keyPresses[3] = True
     
 def keyReleased():
     global gamer, hpotcount, amogus, daggercount, turn, attackImage, gameState, attackType, animationWaitTimer, turn1wait
-    if key == 'w':
+    if key == 'w' or keyCode == UP:
         keyPresses[0] = False
-    if key == 'a':
+    if key == 'a' or keyCode == LEFT:
         keyPresses[1] = False
-    if key == 's':
+    if key == 's' or keyCode == DOWN:
         keyPresses[2] = False
-    if key == 'd':
+    if key == 'd' or keyCode == RIGHT:
         keyPresses[3] = False
     if key == 'h' and hpotcount>0 and turn == 1 and gameState == "fight": 
         print("You used a health potion! You healed 30 hp!")
@@ -572,4 +589,4 @@ def fightTurnThreeDisplayText(enemyStatus, enemyType):
             return "The enemy becomes much dryer!"
         if enemyType == "grass": 
             return "Your grassy vines remain."
-    return "somefin happend idk what (this is a placeholder for no status being inflicted :P)"
+    return "No status inflicted"
