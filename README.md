@@ -1,5 +1,13 @@
 # Spell Based Adventure Game
 
+### Description
+This game will be a spell based adventure that involves exploring a world, discovering new spells, learning how the elements interact, and fighting enemies.
+
+### How to use
+On the map screen, use WASD or the arrow keys to move around.
+In a battle, press 'H' to heal. Otherwise just left click on the element of choice for your attack when it is your turn.
+In the shop, click on the buttons shown to buy health pots, daggers, and armor. To exit, click the button in the bottom right.
+
 ## To-do List
 
 ### Done
@@ -49,12 +57,6 @@
 - have a shopkeeper and coin system, where killing enemies/bosses awards the player coins that they can use to buy items. basic items would just be health potions and daggers, but maybe have him sell ice/rock spells, armor, idk some other stuff etc. 
 - have shopkeeper man sell different foods/buffs, so that u can eat them in the map mode to get buffs to certain attack, like eating ice cream makes ice attacks stronger, or eating spicy food makes fire type attacks stronger. 
 - better boss loot and progression to make the game feel like it has order and not just kill anything
-
-### Description
-This game will be a spell based adventure that involves exploring a world, discovering new spells, learning how the elements interact, and fighting enemies.
-
-### How to use
-On the map screen, use WASD to move around. If you want to start a battle, walk towards the enemy in the bottom right corner (the red triangle). For now, "WASD" is the only usable layout, though arrow keys will be added soon. 
 
 ## Features
 
