@@ -73,7 +73,7 @@ class Enemy(object):
                 damage=damage/2
                 print("Your " + i + " attack was not very effective against the opposing " + self.element + " type... (x0.5 damage)")
                 
-            #fire attacks against tangled and overgrown should go crazy
+            #Other damage modifiers
             if self.status == "tangled" and i == "fire":
                 damage=damage*3
                 print("The vines burst into flames! (x3 damage)")
@@ -88,6 +88,7 @@ class Enemy(object):
                 damage=damage*3
                 print("The lightning attack electrocuted the wet enemy, dealing extra damage! (x3 damage)")
                 
+            #Statuses
             if i == "fire":
                 self.status = "burning"
             if i == "water":
@@ -100,10 +101,12 @@ class Enemy(object):
                     self.status = "overgrown"
                 else:
                     self.status = "tangled"
-                    
             if i == "ice": 
                 if self.status == "wet" or self.element == "water": 
                     self.status = "frozen"
+            if i == "lightning" and (self.status == "wet" or self.element == "water"):
+                self.status = "zapped"
+                    
         self.health -= damage
     
         print("You did " + str(damage) + " damage!")
@@ -111,7 +114,6 @@ class Enemy(object):
         
         return self.health
         #return self.status
-        
         
     def mapDisplay(self, playerX, playerY, debugMode):
         stroke(255,0,0)
@@ -135,17 +137,18 @@ class Enemy(object):
         fill(255, 0, 0)
         noStroke()
         rect(42, 62, 297*(float(self.health)/self.maxHealth), 30)
-    def display(self, imag): 
-        image(imag, 220,50,420,250)
+    def display(self): 
+        image(self.img, 220,50,420,250)
         if self.element == "grass": 
             tint(100,255,100,127)
         if self.element == "fire": 
             tint(255,0,0,127)
         if self.element == "water": 
             tint(75,75,255,127)
-        image(imag, 220,50,420,250) #tinted one
+        image(self.img, 220,50,420,250) #tinted one
         
         tint(255,255,255) # <-- regular
+        
     def displayStatus(self): 
         if self.status == "burning": 
             statusimg = loadImage("burning.png")

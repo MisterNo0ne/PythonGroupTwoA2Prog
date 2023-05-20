@@ -12,7 +12,7 @@ def setup():
     frameRate(24)
     print("hello gamer welcom to epic spell adventure game smiley face =)")
     #don't ask
-    global gameState, ghoul, skeleton, zombie, spider, debugMode, gamer, keyPresses, bkgrnd, enemyList, freeRam, currentEnemy, skltnimg, ghlimg, spdrimg, zomimg, attacktype, turn, blocks, fightbackground, animationWaitTimer, endWaiting, attackImage, turn1wait, turn2wait, turn3wait, wizard, cactus, cactusimg, hpotcount, daggercount, chestimg, chestopened, amogus, sandBoss, sandimg, skltnbossimg, castleimg, skltnBoss, castleBoss, hasArmor, blockFile, coins, merchant, shopimg, hasRock, shopBackground, signimg, signs, bushBlock, sandBlock, skeletonBossBeaten, sandBossBeaten, icons, itemsOwned
+    global gameState, ghoul, skeleton, zombie, spider, debugMode, gamer, keyPresses, bkgrnd, enemyList, currentEnemy, skltnimg, ghlimg, spdrimg, zomimg, attacktype, turn, blocks, fightbackground, animationWaitTimer, endWaiting, attackImage, turn1wait, turn2wait, turn3wait, wizard, cactus, cactusimg, hpotcount, daggercount, chestimg, chestopened, amogus, sandBoss, sandimg, skltnbossimg, castleimg, skltnBoss, castleBoss, hasArmor, blockFile, coins, merchant, shopimg, hasRock, shopBackground, signimg, signs, bushBlock, sandBlock, skeletonBossBeaten, sandBossBeaten, icons, itemsOwned
     
     #load files
     fightbackground = loadImage("epicfightbackground.jpeg")
@@ -42,15 +42,6 @@ def setup():
     icons.append(loadImage("icons/Ice Icon.png"))
     icons.append(loadImage("icons/Rock Icon.png"))
     icons.append(loadImage("icons/Poison Icon.png"))
-    #other stuff
-    
-    chestopened = False
-    gameState = "map"
-    currentEnemy= -1
-    attackType = []
-    hasArmor = False
-    coins = 10.0
-    hasRock = False
     
     #enemy declarators or smth
     ghoul = Enemy(50, "ghoul", "fire", 500, 500, ghlimg, "none", 20, False)
@@ -65,18 +56,17 @@ def setup():
     hpotcount = 0
     daggercount = 0 #these will both change after bosses or smth like that yay
     
-    #amogus is like hax mode, where during this u can hack in more health pots and daggers and funi stuff
-    amogus  = True
+    gamer = Player(400, 400, 100, wizard) 
+
+    
+    itemsOwned = []
+    itemsOwned.append(Item("Coins", 0, 20.0))
+    itemsOwned.append(Item("Health Pots", 0, 0))
+    itemsOwned.append(Item("Daggers", 0, 0))
+    itemsOwned.append(Item("Armor", 0, "leather"))
     
     blocks = []
     makeBlocks()
-    
-    gamer = Player(400, 400, 100, wizard) 
-    
-    itemsOwned = []
-    itemsOwned.append("Coins", 0, 20.0)
-    itemsOwned.append("Health Pots", 0, 0)
-    itemsOwned.append("Daggers", 0, 0)
     
     signs = []
     signs.append(Sign(725, 600, "This is a sign", signimg, 32, 1))
@@ -84,27 +74,35 @@ def setup():
     signs.append(Sign(725, 800, "Two\nline\nbreaks", signimg, 12, 3))
     signs.append(Sign(725, 900, "Small text with one line wowie", signimg, 10, 1))
     
+    #animations
     turn1wait = 50
     turn2wait = 30
     turn3wait = 60
     animationWaitTimer = 0
     endWaiting = False
-    
+
+    #other stuff
+    gameState = "map"
+    attackType = []
+    currentEnemy= -1
+    coins = 10.0
+    chestopened = False
+    hasArmor = False
+    hasRock = False
+    amogus  = True #amogus is like hax mode, where during this u can hack in more health pots and daggers and funi stuff
     debugMode = True 
-    freeRam = False
     skeletonBossBeaten = False
     sandBossBeaten = False
     keyPresses = [False, False, False, False]
     turn = 1
     attackImage = loadImage("WaterBolt.png")
-    waitTimer = 0 
 
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 def draw():
-    global gameState, currentEnemy, enemyList, ghoul, skeleton, turn, animationWaitTimer, gamer, endWaiting, attackType, waitTimer, chestimg, daggercount, hpotcount, chestopened, hasArmor, coins, merchant, shoping, hasRock, shopBackground, signs, sandBossBeaten, skeletonBossBeaten
+    global gameState, currentEnemy, enemyList, ghoul, skeleton, turn, animationWaitTimer, gamer, endWaiting, attackType, chestimg, daggercount, hpotcount, chestopened, hasArmor, coins, merchant, shoping, hasRock, shopBackground, signs, sandBossBeaten, skeletonBossBeaten
     #??????????????????????????????????????????????????????
     #if you wanna edit values of global variables you have to put them here
     
@@ -115,26 +113,31 @@ def draw():
         #background(200)
         image(fightbackground, 0, 0, width, height)
         
-        gamer.showInFight()
-        
         renderAttackButtons() #look at the extra fxns section
 
-        enemyList[currentEnemy].display(enemyList[currentEnemy].img)
-        enemyList[currentEnemy].displayStatus()
+        cEnemy = enemyList[currentEnemy]
+        cType = cEnemy.type
+        cStatus = cEnemy.status
+        cHealth = cEnemy.health
+        cElement = cEnemy.element
+    
+        #show enemy stuff
         if debugMode:
             fill(255)
             noStroke()
             rect(45, 25, 250, 250) #highlight box
             fill(0)
             textSize(24)
-            text("Enemy health: " + str(enemyList[currentEnemy].health) + " ", 50, 50)
-            text("type: " + enemyList[currentEnemy].type + "\n enemyID: " + str(currentEnemy) + "\n enemy element: " + enemyList[currentEnemy].element, 50, 120)
-            text("status: " + enemyList[currentEnemy].status, 50, 240)
+            text("Enemy health: " + str(cHealth) + " ", 50, 50)
+            text("type: " + cType + "\n enemyID: " + str(currentEnemy) + "\n enemy element: " + cElement, 50, 120)
+            text("status: " + cStatus, 50, 240)
             textSize(32)
             stroke(0)
+        cEnemy.display()
+        cEnemy.displayStatus()
+        cEnemy.healthBarInFight()
         
-        enemyList[currentEnemy].healthBarInFight()
-        # Turn logic
+# Turn logic
         animationWaitTimer -= 2 if animationWaitTimer>0 else 0 #decrement the wait timer if it's above 0
         textSize(20)
         fill(255)
@@ -147,20 +150,20 @@ def draw():
         
         
             ##KILLED ENEMY LOGIC
-        if endWaiting or enemyList[currentEnemy].health<=0: 
-            if enemyList[currentEnemy].isBoss == True: 
-                print("yippee you killed the " + enemyList[currentEnemy].type + " congrations you (probably) got loot!11!!11!")
+        if endWaiting or cHealth<=0: 
+            if cEnemy.isBoss == True: 
+                print("yippee you killed the " + cType + " congrations you (probably) got loot!11!!11!")
                 hpotcount+=5
                 daggercount+=5
                 coins+=90
                 #if hasArmor == False:
                  #   print("You found an iron chestplate! This will provide 25% damage reduction from enemy attacks!") 
                   #  hasArmor = True
-                if enemyList[currentEnemy].type == "Sand Boss": 
+                if cType == "Sand Boss": 
                     hasRock = True
                     sandBossBeaten = True
                     del blocks[0]
-                if enemyList[currentEnemy].type == "Skeleton Boss":
+                if cType == "Skeleton Boss":
                     skeletonBossBeaten = True
                     if not sandBossBeaten:
                         del blocks[1]
@@ -170,7 +173,7 @@ def draw():
             gameState = "map"
             currentEnemy = 12345
             endWaiting = False
-            #coins += (0.5*enemyList[currentEnemy].maxHealth)    <-- idea is the amount of gold u get scales with enemy hp
+            #coins += (0.5*cEnemy.maxHealth)    <-- idea is the amount of gold u get scales with enemy hp
             coins+=10
             turn = 1
             animationWaitTimer = 0
@@ -187,13 +190,12 @@ def draw():
             image(attackImage, 0, 0, 75, 75) #player attacking
             popMatrix()
         
-        
         ##PLAYER HIT LOGIC
         if turn == 2 and animationWaitTimer == 0:
-            enemyHitDamage = enemyList[currentEnemy].strength
+            enemyHitDamage = cEnemy.strength
             if hasArmor == True: 
                 enemyHitDamage *= 0.75
-            if enemyList[currentEnemy].status == "frozen" or (enemyList[currentEnemy].element == "fire" and enemyList[currentEnemy].status == "wet"): 
+            if cStatus == "frozen" or (cElement == "fire" and cStatus == "wet"): 
                 enemyHitDamage *= 0.6
             gamer.health -= enemyHitDamage
             println("The gamer was hurt for " + str(enemyHitDamage) + " damage!")
@@ -203,22 +205,26 @@ def draw():
             ##ENEMY HIT LOGIC
         if animationWaitTimer == 20 and turn == 2: 
             if attackType[0] == "none": 
-                enemyList[currentEnemy].hit(50, attackType) 
+                cEnemy.hit(50, attackType) 
             elif attackType[0] == "heal": 
                 rect(0,0,0,0)
             elif attackType[0] == "lightning" or attackType[0] == "rock": 
-                enemyList[currentEnemy].hit(30, attackType)
+                cEnemy.hit(30, attackType)
             else: 
-                enemyList[currentEnemy].hit(20, attackType)
+                cEnemy.hit(20, attackType)
         
 ## 3rd turn
         ##Displays player hurting
         if turn == 3 and animationWaitTimer != 0:
             #player getting hurt
-            casdfawefawsdfawef = 1
+            fractionOfAnimLeft = float(animationWaitTimer)/turn2wait
+            gamer.showInFight(fractionOfAnimLeft)
+        else:
+            gamer.showInFight(0)
+            
         ##Resolve statuses
         if turn == 3 and animationWaitTimer == 0:
-            enemyFighting = enemyList[currentEnemy]
+            enemyFighting = cEnemy
             
             healthChange = fightTurnThreeHealth(enemyFighting.status, enemyFighting.element)
             displayText = fightTurnThreeDisplayText(enemyFighting.status, enemyFighting.element)
@@ -237,7 +243,7 @@ def draw():
             # Enemy death logic
             print("The enemy's health is now " + str(enemyFighting.health))
             print("Your health is now " + str(gamer.health) + " out of " + str(gamer.maxHealth))
-            if enemyList[currentEnemy].health<=0:
+            if cHealth<=0:
                 print("The enemy died!")
                 print("\nBack to the map...\n")
                 endWaiting = True
@@ -261,6 +267,8 @@ def draw():
             endWaiting = False
             gamer.health = gamer.maxHealth
             """
+        #cEnemy.status = cStatus
+        #cEnemy = cEnemy
 #----------------------------------------------------------------------MAP MODE------------------------------------------------------------------------------
 
     elif gameState == "map": #gameState is in map mode
@@ -336,11 +344,14 @@ def draw():
         stroke(0)
         strokeWeight(4)
         rect(50,50,220,110)
+        
         fill(120,60,60)
         rect(0,height-100, 250, 100)
+        
         fill(0)
         textSize(22)
         text("Welcome to my shop. \nFeel free to  buy \nanything you need!\nunless we dont have it lol", 60, 75)
+        
         textSize(28)
         text(str(daggercount) + " daggers", 5, height-65)
         text(str(hpotcount) + " health potions", 5, height-20)
@@ -381,23 +392,8 @@ def draw():
     
 def mousePressed():
     global turn, attackImage, animationWaitTimer, attackType, daggercount, hasRock, hpotcount, coins, hasArmor, gameState, gamer
-    if gameState == "map" and mouseY > height-100 and mouseX > width-300 and freeRam:
-        link("https://www.google.com/search?q=download+free+ram&rlz=1C5GCEA_enUS1042US1042&oq=download+free+ram&aqs=chrome..69i57j0i512j0i10i512l6j0i512l2.2697j0j7&sourceid=chrome&ie=UTF-8")
-    if gameState == "store": 
-        if pointInsideRectangle(mouseX, mouseY, 100,400,100,25) and coins>=5:
-            hpotcount+=1
-            coins-=5
-        if pointInsideRectangle(mouseX, mouseY, 250,400,100,25) and coins>=5:
-            daggercount+=1
-            coins-=5
-        if pointInsideRectangle(mouseX, mouseY, 400,400,100,25) and coins>=100 and hasArmor == False:
-            hasArmor = True
-            coins-=100
-        if pointInsideRectangle(mouseX, mouseY, 500,500,100,25):
-            gameState = "map"
-            gamer.mapPosX=1650
-            gamer.mapPosY=1750
-    elif gameState == "fight" and gamer.health>=1 and turn == 1:
+    
+    if gameState == "fight" and gamer.health>=1 and turn == 1:
         if pointInsideCircle(mouseX, mouseY, 430, 400, 25) and daggercount>0: 
             attackImage = loadImage("epicSword.png")
             attackType = ["none", "none"]
@@ -423,36 +419,32 @@ def mousePressed():
             attackImage = loadImage("lightningBolt.png")
             attackType = ["lightning", "none"]
             turn = 2
+            animationWaitTimer = turn1wait
         if pointInsideCircle(mouseX, mouseY, 370, 435, 25): #ice
             attackImage = loadImage("icicleAttack.png")
             attackType = ["ice", "none"]
             turn = 2
-            animationWaitTimer = turn1wait
             animationWaitTimer = turn1wait
         if pointInsideCircle(mouseX, mouseY, 370, 365, 25) and hasRock: #rock
             attackImage = loadImage("rock1.png")
             attackType = ["rock", "none"]
             turn = 2
             animationWaitTimer = turn1wait
-def renderAttackButtons():
-    textSize(18)
-    imageMode(CENTER)
-    strokeWeight(2.5)
-    fill(128)
-    ellipse(430, 330, 50, 50)
-    ellipse(490, 365, 50, 50)
-    ellipse(490, 435, 50, 50)
-    ellipse(430, 470, 50, 50)
-    ellipse(370, 435, 50, 50)
-    ellipse(370, 365, 50, 50)
-    image(icons[0], 430, 330, 50, 50) #fire
-    image(icons[1], 490, 365, 50, 50) #water
-    image(icons[2], 490, 435, 50, 50) #grass
-    image(icons[3], 430, 470, 50, 50) #lightning
-    image(icons[4], 370, 435, 50, 50) #ice
-    if hasRock:
-        image(icons[5], 370, 365, 50, 50) #rock
-    imageMode(CORNER)        
+    
+    if gameState == "store": 
+        if pointInsideRectangle(mouseX, mouseY, 100,400,100,25) and coins>=5:
+            hpotcount+=1
+            coins-=5
+        if pointInsideRectangle(mouseX, mouseY, 250,400,100,25) and coins>=5:
+            daggercount+=1
+            coins-=5
+        if pointInsideRectangle(mouseX, mouseY, 400,400,100,25) and coins>=100 and hasArmor == False:
+            hasArmor = True
+            coins-=100
+        if pointInsideRectangle(mouseX, mouseY, 500,500,100,25):
+            gameState = "map"
+            gamer.mapPosX=1650
+            gamer.mapPosY=1750
             
 def keyPressed():
     if key == 'w' or keyCode == UP:
@@ -477,8 +469,8 @@ def keyReleased():
         
     if key == 'h' and hpotcount>0 and turn == 1 and gameState == "fight": 
         print("You used a health potion! You healed 30 hp!")
-        gamer.health+=30
-        hpotcount-=1
+        gamer.health += 60
+        hpotcount -= 1
         attackImage = loadImage("LeafAttack.png")
         attackType = ["heal", "none"]
         turn = 2
@@ -507,6 +499,26 @@ def makeBlocks():
             vals = vals[index+1:]
         valList.append(float(vals))
         blocks.append(Obstacle(valList[0], valList[1], valList[2], valList[3]))
+
+def renderAttackButtons():
+    textSize(18)
+    imageMode(CENTER)
+    strokeWeight(2.5)
+    fill(128)
+    ellipse(430, 330, 50, 50)
+    ellipse(490, 365, 50, 50)
+    ellipse(490, 435, 50, 50)
+    ellipse(430, 470, 50, 50)
+    ellipse(370, 435, 50, 50)
+    ellipse(370, 365, 50, 50)
+    image(icons[0], 430, 330, 50, 50) #fire
+    image(icons[1], 490, 365, 50, 50) #water
+    image(icons[2], 490, 435, 50, 50) #grass
+    image(icons[3], 430, 470, 50, 50) #lightning
+    image(icons[4], 370, 435, 50, 50) #ice
+    if hasRock:
+        image(icons[5], 370, 365, 50, 50) #rock
+    imageMode(CORNER)     
 
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
 #------------------------------------------------------------------------------------------------------------------------------------------------------------

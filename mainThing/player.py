@@ -62,8 +62,17 @@ class Player(object):
                 self.mapPosX -= xMov * self.mapOrthogonalSpeed
                 self.mapPosY -= yMov * self.mapOrthogonalSpeed
             
-    def showInFight(self):
-        image(self.playerImage, 0, 260, 320, 340)
+    def showInFight(self, damageTintFraction):
+        #shake + tint from damage
+        pushbackBounds = 8*damageTintFraction if damageTintFraction >= 0.5 else 0
+        pushbackX = random(-pushbackBounds, pushbackBounds)
+        pushbackY = random(-pushbackBounds, pushbackBounds)
+        tintOpacity = 50+(50*damageTintFraction) if damageTintFraction != 0 else 0
+        
+        #display images
+        image(self.playerImage, pushbackX, 260+pushbackY, 320, 340)
+        tint(255, 0, 0, tintOpacity)
+        image(self.playerImage, pushbackX, 260+pushbackY, 320, 340)
         
         #health bar
         strokeWeight(4)
@@ -83,4 +92,5 @@ class Player(object):
         #reset settings
         rectMode(CORNER)
         stroke(0)
+        tint(255)
         
