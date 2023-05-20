@@ -4,9 +4,9 @@ class Player(object):
         self.itemsOwned = [] #items is already a thing ig
         self.mapPosX = mapPosX
         self.mapPosY = mapPosY
-        self.mapOrthogonalSpeed = 8.0
         self.health = health
         self.maxHealth = health
+        self.mapOrthogonalSpeed = 8.0
         self.mapDiagonalSpeed = 5.66 #orthogonal means up down left right
         self.playerImage = playerImage
         self.boundRadius = 15
@@ -73,6 +73,12 @@ class Player(object):
         fill(255, 0, 0)
         noStroke()
         rect(282, 502, 297*(float(self.health)/self.maxHealth), 37)
+        fill(0)
+        textSize(18)
+        textAlign(CENTER)
+        text(str(self.health) + " / " + str(self.maxHealth), 430, 525)
+        textSize(24)
+        textAlign(LEFT)
         
         #reset settings
         rectMode(CORNER)

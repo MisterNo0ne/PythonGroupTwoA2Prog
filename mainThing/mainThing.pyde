@@ -12,7 +12,7 @@ def setup():
     frameRate(24)
     print("hello gamer welcom to epic spell adventure game smiley face =)")
     #don't ask
-    global gameState, ghoul, skeleton, zombie, spider, debugMode, gamer, keyPresses, bkgrnd, enemyList, freeRam, currentEnemy, skltnimg, ghlimg, spdrimg, zomimg, attacktype, turn, blocks, fightbackground, animationWaitTimer, endWaiting, attackImage, turn1wait, turn2wait, turn3wait, wizard, cactus, cactusimg, hpotcount, daggercount, chestimg, chestopened, amogus, sandBoss, sandimg, skltnbossimg, castleimg, skltnBoss, castleBoss, hasArmor, blockFile, coins, merchant, shopimg, hasRock, shopBackground, signimg, signs, bushBlock, sandBlock, skeletonBossBeaten, sandBossBeaten
+    global gameState, ghoul, skeleton, zombie, spider, debugMode, gamer, keyPresses, bkgrnd, enemyList, freeRam, currentEnemy, skltnimg, ghlimg, spdrimg, zomimg, attacktype, turn, blocks, fightbackground, animationWaitTimer, endWaiting, attackImage, turn1wait, turn2wait, turn3wait, wizard, cactus, cactusimg, hpotcount, daggercount, chestimg, chestopened, amogus, sandBoss, sandimg, skltnbossimg, castleimg, skltnBoss, castleBoss, hasArmor, blockFile, coins, merchant, shopimg, hasRock, shopBackground, signimg, signs, bushBlock, sandBlock, skeletonBossBeaten, sandBossBeaten, icons, itemsOwned
     
     #load files
     fightbackground = loadImage("epicfightbackground.jpeg")
@@ -34,6 +34,14 @@ def setup():
     signimg = loadImage("Sign.png")
     bushBlock = loadImage("Bush Blocking area.png")
     sandBlock = loadImage("Sandstone blocking area.png")
+    icons = []
+    icons.append(loadImage("icons/Fire Icon.png"))
+    icons.append(loadImage("icons/Water Icon.png"))
+    icons.append(loadImage("icons/Grass Icon.png"))
+    icons.append(loadImage("icons/Lightning Icon.png"))
+    icons.append(loadImage("icons/Ice Icon.png"))
+    icons.append(loadImage("icons/Rock Icon.png"))
+    icons.append(loadImage("icons/Poison Icon.png"))
     #other stuff
     
     chestopened = False
@@ -65,6 +73,11 @@ def setup():
     
     gamer = Player(400, 400, 100, wizard) 
     
+    itemsOwned = []
+    itemsOwned.append("Coins", 0, 20.0)
+    itemsOwned.append("Health Pots", 0, 0)
+    itemsOwned.append("Daggers", 0, 0)
+    
     signs = []
     signs.append(Sign(725, 600, "This is a sign", signimg, 32, 1))
     signs.append(Sign(725, 700, "This is a sign\nwith a line break :O", signimg, 16, 2))
@@ -77,7 +90,7 @@ def setup():
     animationWaitTimer = 0
     endWaiting = False
     
-    debugMode = True #displays obstacles
+    debugMode = True 
     freeRam = False
     skeletonBossBeaten = False
     sandBossBeaten = False
@@ -96,7 +109,7 @@ def draw():
     #if you wanna edit values of global variables you have to put them here
     
 #-------------------------------------------------------------------------------FIGHT MODE-------------------------------------------------------------------
-
+    
     if gameState == "fight":
         # Display logic
         #background(200)
@@ -104,63 +117,21 @@ def draw():
         
         gamer.showInFight()
         
-        #rendering the attack buttons yayayy
-        textSize(18)
-        #fire
-        fill(245,141,12)
-        rect(350,400,100,25)
-        fill(0)
-        text("fire", 370,400,100,25)
-        #water
-        fill(127,97,252)
-        rect(475,400,100,25)
-        fill(0)
-        text("water", 495,400,100,25)
-        #grass
-        fill(44,185,17)
-        rect(350,450,100,25)
-        fill(0)
-        text("grass", 370,450,100,25)
-        #dagger
-        fill(127)
-        rect(475,450,100,25)
-        fill(0)
-        text("dagger", 495,450,100,25)
-        
-        
-        #lightning
-        fill(202,176,25)
-        rect(350,350,100,25)
-        fill(0)
-        text("lightning", 370,350,100,25)
-        #ice
-        fill(8,187,209)
-        rect(475,350,100,25)
-        fill(0)
-        text("ice", 495,350,100,25)
-        #rock
-        if hasRock: 
-            fill(113,80,81)
-            rect(225,350,100,25)
-            fill(0)
-            text("rock", 245,350,100,25)
-        
-        fill(255)
-        noStroke()
-        rect(45, 25, 250, 250) #highlight box
-        fill(0)
-        textSize(18)
-        text("Player health: " + str(gamer.health) + "/" + str(gamer.maxHealth), 350, 525)
-        textSize(24)
-        
+        renderAttackButtons() #look at the extra fxns section
+
+        enemyList[currentEnemy].display(enemyList[currentEnemy].img)
+        enemyList[currentEnemy].displayStatus()
         if debugMode:
+            fill(255)
+            noStroke()
+            rect(45, 25, 250, 250) #highlight box
+            fill(0)
+            textSize(24)
             text("Enemy health: " + str(enemyList[currentEnemy].health) + " ", 50, 50)
             text("type: " + enemyList[currentEnemy].type + "\n enemyID: " + str(currentEnemy) + "\n enemy element: " + enemyList[currentEnemy].element, 50, 120)
             text("status: " + enemyList[currentEnemy].status, 50, 240)
-        enemyList[currentEnemy].display(enemyList[currentEnemy].img)
-        enemyList[currentEnemy].displayStatus()
-        textSize(32)
-        stroke(0)
+            textSize(32)
+            stroke(0)
         
         enemyList[currentEnemy].healthBarInFight()
         # Turn logic
@@ -336,7 +307,7 @@ def draw():
             
         for e in enemyList:
             e.mapDisplay(gamer.mapPosX, gamer.mapPosY, debugMode)
-            if pointInsideRectangle(gamer.mapPosX, gamer.mapPosY, e.mapPosX, e.mapPosY, 100, 100) and gamer.health>0: 
+            if pointInsideRectangle(gamer.mapPosX, gamer.mapPosY, e.mapPosX-32, e.mapPosY-32, 132, 132) and gamer.health>0: 
                 currentEnemy = enemyList.index(e)
                 print(" ==-== " + enemyList[currentEnemy].element + " " + enemyList[currentEnemy].type + " ==-== ")
                 gameState = "fight"
@@ -350,15 +321,17 @@ def draw():
             image(sandBlock, 247-gamer.mapPosX+(width/2), 1220-gamer.mapPosY+(height/2))
         if not skeletonBossBeaten:
             image(bushBlock, 1900-gamer.mapPosX+(width/2), 1680-gamer.mapPosY+(height/2))
-            
+        
 #-------------------------------------------------------STORE MODE--------------------------------------------------------------------#
     else: #gameState is in store mode                   also i apologize for the 1290380129 lines of code im bad ok
         #i have no clue what to do here yet, prolly something similar to fight mode though where if u have coins and
         #if u click in the boxes then u buy stuff and also render some store guy toob
-        background(127)
+        
+        #background(127)
         image(shopBackground,0,0,600,600)
         image(shopimg, 375, 100, 300, 300)
         image(merchant, 300, 200, 100, 100)
+        
         fill(255)
         stroke(0)
         strokeWeight(4)
@@ -374,16 +347,19 @@ def draw():
         text(str(coins) + " coins", 133, height-65)
         if hasArmor == True: 
             text("iron armor", 5, height-100)
+        
         textSize(22)
+        
         #hpot
         fill(200,50,50)
         rect(100,400,100,25)
         fill(0)
         text("1 health potion", 100, 390)
         
-        fill(127)
         #dagger
+        fill(127)
         rect(250,400,100,25)
+        
         #armor
         rect(400,400,100,25)
         fill(0)
@@ -392,6 +368,7 @@ def draw():
             text("Iron armor", 400, 390)
         elif hasArmor == True: 
             text("no more armor sorry", 400, 390)
+        
         #Exit button
         fill(200,50,50)
         rect(500,500,100,25)
@@ -421,43 +398,61 @@ def mousePressed():
             gamer.mapPosX=1650
             gamer.mapPosY=1750
     elif gameState == "fight" and gamer.health>=1 and turn == 1:
-        if pointInsideRectangle(mouseX, mouseY, 475,450,100,25) and daggercount>0: 
+        if pointInsideCircle(mouseX, mouseY, 430, 400, 25) and daggercount>0: 
             attackImage = loadImage("epicSword.png")
             attackType = ["none", "none"]
             daggercount-=1
             turn = 2
             animationWaitTimer = turn1wait
-        if pointInsideRectangle(mouseX, mouseY, 350, 400, 100, 25):
+        if pointInsideCircle(mouseX, mouseY, 430, 330, 25): #fire
             attackImage = loadImage("FireBall.png")
             attackType = ["fire", "none"]
             turn = 2
             animationWaitTimer = turn1wait
-        if pointInsideRectangle(mouseX, mouseY, 475, 400, 100, 25):
+        if pointInsideCircle(mouseX, mouseY, 490, 365, 25): #water
             attackImage = loadImage("WaterBolt.png")
             attackType = ["water", "none"]
             turn = 2
             animationWaitTimer = turn1wait
-        if pointInsideRectangle(mouseX, mouseY, 350, 450, 100, 25):
+        if pointInsideCircle(mouseX, mouseY, 490, 435, 25): #grass
             attackImage = loadImage("LeafAttack.png")
             attackType = ["grass", "none"]
             turn = 2
             animationWaitTimer = turn1wait
-        if pointInsideRectangle(mouseX, mouseY, 475, 350, 100, 25):
+        if pointInsideCircle(mouseX, mouseY, 430, 470, 25): #lightning
+            attackImage = loadImage("lightningBolt.png")
+            attackType = ["lightning", "none"]
+            turn = 2
+        if pointInsideCircle(mouseX, mouseY, 370, 435, 25): #ice
             attackImage = loadImage("icicleAttack.png")
             attackType = ["ice", "none"]
             turn = 2
             animationWaitTimer = turn1wait
-        if pointInsideRectangle(mouseX, mouseY, 350, 350, 100, 25):
-            attackImage = loadImage("lightningBolt.png")
-            attackType = ["lightning", "none"]
-            turn = 2
             animationWaitTimer = turn1wait
-        if pointInsideRectangle(mouseX, mouseY, 225, 350, 100, 25) and hasRock:
+        if pointInsideCircle(mouseX, mouseY, 370, 365, 25) and hasRock: #rock
             attackImage = loadImage("rock1.png")
             attackType = ["rock", "none"]
             turn = 2
             animationWaitTimer = turn1wait
-            
+def renderAttackButtons():
+    textSize(18)
+    imageMode(CENTER)
+    strokeWeight(2.5)
+    fill(128)
+    ellipse(430, 330, 50, 50)
+    ellipse(490, 365, 50, 50)
+    ellipse(490, 435, 50, 50)
+    ellipse(430, 470, 50, 50)
+    ellipse(370, 435, 50, 50)
+    ellipse(370, 365, 50, 50)
+    image(icons[0], 430, 330, 50, 50) #fire
+    image(icons[1], 490, 365, 50, 50) #water
+    image(icons[2], 490, 435, 50, 50) #grass
+    image(icons[3], 430, 470, 50, 50) #lightning
+    image(icons[4], 370, 435, 50, 50) #ice
+    if hasRock:
+        image(icons[5], 370, 365, 50, 50) #rock
+    imageMode(CORNER)        
             
 def keyPressed():
     if key == 'w' or keyCode == UP:
@@ -479,6 +474,7 @@ def keyReleased():
         keyPresses[2] = False
     if key == 'd' or keyCode == RIGHT:
         keyPresses[3] = False
+        
     if key == 'h' and hpotcount>0 and turn == 1 and gameState == "fight": 
         print("You used a health potion! You healed 30 hp!")
         gamer.health+=30
@@ -494,10 +490,12 @@ def keyReleased():
         
 def pointInsideRectangle(a, b, x, y, w, h):
     # just returns whether or not the coordinate of the first 2 parameters is in the rectangle defined by the last 4 parameters
-    return ((a>x) and (a<x+w)) and ((b>y) and (b<y+h))
+    return (a>x) and (a<x+w) and (b>y) and (b<y+h)
 
-
-#don't ask idk either
+def pointInsideCircle(a, b, x, y, r):
+    #same as above but circle now; finds the distance between (a,b) and (x,y)
+    return pow(pow(a-x, 2) + pow(b-y, 2), 0.5) < r
+    
 def makeBlocks():
     for vals in blockFile:
         valList = []
@@ -509,7 +507,7 @@ def makeBlocks():
             vals = vals[index+1:]
         valList.append(float(vals))
         blocks.append(Obstacle(valList[0], valList[1], valList[2], valList[3]))
-        
+
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
 #------------------------------------------------------------------------------------------------------------------------------------------------------------    

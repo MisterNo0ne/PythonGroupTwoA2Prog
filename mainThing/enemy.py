@@ -91,7 +91,10 @@ class Enemy(object):
             if i == "fire":
                 self.status = "burning"
             if i == "water":
-                self.status = "wet"
+                if self.status == "tangled":
+                    self.status = "overgrown"
+                else:
+                    self.status = "wet"
             if i == "grass":
                 if self.status == "tangled":
                     self.status = "overgrown"
