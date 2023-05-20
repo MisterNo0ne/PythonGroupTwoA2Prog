@@ -9,7 +9,7 @@
 - rock, ice, lightning
 
 ### Friday
-- removable obstales for the forest and desert bosses
+- DONE - removable obstales for the forest and desert bosses
 - item class
 - item list
 - display costs in shop
