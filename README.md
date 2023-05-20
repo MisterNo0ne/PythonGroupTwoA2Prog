@@ -12,8 +12,8 @@
 - DONE - removable obstales for the forest and desert bosses
 - DONE - item class
 - item list
-- display costs in shop
 - DONE - add arrow key functionality (micah)
+- display costs in shop
 - make the shop buying boxes change colors if the player can afford it 
 - make player spawn in the middle of the map and move all the enemies to actual places
 - Beeg thing is to change the attack system
