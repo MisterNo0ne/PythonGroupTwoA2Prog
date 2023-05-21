@@ -135,6 +135,7 @@ class Enemy(object):
         fill(255, 0, 0)
         noStroke()
         rect(42, 62, 297*(float(self.health)/self.maxHealth), 30)
+        
     def display(self): 
         image(self.img, 220,50,420,250)
         if self.element == "grass": 

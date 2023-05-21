@@ -61,7 +61,7 @@ def setup():
     castleBoss = Enemy(500, "Final Boss", "fire", 1600, 200, castleimg, "none", 50, True)
     enemyList = [cactus, ghoul, skeleton, spider, zombie, sandBoss, skltnBoss, castleBoss] 
     
-    gamer = Player(400, 400, 100, wizard) 
+    gamer = Player(1400, 1300, 100, wizard) 
     
     itemsOwned = []
     itemsOwned.append(Item("Coins", 10.0))
@@ -288,9 +288,9 @@ def draw():
             gamer.mapPosY = 1300
             gamer.health = (gamer.maxHealth/2)
             print("You managed to escape, but lost some coins")
-            coins-=15
-            if coins<=0: 
-                coins = 0
+            itemsOwned[0]-=15
+            if itemsOwned[0]<=0: 
+                itemsOwned[0] = 0
             turn = 1
     
 #----------------------------------------------------------------------MAP MODE------------------------------------------------------------------------------
@@ -306,15 +306,6 @@ def draw():
         #starting platform thingy
         fill(127)
         rect(1300-gamer.mapPosX+(width/2),1200-gamer.mapPosY+(height/2),200,200)
-        #rendering inventory box (currently just health pots and daggers): 
-        fill(120,60,60)
-        rect(0,height-100, 250, 100)
-        fill(0)
-        textSize(28)
-        text(str(daggercount) + " daggers", 5, height-65)
-        text(str(hpotcount) + " health potions", 5, height-20)
-        text(str(coins) + " coins", 133, height-65)
-        #i moved the armor text into debugMode at the bottom of mapMode
         
         #displaying health bar so the player actually knows what their hp is before fighting: 
         displayPlayerHealth()
@@ -359,7 +350,6 @@ def draw():
             image(bushBlock, 1900-gamer.mapPosX+(width/2), 1680-gamer.mapPosY+(height/2))
         
         inventoryBox()
-        
 #-------------------------------------------------------STORE MODE--------------------------------------------------------------------#
     else: #gameState is in store mode                   also i apologize for the 1290380129 lines of code im bad ok
         #i have no clue what to do here yet, prolly something similar to fight mode though where if u have coins and
