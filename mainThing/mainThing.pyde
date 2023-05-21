@@ -1,5 +1,6 @@
 from enemy import Enemy
 from item import Item
+from item import Weapon
 from npc import Npc
 from obstacle import Obstacle
 from player import Player
@@ -11,8 +12,8 @@ def setup():
     size(600, 600)
     frameRate(24)
     print("hello gamer welcom to epic spell adventure game smiley face =)")
-    #don't ask
-    global gameState, ghoul, skeleton, zombie, spider, debugMode, gamer, keyPresses, bkgrnd, enemyList, currentEnemy, skltnimg, ghlimg, spdrimg, zomimg, attacktype, turn, blocks, fightbackground, animationWaitTimer, endWaiting, attackImage, turn1wait, turn2wait, turn3wait, wizard, cactus, cactusimg, hpotcount, daggercount, chestimg, chestopened, amogus, sandBoss, sandimg, skltnbossimg, castleimg, skltnBoss, castleBoss, hasArmor, blockFile, coins, merchant, shopimg, hasRock, shopBackground, signimg, signs, bushBlock, sandBlock, skeletonBossBeaten, sandBossBeaten, icons, itemsOwned
+
+    global gameState, ghoul, skeleton, zombie, spider, debugMode, gamer, keyPresses, bkgrnd, enemyList, currentEnemy, skltnimg, ghlimg, spdrimg, zomimg, attacktype, turn, blocks, fightbackground, animationWaitTimer, endWaiting, attackImage, turn1wait, turn2wait, turn3wait, wizard, cactus, cactusimg, chestimg, chestopened, amogus, sandBoss, sandimg, skltnbossimg, castleimg, skltnBoss, castleBoss, blockFile, merchant, shopimg, hasRock, shopBackground, signimg, signs, bushBlock, sandBlock, skeletonBossBeaten, sandBossBeaten, icons, itemsOwned, weaponsOwned, weaponImgs, switchingWeapon, currentWeapon
     
     #load files
     fightbackground = loadImage("epicfightbackground.jpeg")
@@ -42,28 +43,36 @@ def setup():
     icons.append(loadImage("icons/Ice Icon.png"))
     icons.append(loadImage("icons/Rock Icon.png"))
     icons.append(loadImage("icons/Poison Icon.png"))
+    weaponImgs = []
+    weaponImgs.append(loadImage("weapons/sword.png"))
+    weaponImgs.append(loadImage("weapons/bow.png"))
+    weaponImgs.append(loadImage("weapons/dagger.png"))
+    weaponImgs.append(loadImage("weapons/spear.png"))
+    weaponImgs.append(loadImage("weapons/mace.png"))
     
     #enemy declarators or smth
+    cactus = Enemy(200, "cactus", "grass", 150, 300, cactusimg, "none", 30, False)
     ghoul = Enemy(50, "ghoul", "fire", 500, 500, ghlimg, "none", 20, False)
     skeleton = Enemy(100, "skeleton", "grass", 200, 400, skltnimg, "none", 20, False)
     spider = Enemy(42, "spider", "fire", 200, 200, spdrimg, "none", 20, False)
     zombie = Enemy(153, "zombie", "water", 300, 100, zomimg, "none", 20, False)
-    cactus = Enemy(200, "cactus", "grass", 150, 300, cactusimg, "none", 30, False)
     sandBoss = Enemy(300, "Sand Boss", "fire", 300, 1400, sandimg, "none", 40, True)
     skltnBoss = Enemy(400, "Skeleton Boss", "grass", 2500, 1600, skltnbossimg, "none", 40, True)
     castleBoss = Enemy(500, "Final Boss", "fire", 1600, 200, castleimg, "none", 50, True)
-    enemyList = [ghoul, skeleton, spider, zombie, cactus, sandBoss, skltnBoss, castleBoss] 
-    hpotcount = 0
-    daggercount = 0 #these will both change after bosses or smth like that yay
+    enemyList = [cactus, ghoul, skeleton, spider, zombie, sandBoss, skltnBoss, castleBoss] 
     
     gamer = Player(400, 400, 100, wizard) 
-
     
     itemsOwned = []
-    itemsOwned.append(Item("Coins", 0, 20.0))
-    itemsOwned.append(Item("Health Pots", 0, 0))
-    itemsOwned.append(Item("Daggers", 0, 0))
-    itemsOwned.append(Item("Armor", 0, "leather"))
+    itemsOwned.append(Item("Coins", 10.0))
+    itemsOwned.append(Item("Health Pots", 0))
+    itemsOwned.append(Item("Daggers", 0))
+    itemsOwned.append(Item("Armor", "leather"))
+    
+    #REMEMBER: order is fire, water, grass, lightning, ice, rock
+    weaponsOwned = []
+    weaponsOwned.append(Weapon("Sword", 25.0, [1, 1, 1.5, 0.5, 1, 1], [0.8, 1, 1, 0.8, 1, 1.5], weaponImgs[0]))
+    weaponsOwned.append(Weapon("Bow", 20.0, [1, 0.8, 1, 0.8, 1.5, 1], [0.8, 1, 1, 1.5, 1.2, 0.5], weaponImgs[1]))
     
     blocks = []
     makeBlocks()
@@ -85,14 +94,14 @@ def setup():
     gameState = "map"
     attackType = []
     currentEnemy= -1
-    coins = 10.0
+    currentWeapon = 0
     chestopened = False
-    hasArmor = False
     hasRock = False
     amogus  = True #amogus is like hax mode, where during this u can hack in more health pots and daggers and funi stuff
     debugMode = True 
     skeletonBossBeaten = False
     sandBossBeaten = False
+    switchingWeapon = False
     keyPresses = [False, False, False, False]
     turn = 1
     attackImage = loadImage("WaterBolt.png")
@@ -102,7 +111,7 @@ def setup():
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 def draw():
-    global gameState, currentEnemy, enemyList, ghoul, skeleton, turn, animationWaitTimer, gamer, endWaiting, attackType, chestimg, daggercount, hpotcount, chestopened, hasArmor, coins, merchant, shoping, hasRock, shopBackground, signs, sandBossBeaten, skeletonBossBeaten
+    global gameState, currentEnemy, enemyList, ghoul, skeleton, turn, animationWaitTimer, gamer, endWaiting, attackType, chestimg, chestopened, merchant, shoping, hasRock, shopBackground, signs, sandBossBeaten, skeletonBossBeaten, itemsOwned, weaponsOwned
     #??????????????????????????????????????????????????????
     #if you wanna edit values of global variables you have to put them here
     
@@ -141,8 +150,8 @@ def draw():
         animationWaitTimer -= 2 if animationWaitTimer>0 else 0 #decrement the wait timer if it's above 0
         textSize(20)
         fill(255)
-        text("You have " + str(daggercount) + " daggers!", width-200, height-30)
-        text("You have " + str(hpotcount) + " health potions!", width-520, height-30)
+        text("You have " + str(itemsOwned[2].value) + " daggers!", width-200, height-30)
+        text("You have " + str(itemsOwned[1].value) + " health potions!", width-520, height-30)
         textSize(32)
         
         text(str(animationWaitTimer), width-100, 100)
@@ -153,9 +162,9 @@ def draw():
         if endWaiting or cHealth<=0: 
             if cEnemy.isBoss == True: 
                 print("yippee you killed the " + cType + " congrations you (probably) got loot!11!!11!")
-                hpotcount+=5
-                daggercount+=5
-                coins+=90
+                itemsOwned[1].value+=5
+                itemsOwned[2].value+=5
+                itemsOwned[0].value+=90
                 #if hasArmor == False:
                  #   print("You found an iron chestplate! This will provide 25% damage reduction from enemy attacks!") 
                   #  hasArmor = True
@@ -173,8 +182,8 @@ def draw():
             gameState = "map"
             currentEnemy = 12345
             endWaiting = False
-            #coins += (0.5*cEnemy.maxHealth)    <-- idea is the amount of gold u get scales with enemy hp
-            coins+=10
+            #itemsOwned[0].value += (0.5*cEnemy.maxHealth)    <-- idea is the amount of gold u get scales with enemy hp
+            itemsOwned[0].value+=10
             turn = 1
             animationWaitTimer = 0
             
@@ -193,25 +202,24 @@ def draw():
         ##PLAYER HIT LOGIC
         if turn == 2 and animationWaitTimer == 0:
             enemyHitDamage = cEnemy.strength
-            if hasArmor == True: 
+            if itemsOwned[3].value == "iron": 
                 enemyHitDamage *= 0.75
-            if cStatus == "frozen" or (cElement == "fire" and cStatus == "wet"): 
+            if cStatus == "frozen" or (cElement == "fire" and cStatus == "wet") or cStatus == "zapped": 
                 enemyHitDamage *= 0.6
             gamer.health -= enemyHitDamage
             println("The gamer was hurt for " + str(enemyHitDamage) + " damage!")
             turn = 3
             animationWaitTimer = turn2wait
             
-            ##ENEMY HIT LOGIC
+         ##ENEMY HIT LOGIC
         if animationWaitTimer == 20 and turn == 2: 
-            if attackType[0] == "none": 
-                cEnemy.hit(50, attackType) 
-            elif attackType[0] == "heal": 
-                rect(0,0,0,0)
-            elif attackType[0] == "lightning" or attackType[0] == "rock": 
-                cEnemy.hit(30, attackType)
+            cw = weaponsOwned[currentWeapon]
+            if attackType == "none": 
+                cEnemy.hit(50, attackType, cw)
+            elif attackType == "lightning" or attackType[0] == "rock": 
+                cEnemy.hit(30, attackType, cw)
             else: 
-                cEnemy.hit(20, attackType)
+                cEnemy.hit(20, attackType, cw)
         
 ## 3rd turn
         ##Displays player hurting
@@ -256,7 +264,7 @@ def draw():
             print("oh no!1!11!1!11 uy deied!!11! you are loser L game over")
             gameState = "map"
             gamer.mapPosX = 400
-            gamer.mapPosX = 400
+            gamer.mapPosY = 400
             gamer.health = gamer.maxHealth
     
             """
@@ -277,23 +285,11 @@ def draw():
         background(12, 89, 183)
         image(bkgrnd,(width/2)-gamer.mapPosX,(height/2)-gamer.mapPosY)
         
-        #rendering inventory box (currently just health pots and daggers): 
-        stroke(0)
-        strokeWeight(4)
-        fill(120,60,60)
-        rect(0,height-100, 250, 100)
-        fill(0)
-        textSize(28)
-        text(str(daggercount) + " daggers", 5, height-65)
-        text(str(hpotcount) + " health potions", 5, height-20)
-        text(str(coins) + " coins", 133, height-65)
-        #i moved the armor text into debugMode at the bottom of mapMode
-        
     #chest
         #so currently chest hitbox is super jank sorry
-        if pointInsideRectangle(gamer.mapPosX, gamer.mapPosY, 450-gamer.mapPosX+(width/2), 200-gamer.mapPosY+(height/2), 100, 100) and chestopened == False: 
-            daggercount+=10
-            hpotcount+=10
+        if pointInsideRectangle(gamer.mapPosX, gamer.mapPosY, 450-gamer.mapPosX+(width/2), 200-gamer.mapPosY+(height/2), 150, 100) and chestopened == False: 
+            itemsOwned[2].value+=10
+            itemsOwned[1].value+=10
             chestopened = True
         if chestopened == False:      #<-- this would mean deleting the chest but that might look weird
             image(chestimg, 380-gamer.mapPosX+(width/2), 160-gamer.mapPosY+(height/2)+50, 75, 75 )   
@@ -321,7 +317,6 @@ def draw():
                 gameState = "fight"
         
         if debugMode:
-            text("iron armor", 5, height-100)
             for o in blocks:
                 o.display(gamer.mapPosX, gamer.mapPosY)
         
@@ -329,6 +324,8 @@ def draw():
             image(sandBlock, 247-gamer.mapPosX+(width/2), 1220-gamer.mapPosY+(height/2))
         if not skeletonBossBeaten:
             image(bushBlock, 1900-gamer.mapPosX+(width/2), 1680-gamer.mapPosY+(height/2))
+        
+        inventoryBox()
         
 #-------------------------------------------------------STORE MODE--------------------------------------------------------------------#
     else: #gameState is in store mode                   also i apologize for the 1290380129 lines of code im bad ok
@@ -340,108 +337,104 @@ def draw():
         image(shopimg, 375, 100, 300, 300)
         image(merchant, 300, 200, 100, 100)
         
+        inventoryBox()
+        
         fill(255)
         stroke(0)
         strokeWeight(4)
         rect(50,50,220,110)
-        
-        fill(120,60,60)
-        rect(0,height-100, 250, 100)
-        
         fill(0)
         textSize(22)
         text("Welcome to my shop. \nFeel free to  buy \nanything you need!\nunless we dont have it lol", 60, 75)
         
-        textSize(28)
-        text(str(daggercount) + " daggers", 5, height-65)
-        text(str(hpotcount) + " health potions", 5, height-20)
-        text(str(coins) + " coins", 133, height-65)
-        if hasArmor == True: 
-            text("iron armor", 5, height-100)
-        
-        textSize(22)
-        
         #hpot
-        fill(200,50,50)
+        fill(color(127) if itemsOwned[0].value<10 else color(100, 255, 100))
         rect(100,400,100,25)
-        fill(0)
-        text("1 health potion", 100, 390)
         
         #dagger
-        fill(127)
+        fill(color(127) if itemsOwned[0].value<5 else color(100, 255, 100))
         rect(250,400,100,25)
         
         #armor
+        fill(color(127) if itemsOwned[0].value<100 else color(100, 255, 100))
         rect(400,400,100,25)
+        
+        #text for items
         fill(0)
-        text("1 dagger", 250, 390)
-        if hasArmor == False: 
+        text("Health Potion", 100, 390)
+        text("10 coins", 105, 420)
+        
+        text("Dagger", 250, 390)
+        text("5 coins", 255, 420)
+        
+        if itemsOwned[3].value == "leather": 
             text("Iron armor", 400, 390)
-        elif hasArmor == True: 
-            text("no more armor sorry", 400, 390)
+        elif itemsOwned[3].value == "iron":
+            text("No more armor", 400, 390)
+        text("100 coins", 405, 420)
         
         #Exit button
         fill(200,50,50)
-        rect(500,500,100,25)
+        rect(440,500,200,25)
         fill(0)
-        text("Exit to map", 450, 490)
+        text("Exit to map...", 450, 490)
         
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
     
 def mousePressed():
-    global turn, attackImage, animationWaitTimer, attackType, daggercount, hasRock, hpotcount, coins, hasArmor, gameState, gamer
+    global turn, attackImage, animationWaitTimer, attackType, hasRock, gameState, gamer, itemsOwned, currentWeapon, switchingWeapon
     
     if gameState == "fight" and gamer.health>=1 and turn == 1:
-        if pointInsideCircle(mouseX, mouseY, 430, 400, 25) and daggercount>0: 
-            attackImage = loadImage("epicSword.png")
-            attackType = ["none", "none"]
-            daggercount-=1
-            turn = 2
-            animationWaitTimer = turn1wait
+        if pointInsideCircle(mouseX, mouseY, 430, 400, 25): 
+            print("YO")
+            switchingWeapon = not switchingWeapon
+            print("YO")
         if pointInsideCircle(mouseX, mouseY, 430, 330, 25): #fire
             attackImage = loadImage("FireBall.png")
-            attackType = ["fire", "none"]
+            attackType = "fire"
             turn = 2
             animationWaitTimer = turn1wait
         if pointInsideCircle(mouseX, mouseY, 490, 365, 25): #water
             attackImage = loadImage("WaterBolt.png")
-            attackType = ["water", "none"]
+            attackType = "water"
             turn = 2
             animationWaitTimer = turn1wait
         if pointInsideCircle(mouseX, mouseY, 490, 435, 25): #grass
             attackImage = loadImage("LeafAttack.png")
-            attackType = ["grass", "none"]
+            attackType = "grass"
             turn = 2
             animationWaitTimer = turn1wait
         if pointInsideCircle(mouseX, mouseY, 430, 470, 25): #lightning
             attackImage = loadImage("lightningBolt.png")
-            attackType = ["lightning", "none"]
+            attackType = "lightning"
             turn = 2
             animationWaitTimer = turn1wait
         if pointInsideCircle(mouseX, mouseY, 370, 435, 25): #ice
             attackImage = loadImage("icicleAttack.png")
-            attackType = ["ice", "none"]
+            attackType = "ice"
             turn = 2
             animationWaitTimer = turn1wait
         if pointInsideCircle(mouseX, mouseY, 370, 365, 25) and hasRock: #rock
             attackImage = loadImage("rock1.png")
-            attackType = ["rock", "none"]
+            attackType = "rock"
             turn = 2
             animationWaitTimer = turn1wait
     
     if gameState == "store": 
-        if pointInsideRectangle(mouseX, mouseY, 100,400,100,25) and coins>=5:
-            hpotcount+=1
-            coins-=5
-        if pointInsideRectangle(mouseX, mouseY, 250,400,100,25) and coins>=5:
-            daggercount+=1
-            coins-=5
-        if pointInsideRectangle(mouseX, mouseY, 400,400,100,25) and coins>=100 and hasArmor == False:
-            hasArmor = True
-            coins-=100
-        if pointInsideRectangle(mouseX, mouseY, 500,500,100,25):
+        if pointInsideRectangle(mouseX, mouseY, 100,400,100,25) and itemsOwned[0].value>=10:
+            itemsOwned[1].value+=1
+            itemsOwned[0].value-=10
+        if pointInsideRectangle(mouseX, mouseY, 250,400,100,25) and itemsOwned[0].value>=5:
+            itemsOwned[2].value+=1
+            itemsOwned[0].value-=5
+        if pointInsideRectangle(mouseX, mouseY, 400,400,100,25) and itemsOwned[0].value>=100 and itemsOwned[3].value == "leather":
+            itemsOwned[3].value = "iron"
+            itemsOwned[0].value-=100
+            wizard = loadImage("IronWizard.png")
+            gamer.playerImage = wizard
+        if pointInsideRectangle(mouseX, mouseY, 440,500,200,25):
             gameState = "map"
             gamer.mapPosX=1650
             gamer.mapPosY=1750
@@ -457,28 +450,36 @@ def keyPressed():
         keyPresses[3] = True
     
 def keyReleased():
-    global gamer, hpotcount, amogus, daggercount, turn, attackImage, gameState, attackType, animationWaitTimer, turn1wait
+    global gamer, amogus, turn, attackImage, gameState, attackType, animationWaitTimer, currentWeapon
     if key == 'w' or keyCode == UP:
         keyPresses[0] = False
     if key == 'a' or keyCode == LEFT:
         keyPresses[1] = False
+        if switchingWeapon:
+            currentWeapon-=1
+            currentWeapon%=len(weaponsOwned)
     if key == 's' or keyCode == DOWN:
         keyPresses[2] = False
     if key == 'd' or keyCode == RIGHT:
         keyPresses[3] = False
+        if switchingWeapon:
+            currentWeapon+=1
+            currentWeapon%=len(weaponsOwned)
         
-    if key == 'h' and hpotcount>0 and turn == 1 and gameState == "fight": 
+    if key == 'h' and itemsOwned[1].value>0 and turn == 1 and gameState == "fight": 
         print("You used a health potion! You healed 30 hp!")
         gamer.health += 60
-        hpotcount -= 1
+        itemsOwned[1].value -= 1
         attackImage = loadImage("LeafAttack.png")
         attackType = ["heal", "none"]
         turn = 2
         animationWaitTimer = turn1wait
     if key == 'v' and amogus: 
-        hpotcount+=1
+        itemsOwned[1].value+=1
     if key == 'q' and amogus: 
-        daggercount+=1
+        itemsOwned[2].value+=1
+    if key == 'm' and amogus: 
+        itemsOwned[0].value+=10
         
 def pointInsideRectangle(a, b, x, y, w, h):
     # just returns whether or not the coordinate of the first 2 parameters is in the rectangle defined by the last 4 parameters
@@ -504,6 +505,13 @@ def renderAttackButtons():
     textSize(18)
     imageMode(CENTER)
     strokeWeight(2.5)
+    fill(200 if switchingWeapon else 170)
+    circle(430, 400, 140)
+    with pushMatrix():
+        translate(430, 400)
+        rotate(-PI/4)
+        imgsize = 90 if switchingWeapon else 70
+        image(weaponsOwned[currentWeapon].img, 0, 0, imgsize, imgsize)
     fill(128)
     ellipse(430, 330, 50, 50)
     ellipse(490, 365, 50, 50)
@@ -519,6 +527,22 @@ def renderAttackButtons():
     if hasRock:
         image(icons[5], 370, 365, 50, 50) #rock
     imageMode(CORNER)     
+
+def inventoryBox():
+    stroke(0)
+    strokeWeight(4)
+    fill(120,60,60)
+    rect(0,height-100, 250, 100)
+    fill(0)
+    textSize(28)
+    text(str(itemsOwned[2].value) + " daggers", 5, height-65)
+    text(str(itemsOwned[1].value) + " health potions", 5, height-20)
+    text("c " + str(itemsOwned[0].value), 133, height-65)
+    strokeWeight(2)
+    line(140, height-80, 140, height-65)
+    if itemsOwned[3].value == "iron" and debugMode: 
+        textSize(16)
+        text("iron armor", 5, height-100)
 
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -587,16 +611,16 @@ def fightTurnThreeDisplayText(enemyStatus, enemyType):
             return "The plants grow stronger from the water!"
     if enemyStatus == "tangled": 
         if enemyType == "fire": 
-            return "How did you tangle a fire enemy that's stupid"
+            return "The fire quickly destroys the vines."
         if enemyType == "water": 
             return "The enemy shrivels and the vines grow enormous!"
         if enemyType == "grass": 
             return "Your grassy vines remain."
     if enemyStatus == "overgrown": 
         if enemyType == "fire": 
-            return "How did you tangle a fire enemy that's stupid"
+            return "The fire quickly destroys the vines."
         if enemyType == "water": 
-            return "The enemy becomes much dryer!"
+            return "The vines completely dry the enemy!"
         if enemyType == "grass": 
             return "Your grassy vines remain."
     return "No status inflicted"

@@ -18,7 +18,7 @@ class Enemy(object):
         self.resistance = []
         if self.element == "fire":
              self.weakness.append("water")
-             self.weakness.append("rock")
+             #self.weakness.append("rock") #this makes rock attack + frozen status + fire enemy do 600 damage so it gets gone
              self.resistance.append("ice")
              self.resistance.append("lightning")
              self.resistance.append("grass")
@@ -57,7 +57,7 @@ class Enemy(object):
         #idea: some enemies have regenerative abilities
 
 
-    def hit(self, initialDamage, attackType):
+    def hit(self, initialDamage, attackType, weapon):
         """
         defining hit function for when the enemy gets hit, 
         in other words this is the damage calculator
@@ -65,47 +65,45 @@ class Enemy(object):
         """
         damage = initialDamage
         #print("Your initial attack was " + str(initialDamage) + " damage")
-        for i in attackType:
-            if i in self.weakness:
-                damage=damage*2
-                print("Your " + i + " attack was super effective against the opposing " + self.element + " type! (x2 damage)")
-            if i in self.resistance:
-                damage=damage/2
-                print("Your " + i + " attack was not very effective against the opposing " + self.element + " type... (x0.5 damage)")
-                
-            #Other damage modifiers
-            if self.status == "tangled" and i == "fire":
-                damage=damage*3
-                print("The vines burst into flames! (x3 damage)")
-            if self.status == "overgrown" and i == "fire":
-                damage=damage*10
-                print("The overgrown vines burst into overwhelming flames! (x10 damage)")
-                
-            if self.status == "frozen" and i == "rock": 
-                damage=damage*10
-                print("The rock attack smashed through the brittle enemy, dealing massive damage! (x10 damage)")
-            if self.status == "wet" and i == "lightning": 
-                damage=damage*3
-                print("The lightning attack electrocuted the wet enemy, dealing extra damage! (x3 damage)")
-                
-            #Statuses
-            if i == "fire":
-                self.status = "burning"
-            if i == "water":
-                if self.status == "tangled":
-                    self.status = "overgrown"
-                else:
-                    self.status = "wet"
-            if i == "grass":
-                if self.status == "tangled":
-                    self.status = "overgrown"
-                else:
-                    self.status = "tangled"
-            if i == "ice": 
-                if self.status == "wet" or self.element == "water": 
-                    self.status = "frozen"
-            if i == "lightning" and (self.status == "wet" or self.element == "water"):
-                self.status = "zapped"
+        if attackType in self.weakness:
+            damage=damage*2
+            print("Your " + attackType + " attack was super effective against the opposing " + self.element + " type! (x2 damage)")
+        if attackType in self.resistance:
+            damage=damage/2
+            print("Your " + attackType + " attack was not very effective against the opposing " + self.element + " type... (x0.5 damage)")
+            
+        #Other damage modifiers
+        if self.status == "tangled" and attackType == "fire":
+            damage=damage*3
+            print("The vines burst into flames! (x3 damage)")
+        if self.status == "overgrown" and attackType == "fire":
+            damage=damage*10
+            print("The overgrown vines burst into overwhelming flames! (x10 damage)")
+        if self.status == "frozen" and attackType == "rock": 
+            damage=damage*10
+            print("The rock attack smashed through the brittle enemy, dealing massive damage! (x10 damage)")
+        if self.status == "wet" and attackType == "lightning": 
+            damage=damage*3
+            print("The lightning attack electrocuted the wet enemy, dealing extra damage! (x3 damage)")
+            
+        #Statuses
+        if attackType == "fire":
+            self.status = "burning"
+        if attackType == "water":
+            if self.status == "tangled":
+                self.status = "overgrown"
+            else:
+                self.status = "wet"
+        if attackType == "grass":
+            if self.status == "tangled":
+                self.status = "overgrown"
+            else:
+                self.status = "tangled"
+        if attackType == "ice": 
+            if self.status == "wet" or self.element == "water": 
+                self.status = "frozen"
+        if attackType == "lightning" and (self.status == "wet" or self.element == "water"):
+            self.status = "zapped"
                     
         self.health -= damage
     
