@@ -12,7 +12,7 @@ def setup():
     frameRate(24)
     print("hello gamer welcom to epic spell adventure game smiley face =)")
     #don't ask
-    global gameState, ghoul, skeleton, zombie, spider, debugMode, gamer, keyPresses, bkgrnd, enemyList, currentEnemy, skltnimg, ghlimg, spdrimg, zomimg, attacktype, turn, blocks, fightbackground, animationWaitTimer, endWaiting, attackImage, turn1wait, turn2wait, turn3wait, wizard, cactus, cactusimg, hpotcount, daggercount, chestimg, chestopened, amogus, sandBoss, sandimg, skltnbossimg, castleimg, skltnBoss, castleBoss, hasArmor, blockFile, coins, merchant, shopimg, hasRock, shopBackground, signimg, signs, bushBlock, sandBlock, skeletonBossBeaten, sandBossBeaten, icons, itemsOwned
+    global gameState, ghoul, skeleton, zombie, spider, debugMode, gamer, keyPresses, bkgrnd, enemyList, currentEnemy, skltnimg, ghlimg, spdrimg, zomimg, attacktype, turn, blocks, fightbackground, animationWaitTimer, endWaiting, attackImage, turn1wait, turn2wait, turn3wait, wizard, cactus, cactusimg, hpotcount, daggercount, chestimg, chestopened, amogus, sandBoss, sandimg, skltnbossimg, castleimg, skltnBoss, castleBoss, hasIronArmor, blockFile, coins, merchant, shopimg, hasRock, shopBackground, signimg, signs, bushBlock, sandBlock, skeletonBossBeaten, sandBossBeaten, icons, itemsOwned
     
     #load files
     fightbackground = loadImage("epicfightbackground.jpeg")
@@ -51,13 +51,13 @@ def setup():
     cactus = Enemy(200, "cactus", "grass", 150, 300, cactusimg, "none", 30, False)
     sandBoss = Enemy(300, "Sand Boss", "fire", 300, 1400, sandimg, "none", 40, True)
     skltnBoss = Enemy(400, "Skeleton Boss", "grass", 2500, 1600, skltnbossimg, "none", 40, True)
-    castleBoss = Enemy(500, "Final Boss", "fire", 1600, 200, castleimg, "none", 50, True)
+    castleBoss = Enemy(500, "Final Boss", "fire", 2030, 150, castleimg, "none", 50, True)
     enemyList = [ghoul, skeleton, spider, zombie, cactus, sandBoss, skltnBoss, castleBoss] 
     hpotcount = 0
     daggercount = 0 #these will both change after bosses or smth like that yay
     
-    gamer = Player(400, 400, 100, wizard) 
-
+    gamer = Player(1400, 1300, 100, wizard) 
+    
     
     itemsOwned = []
     itemsOwned.append(Item("Coins", 0, 20.0))
@@ -73,7 +73,10 @@ def setup():
     signs.append(Sign(725, 700, "This is a sign\nwith a line break :O", signimg, 16, 2))
     signs.append(Sign(725, 800, "Two\nline\nbreaks", signimg, 12, 3))
     signs.append(Sign(725, 900, "Small text with one line wowie", signimg, 10, 1))
-    
+    signs.append(Sign(gamer.mapPosX, gamer.mapPosY, "Welcome to the land of spellaria!\nYou have been chosen to defeat the\n3 great evils of this land!", signimg, 12, 3))
+    signs.append(Sign(gamer.mapPosX-100, gamer.mapPosY, "To the west lies your first challenge, the\ngreat sand behemoth. Defeat it andyou'll\ngain access to a powerful new spell.", signimg, 11, 3))
+    signs.append(Sign(gamer.mapPosX+100, gamer.mapPosY, "To the east lies the formidable skeleton\nlord in the dark forest. Defeat it to\nobtain yet another powerful spell", signimg, 12, 3))
+    signs.append(Sign(gamer.mapPosX, gamer.mapPosY-100, "To the north lies your final foe, the\nevil presence residing in the Dark Castle.\n Defeat it and you'll have become the\nmost powerful wizard in the land.", signimg, 10, 4))
     #animations
     turn1wait = 50
     turn2wait = 30
@@ -87,7 +90,7 @@ def setup():
     currentEnemy= -1
     coins = 10.0
     chestopened = False
-    hasArmor = False
+    hasIronArmor = False
     hasRock = False
     amogus  = True #amogus is like hax mode, where during this u can hack in more health pots and daggers and funi stuff
     debugMode = True 
@@ -102,7 +105,7 @@ def setup():
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 def draw():
-    global gameState, currentEnemy, enemyList, ghoul, skeleton, turn, animationWaitTimer, gamer, endWaiting, attackType, chestimg, daggercount, hpotcount, chestopened, hasArmor, coins, merchant, shoping, hasRock, shopBackground, signs, sandBossBeaten, skeletonBossBeaten
+    global gameState, currentEnemy, enemyList, ghoul, skeleton, turn, animationWaitTimer, gamer, endWaiting, attackType, chestimg, daggercount, hpotcount, chestopened, hasIronArmor, coins, merchant, shoping, hasRock, shopBackground, signs, sandBossBeaten, skeletonBossBeaten
     #??????????????????????????????????????????????????????
     #if you wanna edit values of global variables you have to put them here
     
@@ -143,6 +146,7 @@ def draw():
         fill(255)
         text("You have " + str(daggercount) + " daggers!", width-200, height-30)
         text("You have " + str(hpotcount) + " health potions!", width-520, height-30)
+        text("Press H to heal!", width-520, height-60)
         textSize(32)
         
         text(str(animationWaitTimer), width-100, 100)
@@ -156,9 +160,9 @@ def draw():
                 hpotcount+=5
                 daggercount+=5
                 coins+=90
-                #if hasArmor == False:
+                #if hasIronArmor == False:
                  #   print("You found an iron chestplate! This will provide 25% damage reduction from enemy attacks!") 
-                  #  hasArmor = True
+                  #  hasIronArmor = True
                 if cType == "Sand Boss": 
                     hasRock = True
                     sandBossBeaten = True
@@ -193,10 +197,16 @@ def draw():
         ##PLAYER HIT LOGIC
         if turn == 2 and animationWaitTimer == 0:
             enemyHitDamage = cEnemy.strength
-            if hasArmor == True: 
+            if hasIronArmor == True: 
                 enemyHitDamage *= 0.75
             if cStatus == "frozen" or (cElement == "fire" and cStatus == "wet"): 
                 enemyHitDamage *= 0.6
+            if cStatus == "tangled" and cElement == "grass": 
+                enemyHitDamage*=1.25
+                print("The grass " + cType + " grows stronger from the vegetation! (1.25x)")
+            if cStatus == "overgrown" and cElement == "grass": 
+                enemyHitDamage*=1.5
+                print("The grass " + cType + " grows super strong from the overgrown vines! (1.5x)")
             gamer.health -= enemyHitDamage
             println("The gamer was hurt for " + str(enemyHitDamage) + " damage!")
             turn = 3
@@ -252,23 +262,29 @@ def draw():
                 print(" ==-== New Cycle ==-==")
         
             # Gamer death logic
-        if gamer.health<=0:
+        if gamer.health<=0 and turn == 3:
+            turn = 5
+            animationWaitTimer = 50
             print("oh no!1!11!1!11 uy deied!!11! you are loser L game over")
+            
+            #DEATH SCREEN  note that theres still a weird flash of the battlefield for
+            #one frame idk how to prevent this sorry
+        if turn == 5 and animationWaitTimer !=0: 
+            fill(0)
+            rect(0,0,width,height)
+            fill(255)
+            text("You passed out!",(width/2)-50, (height/2))
+        if turn == 5 and animationWaitTimer == 0: 
             gameState = "map"
-            gamer.mapPosX = 400
-            gamer.mapPosX = 400
-            gamer.health = gamer.maxHealth
+            gamer.mapPosX = 1400
+            gamer.mapPosY = 1300
+            gamer.health = (gamer.maxHealth/2)
+            print("You managed to escape, but lost some coins")
+            coins-=15
+            if coins<=0: 
+                coins = 0
+            turn = 1
     
-            """
-        if turn == 1 and animationWaitTimer == 0 and endWaiting:
-            del enemyList[currentEnemy]
-            gameState = "map"
-            currentEnemy = 12345
-            endWaiting = False
-            gamer.health = gamer.maxHealth
-            """
-        #cEnemy.status = cStatus
-        #cEnemy = cEnemy
 #----------------------------------------------------------------------MAP MODE------------------------------------------------------------------------------
 
     elif gameState == "map": #gameState is in map mode
@@ -277,9 +293,12 @@ def draw():
         background(12, 89, 183)
         image(bkgrnd,(width/2)-gamer.mapPosX,(height/2)-gamer.mapPosY)
         
-        #rendering inventory box (currently just health pots and daggers): 
         stroke(0)
         strokeWeight(4)
+        #starting platform thingy
+        fill(127)
+        rect(1300-gamer.mapPosX+(width/2),1200-gamer.mapPosY+(height/2),200,200)
+        #rendering inventory box (currently just health pots and daggers): 
         fill(120,60,60)
         rect(0,height-100, 250, 100)
         fill(0)
@@ -289,6 +308,8 @@ def draw():
         text(str(coins) + " coins", 133, height-65)
         #i moved the armor text into debugMode at the bottom of mapMode
         
+        #displaying health bar so the player actually knows what their hp is before fighting: 
+        displayPlayerHealth()
     #chest
         #so currently chest hitbox is super jank sorry
         if pointInsideRectangle(gamer.mapPosX, gamer.mapPosY, 450-gamer.mapPosX+(width/2), 200-gamer.mapPosY+(height/2), 100, 100) and chestopened == False: 
@@ -321,7 +342,8 @@ def draw():
                 gameState = "fight"
         
         if debugMode:
-            text("iron armor", 5, height-100)
+            if hasIronArmor == False: 
+                text("leather armor", 5, height-100)
             for o in blocks:
                 o.display(gamer.mapPosX, gamer.mapPosY)
         
@@ -340,6 +362,8 @@ def draw():
         image(shopimg, 375, 100, 300, 300)
         image(merchant, 300, 200, 100, 100)
         
+        displayPlayerHealth()
+        
         fill(255)
         stroke(0)
         strokeWeight(4)
@@ -356,7 +380,7 @@ def draw():
         text(str(daggercount) + " daggers", 5, height-65)
         text(str(hpotcount) + " health potions", 5, height-20)
         text(str(coins) + " coins", 133, height-65)
-        if hasArmor == True: 
+        if hasIronArmor == True: 
             text("iron armor", 5, height-100)
         
         textSize(22)
@@ -375,9 +399,9 @@ def draw():
         rect(400,400,100,25)
         fill(0)
         text("1 dagger", 250, 390)
-        if hasArmor == False: 
+        if hasIronArmor == False: 
             text("Iron armor", 400, 390)
-        elif hasArmor == True: 
+        elif hasIronArmor == True: 
             text("no more armor sorry", 400, 390)
         
         #Exit button
@@ -391,7 +415,7 @@ def draw():
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
     
 def mousePressed():
-    global turn, attackImage, animationWaitTimer, attackType, daggercount, hasRock, hpotcount, coins, hasArmor, gameState, gamer
+    global turn, attackImage, animationWaitTimer, attackType, daggercount, hasRock, hpotcount, coins, hasIronArmor, gameState, gamer
     
     if gameState == "fight" and gamer.health>=1 and turn == 1:
         if pointInsideCircle(mouseX, mouseY, 430, 400, 25) and daggercount>0: 
@@ -438,8 +462,8 @@ def mousePressed():
         if pointInsideRectangle(mouseX, mouseY, 250,400,100,25) and coins>=5:
             daggercount+=1
             coins-=5
-        if pointInsideRectangle(mouseX, mouseY, 400,400,100,25) and coins>=100 and hasArmor == False:
-            hasArmor = True
+        if pointInsideRectangle(mouseX, mouseY, 400,400,100,25) and coins>=100 and hasIronArmor == False:
+            hasIronArmor = True
             coins-=100
         if pointInsideRectangle(mouseX, mouseY, 500,500,100,25):
             gameState = "map"
@@ -600,3 +624,17 @@ def fightTurnThreeDisplayText(enemyStatus, enemyType):
         if enemyType == "grass": 
             return "Your grassy vines remain."
     return "No status inflicted"
+def displayPlayerHealth(): 
+    strokeWeight(4)
+    stroke(0)
+    fill(255)
+    rect(280, 550, 300, 40)
+    fill(255, 0, 0)
+    noStroke()
+    rect(282, 552, 297*(float(gamer.health)/gamer.maxHealth), 37)
+    fill(0)
+    textSize(18)
+    textAlign(CENTER)
+    text(str(gamer.health) + " / " + str(gamer.maxHealth), 430, 575)
+    textSize(24)
+    textAlign(LEFT)
