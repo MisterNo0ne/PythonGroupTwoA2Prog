@@ -19,11 +19,10 @@ In the shop, click on the buttons shown to buy health pots, daggers, and armor. 
 ### Friday
 - DONE - removable obstales for the forest and desert bosses
 - DONE - item class
-- item list
+- DONE - item list
 - DONE - add arrow key functionality (micah)
-- display costs in shop
-- make the shop buying boxes change colors if the player can afford it 
-- make player spawn in the middle of the map and move all the enemies to actual places
+- DONE - display costs in shop
+- DONE - make the shop buying boxes change colors if the player can afford it 
 - Beeg thing is to change the attack system
   - Each attack has an element and a weapon (sword, dagger, bow+arrow, maybe other like mace or spear or whatever you can think of)
   - Certain weapons go good/bad with certain elements (arrow good with fire air and poison, bad with rock and water)
@@ -34,17 +33,19 @@ In the shop, click on the buttons shown to buy health pots, daggers, and armor. 
 ### Saturday
 - obstacle speedrun
 - get moving enemies to work for epic jumpscare
-- get armor sprite visible in fight and map mode
+- DONE - get armor sprite visible in fight and map mode
 - Make a staling mechanic where you cant use the same attack 100 times for easy win
-- probably brainstorm the gimmicks we'll do on Sunday
+- DONE - probably brainstorm the gimmicks we'll do on Sunday
 - Turn 4 for death animations and post-battle things (money earned etc)
 - Health pot image for cleanliness
+- Different backgrounds for different areas
 
 ### Sunday
 - get bosses with gimmicks working (like multiple phases? or changing elements stuff like that. maybe immunity to statuses for one)
   - to be specific we need castle boss, forest boss, and desert boss. 
 - Balance literally everything, especially grass being really weak and fire being really op. 
   - Idea: if u do water attack twice or smth, they get doused and take more damage or smth idk. 
+- make player spawn in the middle of the map and move all the enemies to actual places
 - make the readme look nice and pretty
 
 - do everything in 5 days cuz we got extension yay =)
