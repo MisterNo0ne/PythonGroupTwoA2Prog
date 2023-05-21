@@ -58,33 +58,30 @@ class Enemy(object):
 
 
     def hit(self, initialDamage, attackType, weapon):
-        """
-        defining hit function for when the enemy gets hit, 
-        in other words this is the damage calculator
-        this is run in a for loop because attackType will combine 2 or 3 elements
-        """
         damage = initialDamage
-        #print("Your initial attack was " + str(initialDamage) + " damage")
+        damageMultiplier = 1
+        
+        #resistances and weaknesses
         if attackType in self.weakness:
-            damage=damage*2
-            print("Your " + attackType + " attack was super effective against the opposing " + self.element + " type! (x2 damage)")
+            damageMultiplier=2
+            print("Your " + attackType + " attack was super effective against the opposing " + self.element + " type! (+1x damage)")
         if attackType in self.resistance:
-            damage=damage/2
-            print("Your " + attackType + " attack was not very effective against the opposing " + self.element + " type... (x0.5 damage)")
+            damageMultiplier=0.5
+            print("Your " + attackType + " attack was not very effective against the opposing " + self.element + " type... (-0.5x damage)")
             
         #Other damage modifiers
         if self.status == "tangled" and attackType == "fire":
-            damage=damage*3
-            print("The vines burst into flames! (x3 damage)")
+            damageMultiplier+=1
+            print("The vines burst into flames! (+2x damage)")
         if self.status == "overgrown" and attackType == "fire":
-            damage=damage*10
-            print("The overgrown vines burst into overwhelming flames! (x10 damage)")
+            damageMultiplier+=2
+            print("The overgrown vines burst into overwhelming flames! (+2x damage)")
         if self.status == "frozen" and attackType == "rock": 
-            damage=damage*10
-            print("The rock attack smashed through the brittle enemy, dealing massive damage! (x10 damage)")
+            damageMultiplier+=4
+            print("The rock attack smashed through the brittle enemy, dealing massive damage! (+4x damage)")
         if self.status == "wet" and attackType == "lightning": 
-            damage=damage*3
-            print("The lightning attack electrocuted the wet enemy, dealing extra damage! (x3 damage)")
+            damageMultiplier+=3
+            print("The lightning attack electrocuted the wet enemy, dealing extra damage! (+3x damage)")
             
         #Statuses
         if attackType == "fire":
@@ -104,11 +101,11 @@ class Enemy(object):
                 self.status = "frozen"
         if attackType == "lightning" and (self.status == "wet" or self.element == "water"):
             self.status = "zapped"
-                    
+        
+        damage *= damageMultiplier            
         self.health -= damage
     
         print("You did " + str(damage) + " damage!")
-            
         
         return self.health
         #return self.status

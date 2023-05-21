@@ -177,6 +177,7 @@ def draw():
                     sandBossBeaten = True
                     del blocks[0]
                 if cType == "Skeleton Boss":
+                    #poison added here
                     skeletonBossBeaten = True
                     if not sandBossBeaten:
                         del blocks[1]
@@ -203,11 +204,21 @@ def draw():
             image(attackImage, 0, 0, 75, 75) #player attacking
             popMatrix()
         
+        ##ENEMY HIT LOGIC
+        if animationWaitTimer == 20 and turn == 2: 
+            cw = weaponsOwned[currentWeapon]
+            if attackType == "lightning" or attackType[0] == "rock": 
+                cEnemy.hit(30, attackType, cw)
+            elif attackType != "heal": #dont attack if the player healed thats dumb
+                cEnemy.hit(20, attackType, cw)
+        
         ##PLAYER HIT LOGIC
         if turn == 2 and animationWaitTimer == 0:
             enemyHitDamage = cEnemy.strength
+            
             if itemsOwned[3].value == "iron": 
                 enemyHitDamage *= 0.75
+            
             if cStatus == "frozen" or (cElement == "fire" and cStatus == "wet") or cStatus == "zapped": 
                 enemyHitDamage *= 0.6
             if cStatus == "tangled" and cElement == "grass": 
@@ -216,20 +227,11 @@ def draw():
             if cStatus == "overgrown" and cElement == "grass": 
                 enemyHitDamage*=1.5
                 print("The grass " + cType + " grows super strong from the overgrown vines! (1.5x)")
+            
             gamer.health -= enemyHitDamage
             println("The gamer was hurt for " + str(enemyHitDamage) + " damage!")
             turn = 3
             animationWaitTimer = turn2wait
-            
-         ##ENEMY HIT LOGIC
-        if animationWaitTimer == 20 and turn == 2: 
-            cw = weaponsOwned[currentWeapon]
-            if attackType == "none": 
-                cEnemy.hit(50, attackType, cw)
-            elif attackType == "lightning" or attackType[0] == "rock": 
-                cEnemy.hit(30, attackType, cw)
-            else: 
-                cEnemy.hit(20, attackType, cw)
         
 ## 3rd turn
         ##Displays player hurting
@@ -239,7 +241,12 @@ def draw():
             gamer.showInFight(fractionOfAnimLeft)
         else:
             gamer.showInFight(0)
-            
+          
+        ##kills the player to death    
+        if gamer.health<=0 and turn == 3 and animationWaitTimer == 0:
+            turn = 5
+            animationWaitTimer = 50
+            print("oh no!1!11!1!11 uy deied!!11! you are loser L game over")
         ##Resolve statuses
         if turn == 3 and animationWaitTimer == 0:
             enemyFighting = cEnemy
@@ -269,14 +276,8 @@ def draw():
             else:
                 print(" ==-== New Cycle ==-==")
         
-            # Gamer death logic
-        if gamer.health<=0 and turn == 3:
-            turn = 5
-            animationWaitTimer = 50
-            print("oh no!1!11!1!11 uy deied!!11! you are loser L game over")
-            
-            #DEATH SCREEN  note that theres still a weird flash of the battlefield for
-            #one frame idk how to prevent this sorry
+## 5th turn
+        # Gamer death logic
         if turn == 5 and animationWaitTimer !=0: 
             fill(0)
             rect(0,0,width,height)
@@ -288,14 +289,14 @@ def draw():
             gamer.mapPosY = 1300
             gamer.health = (gamer.maxHealth/2)
             print("You managed to escape, but lost some coins")
-            itemsOwned[0]-=15
-            if itemsOwned[0]<=0: 
-                itemsOwned[0] = 0
+            itemsOwned[0].value-=15
+            if itemsOwned[0].value<=0: 
+                itemsOwned[0].value = 0
             turn = 1
     
 #----------------------------------------------------------------------MAP MODE------------------------------------------------------------------------------
 
-    elif gameState == "map": #gameState is in map mode
+    if gameState == "map":
         gamer.moveOnMap(keyPresses, blocks)
         
         background(12, 89, 183)
@@ -351,7 +352,7 @@ def draw():
         
         inventoryBox()
 #-------------------------------------------------------STORE MODE--------------------------------------------------------------------#
-    else: #gameState is in store mode                   also i apologize for the 1290380129 lines of code im bad ok
+    if gameState == "store":
         #i have no clue what to do here yet, prolly something similar to fight mode though where if u have coins and
         #if u click in the boxes then u buy stuff and also render some store guy toob
         
@@ -411,9 +412,7 @@ def mousePressed():
     
     if gameState == "fight" and gamer.health>=1 and turn == 1:
         if pointInsideCircle(mouseX, mouseY, 430, 400, 25): 
-            print("YO")
             switchingWeapon = not switchingWeapon
-            print("YO")
         if pointInsideCircle(mouseX, mouseY, 430, 330, 25): #fire
             attackImage = loadImage("FireBall.png")
             attackType = "fire"
@@ -467,10 +466,16 @@ def keyPressed():
         keyPresses[0] = True
     if key == 'a' or keyCode == LEFT:
         keyPresses[1] = True
+        if switchingWeapon:
+            currentWeapon-=1
+            currentWeapon%=len(weaponsOwned)
     if key == 's' or keyCode == DOWN:
         keyPresses[2] = True
     if key == 'd' or keyCode == RIGHT:
         keyPresses[3] = True
+        if switchingWeapon:
+            currentWeapon+=1
+            currentWeapon%=len(weaponsOwned)
     
 def keyReleased():
     global gamer, amogus, turn, attackImage, gameState, attackType, animationWaitTimer, currentWeapon
@@ -478,17 +483,10 @@ def keyReleased():
         keyPresses[0] = False
     if key == 'a' or keyCode == LEFT:
         keyPresses[1] = False
-        if switchingWeapon:
-            currentWeapon-=1
-            currentWeapon%=len(weaponsOwned)
     if key == 's' or keyCode == DOWN:
         keyPresses[2] = False
     if key == 'd' or keyCode == RIGHT:
         keyPresses[3] = False
-        if switchingWeapon:
-            currentWeapon+=1
-            currentWeapon%=len(weaponsOwned)
-        
     if key == 'h' and itemsOwned[1].value>0 and turn == 1 and gameState == "fight": 
         print("You used a health potion! You healed 30 hp!")
         gamer.health += 60
@@ -566,6 +564,21 @@ def inventoryBox():
     if itemsOwned[3].value == "iron" and debugMode: 
         textSize(16)
         text("iron armor", 5, height-100)
+
+def displayPlayerHealth(): 
+    strokeWeight(4)
+    stroke(0)
+    fill(255)
+    rect(280, 550, 300, 40)
+    fill(255, 0, 0)
+    noStroke()
+    rect(282, 552, 297*(float(gamer.health)/gamer.maxHealth), 37)
+    fill(0)
+    textSize(18)
+    textAlign(CENTER)
+    text(str(gamer.health) + " / " + str(gamer.maxHealth), 430, 575)
+    textSize(24)
+    textAlign(LEFT)
 
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -647,17 +660,3 @@ def fightTurnThreeDisplayText(enemyStatus, enemyType):
         if enemyType == "grass": 
             return "Your grassy vines remain."
     return "No status inflicted"
-def displayPlayerHealth(): 
-    strokeWeight(4)
-    stroke(0)
-    fill(255)
-    rect(280, 550, 300, 40)
-    fill(255, 0, 0)
-    noStroke()
-    rect(282, 552, 297*(float(gamer.health)/gamer.maxHealth), 37)
-    fill(0)
-    textSize(18)
-    textAlign(CENTER)
-    text(str(gamer.health) + " / " + str(gamer.maxHealth), 430, 575)
-    textSize(24)
-    textAlign(LEFT)
