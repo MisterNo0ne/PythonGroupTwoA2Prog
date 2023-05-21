@@ -33,9 +33,9 @@ In the shop, click on the buttons shown to buy health pots, daggers, and armor. 
 ### Saturday
 - obstacle speedrun
 - get moving enemies to work for epic jumpscare
-- get armor sprite visible in fight and map mode
+- DONE - get armor sprite visible in fight and map mode
 - Make a staling mechanic where you cant use the same attack 100 times for easy win
-- probably brainstorm the gimmicks we'll do on Sunday
+- DONE - probably brainstorm the gimmicks we'll do on Sunday
 - Turn 4 for death animations and post-battle things (money earned etc)
 - Health pot image for cleanliness
 - Different backgrounds for different areas
