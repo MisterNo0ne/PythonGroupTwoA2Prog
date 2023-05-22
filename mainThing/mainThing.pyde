@@ -13,7 +13,7 @@ def setup():
     frameRate(24)
     print("hello gamer welcom to epic spell adventure game smiley face =)")
 
-    global gameState, ghoul, skeleton, zombie, spider, debugMode, gamer, keyPresses, bkgrnd, enemyList, currentEnemy, skltnimg, ghlimg, spdrimg, zomimg, attacktype, turn, blocks, fightbackgrounds, animationWaitTimer, endWaiting, attackImage, turn1wait, turn2wait, turn3wait, wizard, cactus, cactusimg, chestimg, chestopened, amogus, sandBoss, sandimg, skltnbossimg, castleimg, skltnBoss, castleBoss, blockFile, merchant, shopimg, hasRock, shopBackground, signimg, signs, bushBlock, sandBlock, skeletonBossBeaten, sandBossBeaten, icons, itemsOwned, weaponsOwned, weaponImgs, switchingWeapon, currentWeapon, cPhase, jumpscaring, jumpscared, wolfimg
+    global gameState, ghoul, skeleton, zombie, spider, debugMode, gamer, keyPresses, bkgrnd, enemyList, currentEnemy, skltnimg, ghlimg, spdrimg, zomimg, attacktype, turn, blocks, fightbackgrounds, animationWaitTimer, endWaiting, attackImage, turn1wait, turn2wait, turn3wait, wizard, cactus, cactusimg, chestimg, chestopened, amogus, sandBoss, sandimg, skltnbossimg, castleimg, skltnBoss, castleBoss, blockFile, merchant, shopimg, hasRock, shopBackground, signimg, signs, bushBlock, sandBlock, skeletonBossBeaten, sandBossBeaten, icons, itemsOwned, weaponsOwned, weaponImgs, switchingWeapon, currentWeapon, cPhase, jumpscaring, jumpscared, wolfimg, phaseCounter, phaseChanging
     
     #load files
     fightbackgrounds = []
@@ -124,13 +124,15 @@ def setup():
     cPhase = 0
     jumpscaring = False
     jumpscared = False
+    phaseCounter = 0
+    phaseChanging = False
 
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 def draw():
-    global gameState, currentEnemy, enemyList, ghoul, skeleton, turn, animationWaitTimer, gamer, endWaiting, attackType, chestimg, chestopened, merchant, shoping, hasRock, shopBackground, signs, sandBossBeaten, skeletonBossBeaten, itemsOwned, weaponsOwned, cPhase, jumpscaring, jumpscared
+    global gameState, currentEnemy, enemyList, ghoul, skeleton, turn, animationWaitTimer, gamer, endWaiting, attackType, chestimg, chestopened, merchant, shoping, hasRock, shopBackground, signs, sandBossBeaten, skeletonBossBeaten, itemsOwned, weaponsOwned, cPhase, jumpscaring, jumpscared, phaseCounter, phaseChanging
     #??????????????????????????????????????????????????????
     #if you wanna edit values of global variables you have to put them here
     
@@ -142,6 +144,27 @@ def draw():
         cStatus = cEnemy.status
         cHealth = cEnemy.health
         cElement = cEnemy.element
+        
+        #final boss gimmick thing
+        if cType == "Final Boss" and phaseCounter == 2 and turn == 1:
+        #i hate python
+            if cElement == "fire" and phaseChanging:
+                cElement = "water"
+                phaseChanging = False
+            if cElement == "water" and phaseChanging:
+                cElement = "grass"
+                phaseChanging = False
+            if cElement == "grass" and phaseChanging:
+                cElement = "rock"
+                phaseChanging = False
+            if cElement == "rock" and phaseChanging:
+                cElement = "fire"
+                phaseChanging = False
+            cEnemy.strength+=5
+            print("The Dark Castle magically changed to a " + cElement + " type and grew stronger (+5 strength)")
+            phaseCounter = 0
+            cStatus = "none"
+        
         
         if cEnemy.isBoss == True and cPhase == 0: 
             cPhase = 1
@@ -174,7 +197,7 @@ def draw():
             text("Phase: " + str(cPhase), 50, 300)
             textSize(32)
             stroke(0)
-        text("type: " + cType + "\n enemy element: " + cElement, 50, 120)
+        text("type: " + cType + "\nenemy element: " + cElement + "\nstrength: " + str(cEnemy.strength), 50, 120)
         text("status: " + cStatus, 50, 240)
         stroke(0)
         cEnemy.display()
@@ -323,6 +346,8 @@ def draw():
                 animationWaitTimer = turn3wait
             else: 
                 print(" ==-== New Cycle ==-==")
+                phaseCounter +=1
+                phaseChanging = True
         
 ## 5th turn
         # Gamer death logic
