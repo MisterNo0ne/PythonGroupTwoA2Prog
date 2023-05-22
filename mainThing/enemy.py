@@ -72,9 +72,11 @@ class Enemy(object):
             print("Your " + attackType + " attack was not very effective against the opposing " + self.element + " type... (-0.5x damage)")
             
         #Other damage modifiers
+        """
         if self.element == "fire" and attackType == "water":
             damageMultiplier+=0.5
             print("The fire dies down in the flood! (+0.5x damage)")
+        """
         if self.element == "rock" and attackType == "lightning":
             damageMultiplier+=2
             print("The rock shatters at its edges! (+2x damage)")

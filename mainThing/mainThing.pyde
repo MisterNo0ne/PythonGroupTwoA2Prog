@@ -13,7 +13,7 @@ def setup():
     frameRate(24)
     print("hello gamer welcom to epic spell adventure game smiley face =)")
 
-    global gameState, ghoul, skeleton, zombie, spider, debugMode, gamer, keyPresses, bkgrnd, enemyList, currentEnemy, skltnimg, ghlimg, spdrimg, zomimg, attacktype, turn, blocks, fightbackgrounds, animationWaitTimer, endWaiting, attackImage, turn1wait, turn2wait, turn3wait, wizard, cactus, cactusimg, chestimg, chestopened, amogus, sandBoss, sandimg, skltnbossimg, castleimg, skltnBoss, castleBoss, blockFile, merchant, shopimg, hasRock, shopBackground, signimg, signs, bushBlock, sandBlock, skeletonBossBeaten, sandBossBeaten, icons, itemsOwned, weaponsOwned, weaponImgs, switchingWeapon, currentWeapon, cPhase, jumpscaring
+    global gameState, ghoul, skeleton, zombie, spider, debugMode, gamer, keyPresses, bkgrnd, enemyList, currentEnemy, skltnimg, ghlimg, spdrimg, zomimg, attacktype, turn, blocks, fightbackgrounds, animationWaitTimer, endWaiting, attackImage, turn1wait, turn2wait, turn3wait, wizard, cactus, cactusimg, chestimg, chestopened, amogus, sandBoss, sandimg, skltnbossimg, castleimg, skltnBoss, castleBoss, blockFile, merchant, shopimg, hasRock, shopBackground, signimg, signs, bushBlock, sandBlock, skeletonBossBeaten, sandBossBeaten, icons, itemsOwned, weaponsOwned, weaponImgs, switchingWeapon, currentWeapon, cPhase, jumpscaring, jumpscared
     
     #load files
     fightbackgrounds = []
@@ -112,13 +112,14 @@ def setup():
     attackImage = loadImage("WaterBolt.png")
     cPhase = 0
     jumpscaring = False
+    jumpscared = False
 
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 def draw():
-    global gameState, currentEnemy, enemyList, ghoul, skeleton, turn, animationWaitTimer, gamer, endWaiting, attackType, chestimg, chestopened, merchant, shoping, hasRock, shopBackground, signs, sandBossBeaten, skeletonBossBeaten, itemsOwned, weaponsOwned, cPhase, jumpscaring
+    global gameState, currentEnemy, enemyList, ghoul, skeleton, turn, animationWaitTimer, gamer, endWaiting, attackType, chestimg, chestopened, merchant, shoping, hasRock, shopBackground, signs, sandBossBeaten, skeletonBossBeaten, itemsOwned, weaponsOwned, cPhase, jumpscaring, jumpscared
     #??????????????????????????????????????????????????????
     #if you wanna edit values of global variables you have to put them here
     
@@ -183,6 +184,8 @@ def draw():
         
             ##KILLED ENEMY LOGIC
         if endWaiting or cHealth<=0: 
+            if cEnemy.type == "cactus":
+                jumpscared = True
             if cEnemy.isBoss == True: 
                 print("You have felled the " + cType + "! You found many coins, 5 potions, and 5 daggers!")
                 itemsOwned[1].value+=5
@@ -345,7 +348,7 @@ def draw():
         #jumpscare DDDD:
         if (not jumpscaring) and (gamer.mapPosX > 750 and gamer.mapPosX < 800 and gamer.mapPosY > 1650 and gamer.mapPosY < 1800):
             jumpscaring = True
-        if jumpscaring:
+        if jumpscaring and (not jumpscared):
             enemyList[0].mapPosX += 22
         
         background(12, 89, 183)
