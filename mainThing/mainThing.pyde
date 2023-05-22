@@ -496,7 +496,7 @@ def keyReleased():
         gamer.health += 60
         itemsOwned[1].value -= 1
         attackImage = loadImage("LeafAttack.png")
-        attackType = ["heal", "none"]
+        attackType = "heal"
         turn = 2
         animationWaitTimer = turn1wait
     if key == 'v' and amogus: 
