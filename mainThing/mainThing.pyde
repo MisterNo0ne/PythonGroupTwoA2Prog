@@ -13,10 +13,14 @@ def setup():
     frameRate(24)
     print("hello gamer welcom to epic spell adventure game smiley face =)")
 
-    global gameState, ghoul, skeleton, zombie, spider, debugMode, gamer, keyPresses, bkgrnd, enemyList, currentEnemy, skltnimg, ghlimg, spdrimg, zomimg, attacktype, turn, blocks, fightbackground, animationWaitTimer, endWaiting, attackImage, turn1wait, turn2wait, turn3wait, wizard, cactus, cactusimg, chestimg, chestopened, amogus, sandBoss, sandimg, skltnbossimg, castleimg, skltnBoss, castleBoss, blockFile, merchant, shopimg, hasRock, shopBackground, signimg, signs, bushBlock, sandBlock, skeletonBossBeaten, sandBossBeaten, icons, itemsOwned, weaponsOwned, weaponImgs, switchingWeapon, currentWeapon
+    global gameState, ghoul, skeleton, zombie, spider, debugMode, gamer, keyPresses, bkgrnd, enemyList, currentEnemy, skltnimg, ghlimg, spdrimg, zomimg, attacktype, turn, blocks, fightbackgrounds, animationWaitTimer, endWaiting, attackImage, turn1wait, turn2wait, turn3wait, wizard, cactus, cactusimg, chestimg, chestopened, amogus, sandBoss, sandimg, skltnbossimg, castleimg, skltnBoss, castleBoss, blockFile, merchant, shopimg, hasRock, shopBackground, signimg, signs, bushBlock, sandBlock, skeletonBossBeaten, sandBossBeaten, icons, itemsOwned, weaponsOwned, weaponImgs, switchingWeapon, currentWeapon
     
     #load files
-    fightbackground = loadImage("epicfightbackground.jpeg")
+    fightbackgrounds = []
+    fightbackgrounds.append(loadImage("plainsfightbackground.png"))
+    fightbackgrounds.append(loadImage("epicfightbackground.jpeg"))
+    fightbackgrounds.append(loadImage("desertfightbackground.png"))
+    fightbackgrounds.append(loadImage("volcanofightbackground.png"))
     skltnimg = loadImage("skeletonIdle.png")
     zomimg = loadImage("Zombie.png")
     spdrimg = loadImage("smallenemyspider.png")
@@ -51,14 +55,14 @@ def setup():
     weaponImgs.append(loadImage("weapons/mace.png"))
     
     #enemy declarators or smth
-    cactus = Enemy(200, "cactus", "grass", 150, 300, cactusimg, "none", 30, False)
-    ghoul = Enemy(50, "ghoul", "fire", 500, 500, ghlimg, "none", 20, False)
-    skeleton = Enemy(100, "skeleton", "grass", 200, 400, skltnimg, "none", 20, False)
-    spider = Enemy(42, "spider", "fire", 200, 200, spdrimg, "none", 20, False)
-    zombie = Enemy(153, "zombie", "water", 300, 100, zomimg, "none", 20, False)
-    sandBoss = Enemy(300, "Sand Boss", "fire", 300, 1400, sandimg, "none", 40, True)
-    skltnBoss = Enemy(400, "Skeleton Boss", "grass", 2500, 1600, skltnbossimg, "none", 40, True)
-    castleBoss = Enemy(500, "Final Boss", "fire", 1600, 200, castleimg, "none", 50, True)
+    cactus = Enemy(200, "cactus", "grass", 150, 300, cactusimg, "none", 30, False, 0)
+    ghoul = Enemy(50, "ghoul", "fire", 500, 500, ghlimg, "none", 20, False, 0)
+    skeleton = Enemy(100, "skeleton", "grass", 200, 400, skltnimg, "none", 20, False, 0)
+    spider = Enemy(42, "spider", "fire", 200, 200, spdrimg, "none", 20, False, 0)
+    zombie = Enemy(153, "zombie", "water", 300, 100, zomimg, "none", 20, False, 0)
+    sandBoss = Enemy(300, "Sand Boss", "fire", 300, 1400, sandimg, "none", 40, True, 2)
+    skltnBoss = Enemy(400, "Skeleton Boss", "grass", 2500, 1600, skltnbossimg, "none", 40, True, 1)
+    castleBoss = Enemy(500, "Final Boss", "fire", 1600, 200, castleimg, "none", 50, True, 3)
     enemyList = [cactus, ghoul, skeleton, spider, zombie, sandBoss, skltnBoss, castleBoss] 
     
     gamer = Player(1400, 1300, 100, wizard) 
@@ -121,17 +125,17 @@ def draw():
 #-------------------------------------------------------------------------------FIGHT MODE-------------------------------------------------------------------
     
     if gameState == "fight":
-        # Display logic
-        #background(200)
-        image(fightbackground, 0, 0, width, height)
-        
-        renderAttackButtons() #look at the extra fxns section
-
         cEnemy = enemyList[currentEnemy]
         cType = cEnemy.type
         cStatus = cEnemy.status
         cHealth = cEnemy.health
         cElement = cEnemy.element
+        
+        # Display logic
+        #background(200)
+        image(fightbackgrounds[cEnemy.area], 0, 0, width, height)
+        
+        renderAttackButtons() #look at the extra fxns section
     
         #show enemy stuff
         if debugMode:
