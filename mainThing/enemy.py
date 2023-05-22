@@ -48,12 +48,12 @@ class Enemy(object):
            #  self.resistance.append("water")
           #   self.resistance.append("lightning")
          #    self.resistance.append("grass")
-      #  if self.element == "rock": 
-        #     self.weakness.append("water")
-        #     self.weakness.append("grass")
-         #    self.resistance.append("fire")
-          #   self.resistance.append("rock")
-           #  self.resistance.append("ice")
+        if self.element == "rock": 
+             self.weakness.append("water")
+             self.weakness.append("grass")
+             self.resistance.append("fire")
+             self.resistance.append("rock")
+             self.resistance.append("ice")
         #3 resistances including it's own element and 2 weaknesses kinda like Pokemon
         #idea: some enemies have regenerative abilities
 
@@ -93,7 +93,7 @@ class Enemy(object):
             else:
                 self.status = "wet"
         if attackType == "grass":
-            if self.status == "tangled":
+            if self.status == "tangled" or self.status == "wet":
                 self.status = "overgrown"
             else:
                 self.status = "tangled"
