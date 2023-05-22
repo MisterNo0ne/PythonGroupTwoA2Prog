@@ -65,7 +65,7 @@ def setup():
     enemyList.append(Enemy(100, "skeleton", "grass", 2350, 1650, skltnimg, "none", 20, False, 1))
     enemyList.append(Enemy(80, "ghoul", "fire", 1050, 2000, ghlimg, "none", 20, False, 2))
     enemyList.append(Enemy(100, "skeleton", "rock", 850, 1900, skltnimg, "none", 20, False, 2))
-    enemyList.append(Enemy(180, "zombie", "fire", 850, 1900, skltnimg, "none", 25, False, 3))
+    enemyList.append(Enemy(180, "zombie", "fire", 2000, 400, skltnimg, "none", 25, False, 3))
     spawnEnemies()
     
     gamer = Player(1400, 1300, 100, wizard) 
