@@ -61,7 +61,7 @@ def setup():
     spider = Enemy(42, "spider", "fire", 200, 200, spdrimg, "none", 20, False, 0)
     zombie = Enemy(153, "zombie", "water", 300, 100, zomimg, "none", 20, False, 0)
     sandBoss = Enemy(300, "Sand Boss", "fire", 300, 1400, sandimg, "none", 40, True, 2)
-    skltnBoss = Enemy(400, "Skeleton Boss", "grass", 2500, 1600, skltnbossimg, "none", 40, True, 1)
+    skltnBoss = Enemy(400, "Skeleton Boss", "grass", 2000, 1775, skltnbossimg, "none", 40, True, 1)
     castleBoss = Enemy(500, "Final Boss", "fire", 1600, 200, castleimg, "none", 50, True, 3)
     enemyList = [cactus, ghoul, skeleton, spider, zombie, sandBoss, skltnBoss, castleBoss] 
     
@@ -317,8 +317,6 @@ def draw():
         fill(127)
         rect(1300-gamer.mapPosX+(width/2),1200-gamer.mapPosY+(height/2),200,200)
         
-        #displaying health bar so the player actually knows what their hp is before fighting: 
-        displayPlayerHealth()
     #chest
         #so currently chest hitbox is super jank sorry
         if pointInsideRectangle(gamer.mapPosX, gamer.mapPosY, 450-gamer.mapPosX+(width/2), 200-gamer.mapPosY+(height/2), 150, 100) and chestopened == False: 
@@ -360,6 +358,7 @@ def draw():
             image(bushBlock, 1900-gamer.mapPosX+(width/2), 1680-gamer.mapPosY+(height/2))
         
         inventoryBox()
+        displayPlayerHealth()
 #-------------------------------------------------------STORE MODE--------------------------------------------------------------------#
     if gameState == "store":
         #i have no clue what to do here yet, prolly something similar to fight mode though where if u have coins and
@@ -550,7 +549,7 @@ def renderAttackButtons():
     circle(430, 400, 140)
     with pushMatrix():
         translate(430, 400)
-        rotate(-PI/4)
+        rotate(atan2(mouseY-400, mouseX-430))
         imgsize = 90 if switchingWeapon else 70
         image(weaponsOwned[currentWeapon].img, 0, 0, imgsize, imgsize)
     fill(128)
