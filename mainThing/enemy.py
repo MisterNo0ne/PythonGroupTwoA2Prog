@@ -87,8 +87,8 @@ class Enemy(object):
             damageMultiplier+=4
             print("The overgrown vines burst into overwhelming flames! (+4x damage)")
         if self.status == "frozen" and attackType == "rock": 
-            damageMultiplier+=4
-            print("The rock attack smashed through the brittle enemy, dealing massive damage! (+4x damage)")
+            damageMultiplier+=6
+            print("The rock attack smashed through the brittle enemy, dealing massive damage! (+6x damage)")
         if self.status == "wet" and attackType == "lightning": 
             damageMultiplier+=3
             print("The lightning attack electrocuted the wet enemy, dealing extra damage! (+3x damage)")
