@@ -579,7 +579,7 @@ def keyReleased():
         itemsOwned[2].value+=1
     if key == 'm' and amogus: 
         itemsOwned[0].value+=10
-    if key == 'i':
+    if key == 'i' and gameState == "map":
         spawnEnemies()
         
 def pointInsideRectangle(a, b, x, y, w, h):
