@@ -93,7 +93,7 @@ class Enemy(object):
             else:
                 self.status = "wet"
         if attackType == "grass":
-            if self.status == "tangled":
+            if self.status == "tangled" or self.status == "wet":
                 self.status = "overgrown"
             else:
                 self.status = "tangled"

@@ -186,6 +186,8 @@ def draw():
                 itemsOwned[1].value+=5
                 itemsOwned[2].value+=5
                 itemsOwned[0].value+=100
+                gamer.maxHealth +=15
+                gamer.health = maxHealth
                 cPhase = 0
                 if cType == "Sand Boss": 
                     hasRock = True
