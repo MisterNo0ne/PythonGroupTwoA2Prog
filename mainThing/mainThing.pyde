@@ -1,4 +1,4 @@
-from enemy import Enemy
+wdfrom enemy import Enemy
 from item import Item
 from item import Weapon
 from npc import Npc
@@ -113,8 +113,8 @@ def setup():
     currentWeapon = 0
     chestopened = False
     hasRock = False
-    amogus  = True #amogus is like hax mode, where during this u can hack in more health pots and daggers and funi stuff
-    debugMode = True 
+    amogus  = False
+    debugMode = False 
     skeletonBossBeaten = False
     sandBossBeaten = False
     switchingWeapon = False
