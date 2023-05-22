@@ -13,7 +13,7 @@ def setup():
     frameRate(24)
     print("hello gamer welcom to epic spell adventure game smiley face =)")
 
-    global gameState, ghoul, skeleton, zombie, spider, debugMode, gamer, keyPresses, bkgrnd, enemyList, currentEnemy, skltnimg, ghlimg, spdrimg, zomimg, attacktype, turn, blocks, fightbackgrounds, animationWaitTimer, endWaiting, attackImage, turn1wait, turn2wait, turn3wait, wizard, cactus, cactusimg, chestimg, chestopened, amogus, sandBoss, sandimg, skltnbossimg, castleimg, skltnBoss, castleBoss, blockFile, merchant, shopimg, hasRock, shopBackground, signimg, signs, bushBlock, sandBlock, skeletonBossBeaten, sandBossBeaten, icons, itemsOwned, weaponsOwned, weaponImgs, switchingWeapon, currentWeapon, cPhase
+    global gameState, ghoul, skeleton, zombie, spider, debugMode, gamer, keyPresses, bkgrnd, enemyList, currentEnemy, skltnimg, ghlimg, spdrimg, zomimg, attacktype, turn, blocks, fightbackgrounds, animationWaitTimer, endWaiting, attackImage, turn1wait, turn2wait, turn3wait, wizard, cactus, cactusimg, chestimg, chestopened, amogus, sandBoss, sandimg, skltnbossimg, castleimg, skltnBoss, castleBoss, blockFile, merchant, shopimg, hasRock, shopBackground, signimg, signs, bushBlock, sandBlock, skeletonBossBeaten, sandBossBeaten, icons, itemsOwned, weaponsOwned, weaponImgs, switchingWeapon, currentWeapon, cPhase, jumpscaring
     
     #load files
     fightbackgrounds = []
@@ -111,13 +111,14 @@ def setup():
     turn = 1
     attackImage = loadImage("WaterBolt.png")
     cPhase = 0
+    jumpscaring = False
 
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 def draw():
-    global gameState, currentEnemy, enemyList, ghoul, skeleton, turn, animationWaitTimer, gamer, endWaiting, attackType, chestimg, chestopened, merchant, shoping, hasRock, shopBackground, signs, sandBossBeaten, skeletonBossBeaten, itemsOwned, weaponsOwned, cPhase
+    global gameState, currentEnemy, enemyList, ghoul, skeleton, turn, animationWaitTimer, gamer, endWaiting, attackType, chestimg, chestopened, merchant, shoping, hasRock, shopBackground, signs, sandBossBeaten, skeletonBossBeaten, itemsOwned, weaponsOwned, cPhase, jumpscaring
     #??????????????????????????????????????????????????????
     #if you wanna edit values of global variables you have to put them here
     
@@ -341,6 +342,12 @@ def draw():
     if gameState == "map":
         gamer.moveOnMap(keyPresses, blocks)
         
+        #jumpscare DDDD:
+        if (not jumpscaring) and (gamer.mapPosX > 750 and gamer.mapPosX < 800 and gamer.mapPosY > 1650 and gamer.mapPosY < 1800):
+            jumpscaring = True
+        if jumpscaring:
+            enemyList[0].mapPosX += 22
+        
         background(12, 89, 183)
         image(bkgrnd,(width/2)-gamer.mapPosX,(height/2)-gamer.mapPosY)
         
@@ -415,7 +422,7 @@ def draw():
         text("Welcome to my shop. \nFeel free to  buy \nanything you need!\nunless we dont have it lol", 60, 75)
         
         #hpot
-        fill(color(127) if itemsOwned[0].value<20 else color(100, 255, 100))
+        fill(color(127) if itemsOwned[0].value<25 else color(100, 255, 100))
         rect(100,400,100,25)
         
         #dagger
@@ -430,7 +437,7 @@ def draw():
         #text for items
         fill(0)
         text("Health Potion", 100, 390)
-        text("10 coins", 105, 420)
+        text("25 coins", 105, 420)
         
         text("Dagger", 250, 390)
         text("5 coins", 255, 420)
@@ -494,9 +501,9 @@ def mousePressed():
             animationWaitTimer = turn1wait
     
     if gameState == "store": 
-        if pointInsideRectangle(mouseX, mouseY, 100,400,100,25) and itemsOwned[0].value>=20:
+        if pointInsideRectangle(mouseX, mouseY, 100,400,100,25) and itemsOwned[0].value>=25:
             itemsOwned[1].value+=1
-            itemsOwned[0].value-=20
+            itemsOwned[0].value-=25
         if pointInsideRectangle(mouseX, mouseY, 250,400,100,25) and itemsOwned[0].value>=5:
             itemsOwned[2].value+=1
             itemsOwned[0].value-=5
