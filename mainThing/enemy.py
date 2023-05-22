@@ -71,12 +71,15 @@ class Enemy(object):
             print("Your " + attackType + " attack was not very effective against the opposing " + self.element + " type... (-0.5x damage)")
             
         #Other damage modifiers
+        if self.element == "fire" and attackType == "water":
+            damageMultiplier+=3
+            print("The fire dies down in the flood! (+3x damage)")
         if self.status == "tangled" and attackType == "fire":
             damageMultiplier+=1
             print("The vines burst into flames! (+1x damage)")
         if self.status == "overgrown" and attackType == "fire":
-            damageMultiplier+=2
-            print("The overgrown vines burst into overwhelming flames! (+2x damage)")
+            damageMultiplier+=4
+            print("The overgrown vines burst into overwhelming flames! (+4x damage)")
         if self.status == "frozen" and attackType == "rock": 
             damageMultiplier+=4
             print("The rock attack smashed through the brittle enemy, dealing massive damage! (+4x damage)")
@@ -88,7 +91,7 @@ class Enemy(object):
         if attackType == "fire":
             self.status = "burning"
         if attackType == "water":
-            if self.status == "tangled":
+            if self.status == "tangled" or self.status == "overgrown":
                 self.status = "overgrown"
             else:
                 self.status = "wet"

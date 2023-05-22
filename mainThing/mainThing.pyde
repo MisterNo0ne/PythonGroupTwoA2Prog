@@ -82,13 +82,10 @@ def setup():
     makeBlocks()
     
     signs = []
-    signs.append(Sign(725, 600, "This is a sign", signimg, 32, 1))
-    signs.append(Sign(725, 700, "This is a sign\nwith a line break :O", signimg, 16, 2))
-    signs.append(Sign(725, 800, "Two\nline\nbreaks", signimg, 12, 3))
-    signs.append(Sign(725, 900, "Small text with one line wowie", signimg, 10, 1))
+    signs.append(Sign(725, 600, "Welcome to the secret island!", signimg, 22, 1))
     signs.append(Sign(1400, 1300, "Welcome to the land of spellaria!\nYou have been chosen to defeat the\n3 great evils of this land!", signimg, 12, 3))
     signs.append(Sign(1300, 1300, "To the west lies your first challenge, the\ngreat sand behemoth. Defeat it andyou'll\ngain access to a powerful new spell.", signimg, 11, 3))
-    signs.append(Sign(1500, 1300, "To the east lies the formidable skeleton\nlord in the dark forest. Defeat it to\nobtain yet another powerful spell", signimg, 12, 3))
+    signs.append(Sign(1500, 1300, "To the east lies the formidable skeleton\nlord in the dark forest. Defeat it to\nobtain vast riches to aid your quest.", signimg, 12, 3))
     signs.append(Sign(1400, 1200, "To the north lies your final foe, the\nevil presence residing in the Dark Castle.\n Defeat it and you'll have become the\nmost powerful wizard in the land.", signimg, 10, 4))
     #animations
     turn1wait = 50
@@ -156,9 +153,10 @@ def draw():
             fill(255)
             noStroke()
             rect(45, 25, 250, 250) #highlight box
-            fill(0)
-            textSize(24)
-            text("Enemy health: " + str(cHealth) + " ", 50, 50)
+        fill(0)
+        textSize(24)
+        text("Enemy health: " + str(cHealth) + " ", 50, 50)
+        if debugMode:
             text("type: " + cType + "\n enemyID: " + str(currentEnemy) + "\n enemy element: " + cElement, 50, 120)
             text("status: " + cStatus, 50, 240)
             text("Phase: " + str(cPhase), 50, 300)
@@ -184,10 +182,10 @@ def draw():
             ##KILLED ENEMY LOGIC
         if endWaiting or cHealth<=0: 
             if cEnemy.isBoss == True: 
-                print("You have felled the " + cType + "! You found 100 coins, 5 potions, and 5 daggers!")
+                print("You have felled the " + cType + "! You found many coins, 5 potions, and 5 daggers!")
                 itemsOwned[1].value+=5
                 itemsOwned[2].value+=5
-                itemsOwned[0].value+=100
+                itemsOwned[0].value+=150
                 gamer.maxHealth +=15
                 gamer.health = gamer.maxHealth
                 cPhase = 0
@@ -195,12 +193,15 @@ def draw():
                     hasRock = True
                     sandBossBeaten = True
                     print("A path opened above you!")
+                    signs.append(Sign(725, 1050, "Travel directly up from here\nto seek a treasure very dear", signimg, 16, 2))
                     del blocks[0]
                     cPhase = 0
                 if cType == "Skeleton Boss":
                     #poison added here
+                    itemsOwned[0].value+=100
                     skeletonBossBeaten = True
                     print("A path opened to the left of you!")
+                    print("Diamond armor is now available in the shop... for a hefty price.")
                     if not sandBossBeaten:
                         del blocks[1]
                     else:
@@ -236,7 +237,7 @@ def draw():
             if attackType == "grass" or attackType == "fire" or attackType == "water" or attackType == "ice": #dont attack if the player healed thats dumb
                 damage = 20
             if cType == "Sand Boss" and cPhase == 1: 
-                damage*=0.5
+                damage*=0.8
             cEnemy.hit(damage, attackType, cw)
         
         ##PLAYER HIT LOGIC
@@ -255,7 +256,6 @@ def draw():
             if cStatus == "overgrown" and cElement == "grass": 
                 enemyHitDamage*=1.5
                 print("The grass " + cType + " grows super strong from the overgrown vines! (1.5x)")
-            
             gamer.health -= enemyHitDamage
             println("The gamer was hurt for " + str(enemyHitDamage) + " damage!")
             turn = 3
@@ -278,24 +278,21 @@ def draw():
             
         ##Resolve statuses
         if turn == 3 and animationWaitTimer == 0:
-            enemyFighting = cEnemy
-            
-            healthChange = fightTurnThreeHealth(enemyFighting.status, enemyFighting.element)
-            displayText = fightTurnThreeDisplayText(enemyFighting.status, enemyFighting.element)
+            healthChange = fightTurnThreeHealth(cEnemy.status, cEnemy.element)
+            displayText = fightTurnThreeDisplayText(cEnemy.status, cEnemy.element)
             if healthChange > 0:
                 displayText += " Your attack healed the enemy by "
                 displayText += str(healthChange) + " health."
             elif healthChange < 0:
                 displayText += " Your attack hurt the enemy for an additional "
                 displayText += str(-healthChange) + " damage."
-            
             print(displayText)
-            enemyFighting.health += healthChange
-            enemyFighting.status = fightTurnThreeStatus(enemyFighting.status, enemyFighting.element)
+            cEnemy.health += healthChange
+            cEnemy.status = fightTurnThreeStatus(cEnemy.status, cEnemy.element)
             turn = 1
             
             # Enemy death logic
-            print("The enemy's health is now " + str(enemyFighting.health))
+            print("The enemy's health is now " + str(cEnemy.health))
             print("Your health is now " + str(gamer.health) + " out of " + str(gamer.maxHealth))
             if cHealth<=0:
                 print("The enemy died!")
@@ -351,6 +348,7 @@ def draw():
         if pointInsideRectangle(gamer.mapPosX, gamer.mapPosY, 450-gamer.mapPosX+(width/2), 200-gamer.mapPosY+(height/2), 150, 100) and chestopened == False: 
             itemsOwned[2].value+=10
             itemsOwned[1].value+=10
+            itemsOwned[0].value+=100
             chestopened = True
         if chestopened == False:      #<-- this would mean deleting the chest but that might look weird
             image(chestimg, 380-gamer.mapPosX+(width/2), 160-gamer.mapPosY+(height/2)+50, 75, 75 )   
@@ -410,7 +408,7 @@ def draw():
         text("Welcome to my shop. \nFeel free to  buy \nanything you need!\nunless we dont have it lol", 60, 75)
         
         #hpot
-        fill(color(127) if itemsOwned[0].value<10 else color(100, 255, 100))
+        fill(color(127) if itemsOwned[0].value<20 else color(100, 255, 100))
         rect(100,400,100,25)
         
         #dagger
@@ -489,9 +487,9 @@ def mousePressed():
             animationWaitTimer = turn1wait
     
     if gameState == "store": 
-        if pointInsideRectangle(mouseX, mouseY, 100,400,100,25) and itemsOwned[0].value>=10:
+        if pointInsideRectangle(mouseX, mouseY, 100,400,100,25) and itemsOwned[0].value>=20:
             itemsOwned[1].value+=1
-            itemsOwned[0].value-=10
+            itemsOwned[0].value-=20
         if pointInsideRectangle(mouseX, mouseY, 250,400,100,25) and itemsOwned[0].value>=5:
             itemsOwned[2].value+=1
             itemsOwned[0].value-=5
@@ -509,6 +507,10 @@ def mousePressed():
             gameState = "map"
             gamer.mapPosX=1650
             gamer.mapPosY=1750
+            
+    if gameState == "map" and amogus:
+        gamer.mapPosX += mouseX-300
+        gamer.mapPosY += mouseY-300
             
 def keyPressed():
     if key == 'w' or keyCode == UP:
@@ -537,16 +539,16 @@ def keyReleased():
     if key == 'd' or keyCode == RIGHT:
         keyPresses[3] = False
     if key == 'h' and itemsOwned[1].value>0 and turn == 1 and gameState == "fight": 
-        print("You used a health potion! You healed 40 hp!")
-        gamer.health += 40
+        print("You used a health potion!")
+        gamer.health = gamer.maxHealth
         itemsOwned[1].value -= 1
         attackImage = loadImage("LeafAttack.png")
         attackType = "heal"
         turn = 2
         animationWaitTimer = turn1wait
     if key == 'h' and itemsOwned[1].value>0 and gameState != "fight":
-        print("You used a health potion! You healed 40 hp!")
-        gamer.health += 40
+        print("You used a health potion!")
+        gamer.health = gamer.maxHealth
         itemsOwned[1].value -= 1
     if key == 'v' and amogus: 
         itemsOwned[1].value+=1
@@ -714,4 +716,4 @@ def fightTurnThreeDisplayText(enemyStatus, enemyType):
             return "The vines completely dry the enemy!"
         if enemyType == "grass": 
             return "Your grassy vines remain."
-    return "No status inflicted"
+    return "The enemy's status is " + str(enemyStatus)
