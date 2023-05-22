@@ -13,7 +13,7 @@ def setup():
     frameRate(24)
     print("hello gamer welcom to epic spell adventure game smiley face =)")
 
-    global gameState, ghoul, skeleton, zombie, spider, debugMode, gamer, keyPresses, bkgrnd, enemyList, currentEnemy, skltnimg, ghlimg, spdrimg, zomimg, attacktype, turn, blocks, fightbackgrounds, animationWaitTimer, endWaiting, attackImage, turn1wait, turn2wait, turn3wait, wizard, cactus, cactusimg, chestimg, chestopened, amogus, sandBoss, sandimg, skltnbossimg, castleimg, skltnBoss, castleBoss, blockFile, merchant, shopimg, hasRock, shopBackground, signimg, signs, bushBlock, sandBlock, skeletonBossBeaten, sandBossBeaten, icons, itemsOwned, weaponsOwned, weaponImgs, switchingWeapon, currentWeapon
+    global gameState, ghoul, skeleton, zombie, spider, debugMode, gamer, keyPresses, bkgrnd, enemyList, currentEnemy, skltnimg, ghlimg, spdrimg, zomimg, attacktype, turn, blocks, fightbackgrounds, animationWaitTimer, endWaiting, attackImage, turn1wait, turn2wait, turn3wait, wizard, cactus, cactusimg, chestimg, chestopened, amogus, sandBoss, sandimg, skltnbossimg, castleimg, skltnBoss, castleBoss, blockFile, merchant, shopimg, hasRock, shopBackground, signimg, signs, bushBlock, sandBlock, skeletonBossBeaten, sandBossBeaten, icons, itemsOwned, weaponsOwned, weaponImgs, switchingWeapon, currentWeapon, cPhase
     
     #load files
     fightbackgrounds = []
@@ -60,7 +60,7 @@ def setup():
     skeleton = Enemy(100, "skeleton", "grass", 200, 400, skltnimg, "none", 20, False, 0)
     spider = Enemy(42, "spider", "fire", 200, 200, spdrimg, "none", 20, False, 0)
     zombie = Enemy(153, "zombie", "water", 300, 100, zomimg, "none", 20, False, 0)
-    sandBoss = Enemy(300, "Sand Boss", "fire", 300, 1400, sandimg, "none", 40, True, 2)
+    sandBoss = Enemy(300, "Sand Boss", "rock", 300, 1400, sandimg, "none", 40, True, 2)
     skltnBoss = Enemy(400, "Skeleton Boss", "grass", 2500, 1600, skltnbossimg, "none", 40, True, 1)
     castleBoss = Enemy(500, "Final Boss", "fire", 1600, 200, castleimg, "none", 50, True, 3)
     enemyList = [cactus, ghoul, skeleton, spider, zombie, sandBoss, skltnBoss, castleBoss] 
@@ -112,13 +112,14 @@ def setup():
     keyPresses = [False, False, False, False]
     turn = 1
     attackImage = loadImage("WaterBolt.png")
+    cPhase = 0
 
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 def draw():
-    global gameState, currentEnemy, enemyList, ghoul, skeleton, turn, animationWaitTimer, gamer, endWaiting, attackType, chestimg, chestopened, merchant, shoping, hasRock, shopBackground, signs, sandBossBeaten, skeletonBossBeaten, itemsOwned, weaponsOwned
+    global gameState, currentEnemy, enemyList, ghoul, skeleton, turn, animationWaitTimer, gamer, endWaiting, attackType, chestimg, chestopened, merchant, shoping, hasRock, shopBackground, signs, sandBossBeaten, skeletonBossBeaten, itemsOwned, weaponsOwned, cPhase
     #??????????????????????????????????????????????????????
     #if you wanna edit values of global variables you have to put them here
     
@@ -131,10 +132,21 @@ def draw():
         cHealth = cEnemy.health
         cElement = cEnemy.element
         
+        if cEnemy.isBoss == True and cPhase == 0: 
+            cPhase = 1
+        if cType == "Sand Boss" and cPhase == 1: 
+            cElement = "rock"
+            cEnemy.strength = 20
+            ronk = loadImage("rock1.png")
+            image(ronk, 500, 200, 100, 100)
+            if cHealth<=200: 
+                cPhase = 2
+        if cType == "Sand Boss" and cPhase == 2:
+            cElement = "fire"
+            cEnemy.strength = 40
         # Display logic
         #background(200)
         image(fightbackgrounds[cEnemy.area], 0, 0, width, height)
-        
         renderAttackButtons() #look at the extra fxns section
     
         #show enemy stuff
@@ -147,6 +159,7 @@ def draw():
             text("Enemy health: " + str(cHealth) + " ", 50, 50)
             text("type: " + cType + "\n enemyID: " + str(currentEnemy) + "\n enemy element: " + cElement, 50, 120)
             text("status: " + cStatus, 50, 240)
+            text("Phase: " + str(cPhase), 50, 300)
             textSize(32)
             stroke(0)
         cEnemy.display()
@@ -169,13 +182,11 @@ def draw():
             ##KILLED ENEMY LOGIC
         if endWaiting or cHealth<=0: 
             if cEnemy.isBoss == True: 
-                print("yippee you killed the " + cType + " congrations you found 100 coins, 5 potions, and 5 daggers!")
+                print("You have felled the " + cType + "! You found 100 coins, 5 potions, and 5 daggers!")
                 itemsOwned[1].value+=5
                 itemsOwned[2].value+=5
-                itemsOwned[0].value+=90
-                #if hasArmor == False:
-                 #   print("You found an iron chestplate! This will provide 25% damage reduction from enemy attacks!") 
-                  #  hasIronArmor = True
+                itemsOwned[0].value+=100
+                cPhase = 0
                 if cType == "Sand Boss": 
                     hasRock = True
                     sandBossBeaten = True
@@ -217,6 +228,8 @@ def draw():
                 damage = 0
             if attackType == "grass" or attackType == "fire" or attackType == "water" or attackType == "ice": #dont attack if the player healed thats dumb
                 damage = 20
+            if cType == "Sand Boss" and cPhase == 1: 
+                damage*=0.5
             cEnemy.hit(damage, attackType, cw)
         
         ##PLAYER HIT LOGIC
@@ -282,7 +295,7 @@ def draw():
                 print("\nBack to the map...\n")
                 endWaiting = True
                 animationWaitTimer = turn3wait
-            else:
+            else: 
                 print(" ==-== New Cycle ==-==")
         
 ## 5th turn
@@ -302,7 +315,16 @@ def draw():
             if itemsOwned[0].value<=0: 
                 itemsOwned[0].value = 0
             turn = 1
-    
+        
+        
+        #boss gimmick time!
+        if cType == "Sand Boss": 
+            #if cHealth > 200: 
+            #    cPhase = 1
+            if cPhase == 1 and cHealth <= 200: 
+                print("The Rock shield shatters to pieces, leaving the sand boss defenseless!")
+                cPhase = 2
+        
 #----------------------------------------------------------------------MAP MODE------------------------------------------------------------------------------
 
     if gameState == "map":
@@ -515,6 +537,10 @@ def keyReleased():
         attackType = "heal"
         turn = 2
         animationWaitTimer = turn1wait
+    if key == 'h' and itemsOwned[1].value>0 and gameState != "fight":
+        print("You used a health potion! You healed 40 hp!")
+        gamer.health += 40
+        itemsOwned[1].value -= 1
     if key == 'v' and amogus: 
         itemsOwned[1].value+=1
     if key == 'q' and amogus: 
