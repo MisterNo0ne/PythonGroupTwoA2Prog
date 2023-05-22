@@ -169,7 +169,7 @@ def draw():
             ##KILLED ENEMY LOGIC
         if endWaiting or cHealth<=0: 
             if cEnemy.isBoss == True: 
-                print("yippee you killed the " + cType + " congrations you (probably) got loot!11!!11!")
+                print("yippee you killed the " + cType + " congrations you found 100 coins, 5 potions, and 5 daggers!")
                 itemsOwned[1].value+=5
                 itemsOwned[2].value+=5
                 itemsOwned[0].value+=90
@@ -191,11 +191,11 @@ def draw():
             gameState = "map"
             currentEnemy = 12345
             endWaiting = False
-            #itemsOwned[0].value += (0.5*cEnemy.maxHealth)    <-- idea is the amount of gold u get scales with enemy hp
-            itemsOwned[0].value+=10
+            itemsOwned[0].value += (0.25*cEnemy.maxHealth)   # <-- idea is the amount of gold u get scales with enemy hp
+            #itemsOwned[0].value+=10
             turn = 1
             animationWaitTimer = 0
-            
+                    
 ## 2nd turn 
         ##Displays gamer's attack
         timeForAnim = 30 #only the first 30 frames will get the animation
@@ -211,10 +211,13 @@ def draw():
         ##ENEMY HIT LOGIC
         if animationWaitTimer == 20 and turn == 2: 
             cw = weaponsOwned[currentWeapon]
-            if attackType == "lightning" or attackType[0] == "rock": 
-                cEnemy.hit(30, attackType, cw)
-            elif attackType != "heal": #dont attack if the player healed thats dumb
-                cEnemy.hit(20, attackType, cw)
+            if attackType[0] == "lightning" or attackType[0] == "rock": 
+                damage = 30
+            if attackType[0] == "heal":
+                damage = 0
+            if attackType[0] == "grass" or attackType[0] == "fire" or attackType[0] == "water" or attackType[0] == "ice": #dont attack if the player healed thats dumb
+                damage = 20
+            cEnemy.hit(damage, attackType, cw)
         
         ##PLAYER HIT LOGIC
         if turn == 2 and animationWaitTimer == 0:
@@ -222,7 +225,8 @@ def draw():
             
             if itemsOwned[3].value == "iron": 
                 enemyHitDamage *= 0.75
-            
+            if itemsOwned[3].value == "diamond": 
+                enemyHitDamage *= 0.5
             if cStatus == "frozen" or (cElement == "fire" and cStatus == "wet") or cStatus == "zapped": 
                 enemyHitDamage *= 0.6
             if cStatus == "tangled" and cElement == "grass": 
@@ -251,6 +255,7 @@ def draw():
             turn = 5
             animationWaitTimer = 50
             print("oh no!1!11!1!11 uy deied!!11! you are loser L game over")
+            
         ##Resolve statuses
         if turn == 3 and animationWaitTimer == 0:
             enemyFighting = cEnemy
@@ -387,6 +392,7 @@ def draw():
         fill(color(127) if itemsOwned[0].value<100 else color(100, 255, 100))
         rect(400,400,100,25)
         
+        
         #text for items
         fill(0)
         text("Health Potion", 100, 390)
@@ -397,9 +403,14 @@ def draw():
         
         if itemsOwned[3].value == "leather": 
             text("Iron armor", 400, 390)
+            text("100 coins", 405, 420)
         elif itemsOwned[3].value == "iron":
-            text("No more armor", 400, 390)
-        text("100 coins", 405, 420)
+            if skeletonBossBeaten: 
+                text("Diamond Armor", 400, 390)
+                text("300 coins", 405, 420)
+            else: 
+                text("No more armor", 400, 390)
+        #text("100 coins", 405, 420)
         
         #Exit button
         fill(200,50,50)
@@ -460,6 +471,11 @@ def mousePressed():
             itemsOwned[0].value-=100
             wizard = loadImage("IronWizard.png")
             gamer.playerImage = wizard
+        if pointInsideRectangle(mouseX, mouseY, 400,400,100,25) and itemsOwned[0].value>=300 and itemsOwned[3].value == "iron":
+            itemsOwned[3].value = "diamond"
+            itemsOwned[0].value -= 300
+            wizard = loadImage("DiamondWizard.png")
+            gamer.playerImage = wizard
         if pointInsideRectangle(mouseX, mouseY, 440,500,200,25):
             gameState = "map"
             gamer.mapPosX=1650
@@ -492,8 +508,8 @@ def keyReleased():
     if key == 'd' or keyCode == RIGHT:
         keyPresses[3] = False
     if key == 'h' and itemsOwned[1].value>0 and turn == 1 and gameState == "fight": 
-        print("You used a health potion! You healed 30 hp!")
-        gamer.health += 60
+        print("You used a health potion! You healed 40 hp!")
+        gamer.health += 40
         itemsOwned[1].value -= 1
         attackImage = loadImage("LeafAttack.png")
         attackType = ["heal", "none"]
@@ -565,9 +581,11 @@ def inventoryBox():
     text("c " + str(itemsOwned[0].value), 133, height-65)
     strokeWeight(2)
     line(140, height-80, 140, height-65)
-    if itemsOwned[3].value == "iron" and debugMode: 
+    if itemsOwned[3].value == "iron":   #and debugMode
         textSize(16)
         text("iron armor", 5, height-100)
+    if itemsOwned[3].value == "diamond": 
+        text("Diamond Armor", 5, height-100)
 
 def displayPlayerHealth(): 
     strokeWeight(4)

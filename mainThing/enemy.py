@@ -73,7 +73,7 @@ class Enemy(object):
         #Other damage modifiers
         if self.status == "tangled" and attackType == "fire":
             damageMultiplier+=1
-            print("The vines burst into flames! (+2x damage)")
+            print("The vines burst into flames! (+1x damage)")
         if self.status == "overgrown" and attackType == "fire":
             damageMultiplier+=2
             print("The overgrown vines burst into overwhelming flames! (+2x damage)")
