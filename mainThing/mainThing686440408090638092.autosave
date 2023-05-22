@@ -13,7 +13,7 @@ def setup():
     frameRate(24)
     print("hello gamer welcom to epic spell adventure game smiley face =)")
 
-    global gameState, ghoul, skeleton, zombie, spider, debugMode, gamer, keyPresses, bkgrnd, enemyList, currentEnemy, skltnimg, ghlimg, spdrimg, zomimg, attacktype, turn, blocks, fightbackgrounds, animationWaitTimer, endWaiting, attackImage, turn1wait, turn2wait, turn3wait, wizard, cactus, cactusimg, chestimg, chestopened, amogus, sandBoss, sandimg, skltnbossimg, castleimg, skltnBoss, castleBoss, blockFile, merchant, shopimg, hasRock, shopBackground, signimg, signs, bushBlock, sandBlock, skeletonBossBeaten, sandBossBeaten, icons, itemsOwned, weaponsOwned, weaponImgs, switchingWeapon, currentWeapon, cPhase, jumpscaring, jumpscared, wolfimg
+    global gameState, ghoul, skeleton, zombie, spider, debugMode, gamer, keyPresses, bkgrnd, enemyList, currentEnemy, skltnimg, ghlimg, spdrimg, zomimg, attacktype, turn, blocks, fightbackgrounds, animationWaitTimer, endWaiting, attackImage, turn1wait, turn2wait, turn3wait, wizard, cactus, cactusimg, chestimg, chestopened, amogus, sandBoss, sandimg, skltnbossimg, castleimg, skltnBoss, castleBoss, blockFile, merchant, shopimg, hasRock, shopBackground, signimg, signs, bushBlock, sandBlock, skeletonBossBeaten, sandBossBeaten, icons, itemsOwned, weaponsOwned, weaponImgs, switchingWeapon, currentWeapon, cPhase, jumpscaring, jumpscared, wolfimg, phaseCounter, phaseChanging
     
     #load files
     fightbackgrounds = []
@@ -89,11 +89,6 @@ def setup():
     signs.append(Sign(2050, 450, "The final battle", signimg, 32, 1))
     signs.append(Sign(700, 1750, "RUN!!!1!", signimg, 32, 1))
     signs.append(Sign(500, 1750, "I told you to run", signimg, 20, 1))
-    signs.append(Sign(2750, 800, "Rock can shatter things if\nthey're brittle...", signimg, 15, 2))
-    signs.append(Sign(1400, 800, "Ice can freeze a\nwet enemy...", signimg, 15, 2))
-    signs.append(Sign(2550, 1850, "Did you get enough\nhealth potions?", signimg, 15, 2))
-    signs.append(Sign(800, 1350, "Water is a very\ngood conductor...", signimg, 15, 2))
-    signs.append(Sign(1500, 1500, "Tangled grass enemies get\nhealed, but the vines can also\n make flames much stronger...", signimg, 12, 3))
     signs.append(Sign(350, 1800, "Having some armor is gonna be\npretty important.\nThis boss hits hard!", signimg, 12, 3))
     signs.append(Sign(1400, 1300, "Welcome to the land of spellaria!\nYou have been chosen to defeat the\n3 great evils of this land!", signimg, 12, 3))
     signs.append(Sign(1300, 1300, "To the west lies your first challenge, the\ngreat sand behemoth. Defeat it andyou'll\ngain access to a powerful new spell.", signimg, 11, 3))
@@ -113,8 +108,8 @@ def setup():
     currentWeapon = 0
     chestopened = False
     hasRock = False
-    amogus  = False
-    debugMode = False 
+    amogus  = True #amogus is like hax mode, where during this u can hack in more health pots and daggers and funi stuff
+    debugMode = True 
     skeletonBossBeaten = False
     sandBossBeaten = False
     switchingWeapon = False
@@ -124,13 +119,15 @@ def setup():
     cPhase = 0
     jumpscaring = False
     jumpscared = False
+    phaseCounter = 0
+    phaseChanging = False
 
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 def draw():
-    global gameState, currentEnemy, enemyList, ghoul, skeleton, turn, animationWaitTimer, gamer, endWaiting, attackType, chestimg, chestopened, merchant, shoping, hasRock, shopBackground, signs, sandBossBeaten, skeletonBossBeaten, itemsOwned, weaponsOwned, cPhase, jumpscaring, jumpscared
+    global gameState, currentEnemy, enemyList, ghoul, skeleton, turn, animationWaitTimer, gamer, endWaiting, attackType, chestimg, chestopened, merchant, shoping, hasRock, shopBackground, signs, sandBossBeaten, skeletonBossBeaten, itemsOwned, weaponsOwned, cPhase, jumpscaring, jumpscared, phaseCounter, phaseChanging
     #??????????????????????????????????????????????????????
     #if you wanna edit values of global variables you have to put them here
     
@@ -143,6 +140,26 @@ def draw():
         cHealth = cEnemy.health
         cElement = cEnemy.element
         
+        #final boss gimmick thing
+        if cType == "Final Boss" and phaseCounter == 2 and turn == 1:
+      #i hate python
+            if cElement == "fire" and phaseChanging:
+                cElement = "water"
+                phaseChanging = False
+            if cElement == "water" and phaseChanging:
+                cElement = "grass"
+                phaseChanging = False
+            if cElement == "grass" and phaseChanging:
+                cElement = "rock"
+                phaseChanging = False
+            if cElement == "rock" and phaseChanging:
+                cElement = "fire"
+                phaseChanging = False
+            cEnemy.strength+=5
+            print("The Dark Castle magically changed to a " + cElement + " type and grew stronger (+5 strength)")
+            phaseCounter = 0
+            cStatus = "none"
+
         if cEnemy.isBoss == True and cPhase == 0: 
             cPhase = 1
         if cType == "Sand Boss" and cPhase == 1: 
@@ -163,20 +180,19 @@ def draw():
         renderAttackButtons() #look at the extra fxns section
     
         #show enemy stuff
-        fill(255)
-        noStroke()
-        rect(45, 25, 250, 250) #highlight box
+        if debugMode:
+            fill(255)
+            noStroke()
+            rect(45, 25, 250, 250) #highlight box
         fill(0)
         textSize(24)
         text("Enemy health: " + str(cHealth) + " ", 50, 50)
         if debugMode:
             text("type: " + cType + "\n enemyID: " + str(currentEnemy) + "\n enemy element: " + cElement, 50, 120)
+            text("status: " + cStatus, 50, 240)
             text("Phase: " + str(cPhase), 50, 300)
             textSize(32)
             stroke(0)
-        text("type: " + cType + "\n enemy element: " + cElement, 50, 120)
-        text("status: " + cStatus, 50, 240)
-        stroke(0)
         cEnemy.display()
         cEnemy.displayStatus()
         cEnemy.healthBarInFight()
@@ -217,6 +233,9 @@ def draw():
                     signs.append(Sign(725, 1100, "Travel directly up from here\nto seek a treasure very cool", signimg, 16, 2))
                     del blocks[0]
                     cPhase = 0
+                if cType == "Final Boss": 
+                    itemsOwned[0].value+=500
+                    print("Congratulations! You have slain the final boss and have completed the game!")
                 if cType == "Skeleton Boss":
                     #poison added here
                     itemsOwned[0].value+=100
@@ -259,13 +278,12 @@ def draw():
             if attackType == "grass" or attackType == "fire" or attackType == "water" or attackType == "ice": #dont attack if the player healed thats dumb
                 damage = 20
             if cType == "Sand Boss" and cPhase == 1: 
-                damage*=0.8
+                damage*=0.7
             cEnemy.hit(damage, attackType, cw)
         
         ##PLAYER HIT LOGIC
         if turn == 2 and animationWaitTimer == 0:
             enemyHitDamage = cEnemy.strength
-            
             if itemsOwned[3].value == "iron": 
                 enemyHitDamage *= 0.75
             if itemsOwned[3].value == "diamond": 
@@ -323,6 +341,9 @@ def draw():
                 animationWaitTimer = turn3wait
             else: 
                 print(" ==-== New Cycle ==-==")
+                if cType == "Final Boss": 
+                    phaseCounter +=1
+                    phaseChanging = True
         
 ## 5th turn
         # Gamer death logic
