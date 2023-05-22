@@ -82,10 +82,10 @@ def setup():
     signs.append(Sign(725, 700, "This is a sign\nwith a line break :O", signimg, 16, 2))
     signs.append(Sign(725, 800, "Two\nline\nbreaks", signimg, 12, 3))
     signs.append(Sign(725, 900, "Small text with one line wowie", signimg, 10, 1))
-    signs.append(Sign(gamer.mapPosX, gamer.mapPosY, "Welcome to the land of spellaria!\nYou have been chosen to defeat the\n3 great evils of this land!", signimg, 12, 3))
-    signs.append(Sign(gamer.mapPosX-100, gamer.mapPosY, "To the west lies your first challenge, the\ngreat sand behemoth. Defeat it andyou'll\ngain access to a powerful new spell.", signimg, 11, 3))
-    signs.append(Sign(gamer.mapPosX+100, gamer.mapPosY, "To the east lies the formidable skeleton\nlord in the dark forest. Defeat it to\nobtain yet another powerful spell", signimg, 12, 3))
-    signs.append(Sign(gamer.mapPosX, gamer.mapPosY-100, "To the north lies your final foe, the\nevil presence residing in the Dark Castle.\n Defeat it and you'll have become the\nmost powerful wizard in the land.", signimg, 10, 4))
+    signs.append(Sign(1400, 1300, "Welcome to the land of spellaria!\nYou have been chosen to defeat the\n3 great evils of this land!", signimg, 12, 3))
+    signs.append(Sign(1300, 1300, "To the west lies your first challenge, the\ngreat sand behemoth. Defeat it andyou'll\ngain access to a powerful new spell.", signimg, 11, 3))
+    signs.append(Sign(1500, 1300, "To the east lies the formidable skeleton\nlord in the dark forest. Defeat it to\nobtain yet another powerful spell", signimg, 12, 3))
+    signs.append(Sign(1400, 1200, "To the north lies your final foe, the\nevil presence residing in the Dark Castle.\n Defeat it and you'll have become the\nmost powerful wizard in the land.", signimg, 10, 4))
     #animations
     turn1wait = 50
     turn2wait = 30
