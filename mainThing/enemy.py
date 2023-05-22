@@ -114,7 +114,8 @@ class Enemy(object):
     def mapDisplay(self, playerX, playerY, debugMode):
         stroke(255,0,0)
         strokeWeight(5)
-        image(self.img, self.mapPosX-playerX+(width/2), self.mapPosY-playerY+(height/2), 100, 100)
+        imagsize = 200 if self.isBoss else 100
+        image(self.img, self.mapPosX-playerX+(width/2), self.mapPosY-playerY+(height/2), imagsize, imagsize)
         
         textSize(16)
         fill(0)
@@ -123,7 +124,7 @@ class Enemy(object):
         if debugMode:
             noFill()
             stroke(0, 255, 255)
-            rect(self.mapPosX-playerX+(width/2), self.mapPosY-playerY+(height/2), 100, 100)
+            rect(self.mapPosX-playerX+(width/2), self.mapPosY-playerY+(height/2), imagsize, imagsize)
         
     def healthBarInFight(self):
         fractionOfHealth = float(self.health)/self.maxHealth

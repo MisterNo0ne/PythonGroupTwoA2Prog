@@ -141,6 +141,8 @@ def draw():
             image(ronk, 500, 200, 100, 100)
             if cHealth<=200: 
                 cPhase = 2
+                print("The sand boss is fired up with rage!")
+                print("It is now a fire type enemy!")
         if cType == "Sand Boss" and cPhase == 2:
             cElement = "fire"
             cEnemy.strength = 40
@@ -187,15 +189,18 @@ def draw():
                 itemsOwned[2].value+=5
                 itemsOwned[0].value+=100
                 gamer.maxHealth +=15
-                gamer.health = maxHealth
+                gamer.health = gamer.maxHealth
                 cPhase = 0
                 if cType == "Sand Boss": 
                     hasRock = True
                     sandBossBeaten = True
+                    print("A path opened above you!")
                     del blocks[0]
+                    cPhase = 0
                 if cType == "Skeleton Boss":
                     #poison added here
                     skeletonBossBeaten = True
+                    print("A path opened to the left of you!")
                     if not sandBossBeaten:
                         del blocks[1]
                     else:
@@ -367,7 +372,8 @@ def draw():
             
         for e in enemyList:
             e.mapDisplay(gamer.mapPosX, gamer.mapPosY, debugMode)
-            if pointInsideRectangle(gamer.mapPosX, gamer.mapPosY, e.mapPosX-32, e.mapPosY-32, 132, 132) and gamer.health>0: 
+            hitLength = 232 if e.isBoss else 132
+            if pointInsideRectangle(gamer.mapPosX, gamer.mapPosY, e.mapPosX-32, e.mapPosY-32, hitLength, hitLength) and gamer.health>0: 
                 currentEnemy = enemyList.index(e)
                 print(" ==-== " + enemyList[currentEnemy].element + " " + enemyList[currentEnemy].type + " ==-== ")
                 gameState = "fight"
