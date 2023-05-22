@@ -13,7 +13,7 @@ def setup():
     frameRate(24)
     print("hello gamer welcom to epic spell adventure game smiley face =)")
 
-    global gameState, ghoul, skeleton, zombie, spider, debugMode, gamer, keyPresses, bkgrnd, enemyList, currentEnemy, skltnimg, ghlimg, spdrimg, zomimg, attacktype, turn, blocks, fightbackgrounds, animationWaitTimer, endWaiting, attackImage, turn1wait, turn2wait, turn3wait, wizard, cactus, cactusimg, chestimg, chestopened, amogus, sandBoss, sandimg, skltnbossimg, castleimg, skltnBoss, castleBoss, blockFile, merchant, shopimg, hasRock, shopBackground, signimg, signs, bushBlock, sandBlock, skeletonBossBeaten, sandBossBeaten, icons, itemsOwned, weaponsOwned, weaponImgs, switchingWeapon, currentWeapon, cPhase, jumpscaring, jumpscared
+    global gameState, ghoul, skeleton, zombie, spider, debugMode, gamer, keyPresses, bkgrnd, enemyList, currentEnemy, skltnimg, ghlimg, spdrimg, zomimg, attacktype, turn, blocks, fightbackgrounds, animationWaitTimer, endWaiting, attackImage, turn1wait, turn2wait, turn3wait, wizard, cactus, cactusimg, chestimg, chestopened, amogus, sandBoss, sandimg, skltnbossimg, castleimg, skltnBoss, castleBoss, blockFile, merchant, shopimg, hasRock, shopBackground, signimg, signs, bushBlock, sandBlock, skeletonBossBeaten, sandBossBeaten, icons, itemsOwned, weaponsOwned, weaponImgs, switchingWeapon, currentWeapon, cPhase, jumpscaring, jumpscared, wolfimg
     
     #load files
     fightbackgrounds = []
@@ -23,6 +23,7 @@ def setup():
     fightbackgrounds.append(loadImage("volcanofightbackground.png"))
     skltnimg = loadImage("skeletonIdle.png")
     zomimg = loadImage("Zombie.png")
+    wolfimg = loadImage("wolf.png")
     spdrimg = loadImage("smallenemyspider.png")
     ghlimg = loadImage("spookyGhoul.png")
     bkgrnd = loadImage("MapBackground.png")
@@ -60,6 +61,11 @@ def setup():
     skltnBoss = Enemy(400, "Skeleton Boss", "grass", 2000, 1775, skltnbossimg, "none", 40, True, 1)
     castleBoss = Enemy(500, "Final Boss", "fire", 2000, 150, castleimg, "none", 50, True, 3)
     enemyList = [cactus, sandBoss, skltnBoss, castleBoss] 
+    enemyList.append(Enemy(80, "ghoul", "grass", 2400, 1450, ghlimg, "none", 20, False, 1))
+    enemyList.append(Enemy(100, "skeleton", "grass", 2350, 1650, skltnimg, "none", 20, False, 1))
+    enemyList.append(Enemy(80, "ghoul", "fire", 1050, 2000, ghlimg, "none", 20, False, 2))
+    enemyList.append(Enemy(100, "skeleton", "rock", 850, 1900, skltnimg, "none", 20, False, 2))
+    enemyList.append(Enemy(180, "zombie", "fire", 850, 1900, skltnimg, "none", 25, False, 3))
     spawnEnemies()
     
     gamer = Player(1400, 1300, 100, wizard) 
@@ -573,6 +579,8 @@ def keyReleased():
         itemsOwned[2].value+=1
     if key == 'm' and amogus: 
         itemsOwned[0].value+=10
+    if key == 'i':
+        spawnEnemies()
         
 def pointInsideRectangle(a, b, x, y, w, h):
     # just returns whether or not the coordinate of the first 2 parameters is in the rectangle defined by the last 4 parameters
@@ -656,10 +664,18 @@ def displayPlayerHealth():
 
 def spawnEnemies():
     global enemyList
-    enemyList.append(Enemy(50, "ghoul", "fire", 500, 500, ghlimg, "none", 20, False, 0))
-    enemyList.append(Enemy(100, "skeleton", "grass", 200, 400, skltnimg, "none", 20, False, 0))
-    enemyList.append(Enemy(42, "spider", "fire", 900, 1900, spdrimg, "none", 20, False, 0))
-    enemyList.append(Enemy(153, "zombie", "water", 300, 100, zomimg, "none", 20, False, 0))
+    enemyList.append(Enemy(50, "spider", "rock", 700, 1200, spdrimg, "none", 25, False, 0))
+    enemyList.append(Enemy(100, "wolf", "water", 1050, 1100, wolfimg, "none", 20, False, 0))
+    enemyList.append(Enemy(150, "zombie", "water", 1050, 1400, zomimg, "none", 20, False, 0))
+    enemyList.append(Enemy(50, "spider", "fire", 1200, 1600, spdrimg, "none", 25, False, 0))
+    enemyList.append(Enemy(150, "zombie", "grass", 1300, 1000, zomimg, "none", 20, False, 0))
+    enemyList.append(Enemy(100, "wolf", "grass", 1500, 1700, wolfimg, "none", 20, False, 0))
+    enemyList.append(Enemy(150, "zombie", "rock", 1600, 700, zomimg, "none", 20, False, 0))
+    enemyList.append(Enemy(150, "zombie", "fire", 1950, 1350, zomimg, "none", 20, False, 0))
+    enemyList.append(Enemy(100, "skeleton", "fire", 2150, 1100, skltnimg, "none", 20, False, 0))
+    enemyList.append(Enemy(80, "ghoul", "rock", 2450, 650, ghlimg, "none", 20, False, 0))
+    enemyList.append(Enemy(100, "wolf", "rock", 2650, 900, wolfimg, "none", 20, False, 0))
+    enemyList.append(Enemy(80, "ghoul", "water", 2500, 1200, ghlimg, "none", 20, False, 0))
 
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
