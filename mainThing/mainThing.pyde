@@ -99,7 +99,7 @@ def setup():
 
     #other stuff
     gameState = "map"
-    attackType = []
+    attackType = "amgpsu"
     currentEnemy= -1
     currentWeapon = 0
     chestopened = False
@@ -199,7 +199,7 @@ def draw():
 ## 2nd turn 
         ##Displays gamer's attack
         timeForAnim = 30 #only the first 30 frames will get the animation
-        if turn == 2 and animationWaitTimer >= turn1wait-timeForAnim and attackType[0] != "heal":
+        if turn == 2 and animationWaitTimer >= turn1wait-timeForAnim and attackType != "heal":
             #ellipse(160, 440, 20, 20)
             progressFraction = float(turn1wait-animationWaitTimer)/timeForAnim
             pushMatrix()
@@ -211,11 +211,11 @@ def draw():
         ##ENEMY HIT LOGIC
         if animationWaitTimer == 20 and turn == 2: 
             cw = weaponsOwned[currentWeapon]
-            if attackType[0] == "lightning" or attackType[0] == "rock": 
+            if attackType == "lightning" or attackType == "rock": 
                 damage = 30
-            if attackType[0] == "heal":
+            if attackType == "heal":
                 damage = 0
-            if attackType[0] == "grass" or attackType[0] == "fire" or attackType[0] == "water" or attackType[0] == "ice": #dont attack if the player healed thats dumb
+            if attackType == "grass" or attackType == "fire" or attackType == "water" or attackType == "ice": #dont attack if the player healed thats dumb
                 damage = 20
             cEnemy.hit(damage, attackType, cw)
         
@@ -512,7 +512,7 @@ def keyReleased():
         gamer.health += 40
         itemsOwned[1].value -= 1
         attackImage = loadImage("LeafAttack.png")
-        attackType = ["heal", "none"]
+        attackType = "heal"
         turn = 2
         animationWaitTimer = turn1wait
     if key == 'v' and amogus: 
