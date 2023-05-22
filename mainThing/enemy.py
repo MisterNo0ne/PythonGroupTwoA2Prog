@@ -51,6 +51,7 @@ class Enemy(object):
         if self.element == "rock": 
              self.weakness.append("water")
              self.weakness.append("grass")
+             self.weakness.append("lightning")
              self.resistance.append("fire")
              self.resistance.append("rock")
              self.resistance.append("ice")
@@ -72,8 +73,11 @@ class Enemy(object):
             
         #Other damage modifiers
         if self.element == "fire" and attackType == "water":
-            damageMultiplier+=3
-            print("The fire dies down in the flood! (+3x damage)")
+            damageMultiplier+=0.5
+            print("The fire dies down in the flood! (+0.5x damage)")
+        if self.element == "rock" and attackType == "lightning":
+            damageMultiplier+=2
+            print("The rock shatters at its edges! (+2x damage)")
         if self.status == "tangled" and attackType == "fire":
             damageMultiplier+=1
             print("The vines burst into flames! (+1x damage)")

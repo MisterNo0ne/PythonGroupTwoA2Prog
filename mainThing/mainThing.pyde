@@ -55,15 +55,12 @@ def setup():
     weaponImgs.append(loadImage("weapons/mace.png"))
     
     #enemy declarators or smth
-    cactus = Enemy(200, "cactus", "grass", 150, 300, cactusimg, "none", 30, False, 0)
-    ghoul = Enemy(50, "ghoul", "fire", 500, 500, ghlimg, "none", 20, False, 0)
-    skeleton = Enemy(100, "skeleton", "grass", 200, 400, skltnimg, "none", 20, False, 0)
-    spider = Enemy(42, "spider", "fire", 200, 200, spdrimg, "none", 20, False, 0)
-    zombie = Enemy(153, "zombie", "water", 300, 100, zomimg, "none", 20, False, 0)
-    sandBoss = Enemy(300, "Sand Boss", "rock", 300, 1400, sandimg, "none", 40, True, 2)
+    cactus = Enemy(200, "cactus", "grass", 300, 1700, cactusimg, "none", 30, False, 0)
+    sandBoss = Enemy(300, "Sand Boss", "rock", 200, 1300, sandimg, "none", 40, True, 2)
     skltnBoss = Enemy(400, "Skeleton Boss", "grass", 2000, 1775, skltnbossimg, "none", 40, True, 1)
-    castleBoss = Enemy(500, "Final Boss", "fire", 1600, 200, castleimg, "none", 50, True, 3)
-    enemyList = [cactus, ghoul, skeleton, spider, zombie, sandBoss, skltnBoss, castleBoss] 
+    castleBoss = Enemy(500, "Final Boss", "fire", 2000, 150, castleimg, "none", 50, True, 3)
+    enemyList = [cactus, sandBoss, skltnBoss, castleBoss] 
+    spawnEnemies()
     
     gamer = Player(1400, 1300, 100, wizard) 
     
@@ -82,7 +79,11 @@ def setup():
     makeBlocks()
     
     signs = []
-    signs.append(Sign(725, 600, "Welcome to the secret island!", signimg, 22, 1))
+    signs.append(Sign(725, 600, "idk how to rhyme :(", signimg, 16, 1))
+    signs.append(Sign(2050, 450, "The final battle", signimg, 32, 1))
+    signs.append(Sign(700, 1750, "RUN!!!1!", signimg, 32, 1))
+    signs.append(Sign(500, 1750, "I told you to run", signimg, 20, 1))
+    signs.append(Sign(350, 1800, "Having some armor is gonna be\npretty important.\nThis boss hits hard!", signimg, 12, 3))
     signs.append(Sign(1400, 1300, "Welcome to the land of spellaria!\nYou have been chosen to defeat the\n3 great evils of this land!", signimg, 12, 3))
     signs.append(Sign(1300, 1300, "To the west lies your first challenge, the\ngreat sand behemoth. Defeat it andyou'll\ngain access to a powerful new spell.", signimg, 11, 3))
     signs.append(Sign(1500, 1300, "To the east lies the formidable skeleton\nlord in the dark forest. Defeat it to\nobtain vast riches to aid your quest.", signimg, 12, 3))
@@ -189,11 +190,15 @@ def draw():
                 gamer.maxHealth +=15
                 gamer.health = gamer.maxHealth
                 cPhase = 0
+                print("Your max health increased!")
+                gamer.maxHealth += 25
+                print("You have also healed to max for free.")
+                gamer.health = gamer.maxHealth
                 if cType == "Sand Boss": 
                     hasRock = True
                     sandBossBeaten = True
                     print("A path opened above you!")
-                    signs.append(Sign(725, 1050, "Travel directly up from here\nto seek a treasure very dear", signimg, 16, 2))
+                    signs.append(Sign(725, 1100, "Travel directly up from here\nto seek a treasure very cool", signimg, 16, 2))
                     del blocks[0]
                     cPhase = 0
                 if cType == "Skeleton Boss":
@@ -206,14 +211,15 @@ def draw():
                         del blocks[1]
                     else:
                         del blocks[0]
+            else:
+                itemsOwned[0].value += (0.25*cEnemy.maxHealth)   # <-- idea is the amount of gold u get scales with enemy hp
             del enemyList[currentEnemy]
             gameState = "map"
             currentEnemy = 12345
             endWaiting = False
-            itemsOwned[0].value += (0.25*cEnemy.maxHealth)   # <-- idea is the amount of gold u get scales with enemy hp
-            #itemsOwned[0].value+=10
             turn = 1
             animationWaitTimer = 0
+            print("\nBack to map screen...\n")
                     
 ## 2nd turn 
         ##Displays gamer's attack
@@ -314,6 +320,7 @@ def draw():
             gamer.mapPosX = 1400
             gamer.mapPosY = 1300
             gamer.health = (gamer.maxHealth/2)
+            cEnemy.health = cEnemy.maxHealth
             print("You managed to escape, but lost some coins")
             itemsOwned[0].value-=15
             if itemsOwned[0].value<=0: 
@@ -636,6 +643,13 @@ def displayPlayerHealth():
     text(str(gamer.health) + " / " + str(gamer.maxHealth), 430, 575)
     textSize(24)
     textAlign(LEFT)
+
+def spawnEnemies():
+    global enemyList
+    enemyList.append(Enemy(50, "ghoul", "fire", 500, 500, ghlimg, "none", 20, False, 0))
+    enemyList.append(Enemy(100, "skeleton", "grass", 200, 400, skltnimg, "none", 20, False, 0))
+    enemyList.append(Enemy(42, "spider", "fire", 900, 1900, spdrimg, "none", 20, False, 0))
+    enemyList.append(Enemy(153, "zombie", "water", 300, 100, zomimg, "none", 20, False, 0))
 
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
