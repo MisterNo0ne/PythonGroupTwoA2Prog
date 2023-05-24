@@ -1,5 +1,7 @@
 # Spell Based Adventure Game
 
+###
+
 ### Description
 This game will be a spell based adventure that involves exploring a world, discovering new spells, learning how the elements interact, and fighting enemies. Search the island looking for secrets, knowledge, and special weapons so that you can defeat the final boss!
 
@@ -7,15 +9,6 @@ This game will be a spell based adventure that involves exploring a world, disco
 On the map screen, use WASD or the arrow keys to move around. (If you run out of enemies to fight in the plains, press 'i' to respawn them.)
 In a battle, press 'H' to heal. Otherwise just left click on the element of choice for your attack when it is your turn.
 In the shop, click on the buttons shown to buy health pots, daggers, and armor. To exit, click the button in the bottom right.
-
-### Idea List
-- add poison type that counters fire to balance game
-- staling mechanic (same attacks weaken if used multiple times)
-- balance rock (make rock only good with certain statuses and bad without that, or maybe rock could get really stale)
-- have bosses have different phases/gimmicks. for the final boss, most likely a thing where it's element changes every turn (or every other turn) and all status effects are removed. Maybe have it heal a bit too when transitioning to a new phase. 
-- have a shopkeeper and coin system, where killing enemies/bosses awards the player coins that they can use to buy items. basic items would just be health potions and daggers, but maybe have him sell ice/rock spells, armor, idk some other stuff etc. 
-- have shopkeeper man sell different foods/buffs, so that u can eat them in the map mode to get buffs to certain attack, like eating ice cream makes ice attacks stronger, or eating spicy food makes fire type attacks stronger. 
-- better boss loot and progression to make the game feel like it has order and not just kill anything
 
 ## Features
 Added a debugMode that can be toggled to display important statistics and information for debugging.
@@ -69,14 +62,14 @@ Added a display that shows the prices of each item.
 ## Development
 
 ### Roles
-Micah: player.py and obstacle.py and all of their class functions, as well as keyPress system and gameState transition. Also made the map, enemies sprinkled around the map, the jumpscare 
+Micah: player.py and obstacle.py and all of their class functions, as well as keyPress system and gameState transition. Also made the map, enemies sprinkled around the map, the jumpscare, all the obstacles for collisions, animation system, respawning enemies, and changing enemy fight backgrounds based on the terrain.
 
 Zack: enemy images, attack sprites,  enemy.py, mapDisplay() and the damage calculator, as well as the element and status effect system, turn system, boss gimmicks, the store, inventory display, health bar display, health pot functionality, armor and coin functionality. 
 
 Eddie: item.py, weapon.py, class extension, npc.py, and a basic dialogue file that npc can access
 Class extension works by having 'child' classes inherit data from 'parent' classes, so the weapon class can have values of the item class. There isnt a thing on it on the main processing documentation page either so its tough
 
-Maksim: Virtually every single image (attack icons, enemy images, the player, attacks, the shop, the shopkeeper) and all animations, npcs, bosses, and basic functionality of data folder
+Maksim: Virtually every single image (attack icons, enemy images, the player, attacks, the shop, the shopkeeper) and all animations pngs, npcs, bosses, and basic functionality of data folder
 Basically the animations in the battles work by having 2 variables for x and y change and have an image render at those coordinates; the image changes based on the attack
 
 ### [Source Code](https://github.com/MisterNo0ne/PythonGroupTwoA2Prog/tree/main/mainThing)
