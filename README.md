@@ -71,7 +71,7 @@ Added a display that shows the prices of each item.
 ### Roles
 Micah: player.py and obstacle.py and all of their class functions, as well as keyPress system and gameState transition. Also made the map, enemies sprinkled around the map, the jumpscare 
 
-Zack: enemy images, attack sprites,  enemy.py, mapDisplay() and the damage calculator, as well as the element and status effect system, boss gimmicks, the store, money, inventory display, health bar display, health pot functionality
+Zack: enemy images, attack sprites,  enemy.py, mapDisplay() and the damage calculator, as well as the element and status effect system, turn system, boss gimmicks, the store, inventory display, health bar display, health pot functionality, armor and coin functionality. 
 
 Eddie: item.py, weapon.py, class extension, npc.py, and a basic dialogue file that npc can access
 Class extension works by having 'child' classes inherit data from 'parent' classes, so the weapon class can have values of the item class. There isnt a thing on it on the main processing documentation page either so its tough
