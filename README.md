@@ -69,7 +69,7 @@ Zack: enemy images, attack sprites,  enemy.py, mapDisplay() and the damage calcu
 Eddie: item.py, weapon.py, class extension, npc.py, and a basic dialogue file that npc can access
 Class extension works by having 'child' classes inherit data from 'parent' classes, so the weapon class can have values of the item class. There isnt a thing on it on the main processing documentation page either so its tough
 
-Maksim: Virtually every single image (attack icons, enemy images, the player, attacks, the shop, the shopkeeper) and all animations pngs, npcs, bosses, and basic functionality of data folder
+Maksim: Majority of the images and sprites including attack icons, some enemy images, the player, attacks, the shop, the shopkeeper, npcs, bosses, and basic functionality of data folder
 Basically the animations in the battles work by having 2 variables for x and y change and have an image render at those coordinates; the image changes based on the attack
 
 ### [Source Code](https://github.com/MisterNo0ne/PythonGroupTwoA2Prog/tree/main/mainThing)
